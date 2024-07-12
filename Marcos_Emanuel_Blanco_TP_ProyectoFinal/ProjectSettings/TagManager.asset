@@ -6,6 +6,12 @@ TagManager:
   tags:
   - EnemigoBasico
   - Suelo
+  - Tienda
+  - Equipamiento
+  - Aventurero
+  - Pickup
+  - Muro
+  - EnemigoMina
   layers:
   - Default
   - TransparentFX

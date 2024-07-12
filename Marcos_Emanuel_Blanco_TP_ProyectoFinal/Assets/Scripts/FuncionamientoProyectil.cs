@@ -20,7 +20,7 @@ public class FuncionamientoProyectil : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Suelo") || collision.CompareTag("EnemigoBasico"))
+        if (collision.CompareTag("Suelo") || collision.CompareTag("EnemigoBasico") || collision.CompareTag("Aventurero"))
         {
             GolpeProyectil();
             Explotar();
@@ -47,6 +47,12 @@ public class FuncionamientoProyectil : MonoBehaviour
             if (col.CompareTag("EnemigoBasico"))
             {
                 col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoExplosion);
+            }
+
+            if (col.CompareTag("Aventurero"))
+            {
+                col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoExplosion);
+                Debug.Log("Enemigo Herido");
             }
         }
     }

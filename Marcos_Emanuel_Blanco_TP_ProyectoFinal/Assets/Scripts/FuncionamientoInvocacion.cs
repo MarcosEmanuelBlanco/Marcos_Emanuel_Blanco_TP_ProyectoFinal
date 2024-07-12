@@ -10,12 +10,10 @@ public class FuncionamientoInvocacion : MonoBehaviour
     [SerializeField] private Vector2 fuerzaSalto;
     [SerializeField] private float dagnoChoque;
     private Rigidbody2D rb;
-    private Collider2D collider;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        collider = rb.GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -23,7 +21,7 @@ public class FuncionamientoInvocacion : MonoBehaviour
     {
         MovimientoInvocacion();
         RaycastHit2D rayoSensorBorde = Physics2D.Raycast(posicionSensorSalto.position, Vector2.down, alcanceSensorSalto);
-        if (rayoSensorBorde.transform.CompareTag("EnemigoBasico") == true)
+        if (rayoSensorBorde.transform.CompareTag("EnemigoBasico") == true || rayoSensorBorde.transform.CompareTag("Aventurero") == true)
         {
             Debug.Log("saltando");
             SaltoInvocacion();
@@ -39,7 +37,7 @@ public class FuncionamientoInvocacion : MonoBehaviour
     void SaltoInvocacion()
     {
         rb.AddForce(fuerzaSalto, ForceMode2D.Impulse);
-        collider.isTrigger = true;
+        gameObject.GetComponent<Collider2D>().isTrigger = true;
     }
 
     private void OnDrawGizmos()
@@ -54,6 +52,13 @@ public class FuncionamientoInvocacion : MonoBehaviour
         {
             collision.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoChoque);
             gameObject.SetActive(false);
+        }
+
+        if (collision.CompareTag("Aventurero"))
+        {
+            collision.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoChoque);
+            gameObject.SetActive(false);
+            Debug.Log("Enemigo Herido");
         }
     }
 

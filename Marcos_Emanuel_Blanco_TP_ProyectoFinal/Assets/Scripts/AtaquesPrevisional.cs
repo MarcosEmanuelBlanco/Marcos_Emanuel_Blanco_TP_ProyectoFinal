@@ -18,12 +18,28 @@ public class AtaquesPrevisional : MonoBehaviour
     [SerializeField] private Transform puntoInvocacionE;
     [SerializeField] private float esperaSiguienteAtaqueE;
     [SerializeField] private float intervaloEntreGolpesE;
+    [SerializeField] private GameObject muroR;
+    [SerializeField] private Transform puntoMuro;
+    [SerializeField] private float esperaSiguienteAtaqueR;
+    [SerializeField] private float intervaloEntreGolpesR;
+    [SerializeField] private float duracionMuroR;
+    [SerializeField] private int habilidadAleatoria;
+    [SerializeField] private int munW;
+    [SerializeField] private int munE;
+    [SerializeField] private int munR;
     // Start is called before the first frame update
     void Start()
     {
+        habilidadAleatoria = 0;
         representacionAtaqueQ.gameObject.SetActive(false);
+        muroR.transform.position = puntoMuro.transform.position;
+        muroR.SetActive(false);
     }
 
+    public void CambiarHabilidadAleatoria(int habAl)
+    {
+        habilidadAleatoria += habAl;
+    }
     private void UsarQ()
     {
         if (esperaSiguienteAtaqueQ > 0)
@@ -59,6 +75,18 @@ public class AtaquesPrevisional : MonoBehaviour
                 col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoGolpeQ);
                 Debug.Log("Enemigo Herido");
             }
+
+            if (col.CompareTag("EnemigoMina"))
+            {
+                col.transform.GetComponent<AtaqueMina>().ModificarVidaEnemigo(-dagnoGolpeQ);
+                Debug.Log("Enemigo Herido");
+            }
+
+            if (col.CompareTag("Aventurero"))
+            {
+                col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpeQ);
+                Debug.Log("Enemigo Herido");
+            }
         }
     }
 
@@ -68,10 +96,11 @@ public class AtaquesPrevisional : MonoBehaviour
         {
             esperaSiguienteAtaqueW -= Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.W) && esperaSiguienteAtaqueW <= 0)
+        if (Input.GetKeyDown(KeyCode.W) && esperaSiguienteAtaqueW <= 0 && munW > 0)
         {
             esperaSiguienteAtaqueW = intervaloEntreGolpesW;
             DisparoW();
+            munW--;
         }
     }
 
@@ -80,6 +109,7 @@ public class AtaquesPrevisional : MonoBehaviour
         GameObject nuevoProyectil = proyectilW;
         nuevoProyectil.transform.position = puntoDisparoW.transform.position;
         Instantiate(nuevoProyectil);
+        
     }
 
     private void UsarE()
@@ -88,10 +118,11 @@ public class AtaquesPrevisional : MonoBehaviour
         {
             esperaSiguienteAtaqueE -= Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.E) && esperaSiguienteAtaqueE <= 0)
+        if (Input.GetKeyDown(KeyCode.E) && esperaSiguienteAtaqueE <= 0 && munE > 0)
         {
             esperaSiguienteAtaqueE = intervaloEntreGolpesE;
             InvocarE();
+            munE--;
         }
     }
 
@@ -101,12 +132,42 @@ public class AtaquesPrevisional : MonoBehaviour
         nuevaInvocacion.transform.position = puntoInvocacionE.transform.position;
         Instantiate(nuevaInvocacion);
     }
+
+    private void UsarR()
+    {
+        if (esperaSiguienteAtaqueR > 0)
+        {
+            esperaSiguienteAtaqueR -= Time.deltaTime;
+        }
+        if(Input.GetKeyDown(KeyCode.R) && esperaSiguienteAtaqueR <= 0 && munR > 0)
+        {
+            esperaSiguienteAtaqueR = intervaloEntreGolpesR;
+            StartCoroutine(nameof(ActivarR));
+            munR--;
+        }
+    }
+
+    private IEnumerator ActivarR()
+    {
+        muroR.SetActive(true);
+        yield return new WaitForSeconds(duracionMuroR);
+        muroR.SetActive(false);
+        muroR.GetComponent<FuncionamientoMuro>().GolpeR();
+    }
+
+    private void UsarT()
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
         UsarQ();
         UsarW();
         UsarE();
+        UsarR();
+        UsarT();
     }
 
 }
