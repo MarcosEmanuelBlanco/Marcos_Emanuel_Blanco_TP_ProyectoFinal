@@ -123,6 +123,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2510749366613702455, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2650642941041396563, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_Name
       value: AventureroTanque
@@ -167,6 +171,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: vidaEnemigo
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: valorEnemigo
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: alcanceVision.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: velocidadEnemigo
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8144431737517271331, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -174,6 +194,10 @@ PrefabInstance:
     - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_Size.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
@@ -212,8 +236,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   representacionAtaque: {fileID: 2871378142185948982}
   posicionAtaque: {fileID: 2182495846882972734}
-  areaAtaque: {x: 1, y: 2}
-  fuerzaMazazo: {x: 5, y: 1.5}
+  areaAtaque: {x: 3, y: 2}
+  fuerzaMazazo: {x: 0, y: 5}
   dagnoGolpe: 10
   tiempoEntreGolpes: 2
 --- !u!4 &8309676897710492908 stripped

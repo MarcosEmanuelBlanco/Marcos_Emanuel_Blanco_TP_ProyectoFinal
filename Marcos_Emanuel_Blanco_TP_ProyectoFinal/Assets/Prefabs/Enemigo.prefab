@@ -160,7 +160,8 @@ GameObject:
   - component: {fileID: 1590112002101014244}
   - component: {fileID: 4266868218540157372}
   - component: {fileID: 3401705213077777205}
-  m_Layer: 0
+  - component: {fileID: -3421820871995322065}
+  m_Layer: 3
   m_Name: Enemigo
   m_TagString: EnemigoBasico
   m_Icon: {fileID: 0}
@@ -321,15 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887117741b1009b4cbbb9619e1b9a8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaEnemigo: 20
-  velocidadEnemigo: 0.5
-  distanciaAlJugador: 3
-  puntoVision: {fileID: 4044003146972542838}
-  moviendose: 0
-  atacando: 0
-  atacadoPorAventurero: 0
-  rotacion: 180
-  alcanceVision: {x: 25, y: 1}
+  vidaMaxima: 50
+  valorEnemigo: 10
 --- !u!114 &3401705213077777205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,4 +339,25 @@ MonoBehaviour:
   representacionAtaque: {fileID: 6829482825924969961}
   posicionAtaque: {fileID: 5884109144844605792}
   radioGolpe: 0.5
-  dagnoGolpe: 5
+  dagnoGolpe: 20
+--- !u!114 &-3421820871995322065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8720418070332993492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411be7f06fcdfd246819c4ada88e0841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocidadEnemigo: 0.5
+  distanciaAlJugador: 3
+  distanciaAlAventurero: 1
+  puntoVision: {fileID: 4044003146972542838}
+  atacando: 0
+  aturdido: 0
+  atacadoPorAventurero: 0
+  rotacion: 180
+  alcanceVision: {x: 25, y: 1}

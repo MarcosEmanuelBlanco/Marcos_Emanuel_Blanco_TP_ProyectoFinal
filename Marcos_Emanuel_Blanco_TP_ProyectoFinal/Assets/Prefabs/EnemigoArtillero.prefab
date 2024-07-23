@@ -76,7 +76,8 @@ GameObject:
   - component: {fileID: -7209883686569546155}
   - component: {fileID: 334202877805849579}
   - component: {fileID: -6253099453617466463}
-  m_Layer: 0
+  - component: {fileID: 5873623679361212738}
+  m_Layer: 3
   m_Name: EnemigoArtillero
   m_TagString: EnemigoBasico
   m_Icon: {fileID: 0}
@@ -251,12 +252,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887117741b1009b4cbbb9619e1b9a8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaEnemigo: 15
-  velocidadEnemigo: 0.35
+  vidaMaxima: 25
+  valorEnemigo: 40
+--- !u!114 &5873623679361212738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6464168343485070226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411be7f06fcdfd246819c4ada88e0841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocidadEnemigo: 0.3
   distanciaAlJugador: 10
+  distanciaAlAventurero: 10
   puntoVision: {fileID: 5260308554516164678}
-  moviendose: 0
   atacando: 0
+  aturdido: 0
   atacadoPorAventurero: 0
   rotacion: 180
   alcanceVision: {x: 25, y: 1}

@@ -123,6 +123,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2510749366613702455, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2650642941041396563, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_Name
       value: AventureroMago
@@ -168,21 +172,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: vidaEnemigo
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: valorEnemigo
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: alcanceVision.x
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: velocidadEnemigo
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: distanciaAlJugador
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8144431737517271331, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
+    - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 0.8828125
@@ -221,7 +237,7 @@ MonoBehaviour:
   representacionAtaque: {fileID: 6055919173887148847}
   posicionAtaque: {fileID: 8644550491258583995}
   areaAtaque: {x: 5, y: 3}
-  dagnoGolpe: 15
+  dagnoGolpe: 70
   tiempoEntreGolpes: 3
 --- !u!4 &4188522568835621342 stripped
 Transform:

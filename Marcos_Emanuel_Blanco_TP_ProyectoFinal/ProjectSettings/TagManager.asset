@@ -12,11 +12,14 @@ TagManager:
   - Pickup
   - Muro
   - EnemigoMina
+  - Pegote
+  - Jefe
+  - Invocacion
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemigo
   - Water
   - UI
   - 

@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemigosAGenerar: []
+  puntosAparicion: []
+  posicionSensor: {fileID: 1814277469580412970}
+  alcanceSensor: {x: 2, y: 20}
 --- !u!212 &4432213714967132646
 SpriteRenderer:
   m_ObjectHideFlags: 0
