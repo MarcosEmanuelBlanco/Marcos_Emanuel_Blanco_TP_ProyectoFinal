@@ -256,6 +256,7 @@ public class AtaquesPrevisional : MonoBehaviour
                     break;
                 case 4:
                     StartCoroutine(nameof(InvocarArtilleria));
+                    OnRandomSkillChange.Invoke("Ninguna");
                     habilidadAleatoria = 0;
                     //aleatoriaDisponible = false;
                     break;
