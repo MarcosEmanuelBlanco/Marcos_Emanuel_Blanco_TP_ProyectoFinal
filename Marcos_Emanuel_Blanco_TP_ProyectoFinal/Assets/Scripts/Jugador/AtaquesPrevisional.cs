@@ -64,7 +64,6 @@ public class AtaquesPrevisional : MonoBehaviour
 
     [SerializeField] private GameObject[] invocacionArtilleria;
     [SerializeField] private Transform[] puntoArtilleria;
-    [SerializeField] private float duracionArtilleria;
 
     [Header("Municiones")]
 
@@ -88,8 +87,8 @@ public class AtaquesPrevisional : MonoBehaviour
         representacionPreparacionRE.gameObject.SetActive(false);
         for (int i = 0; i < invocacionArtilleria.Length; i++)
         {
-            invocacionArtilleria[i].transform.position = puntoArtilleria[i].transform.position;
-            invocacionArtilleria[i].SetActive(false);
+            
+            //invocacionArtilleria[i].SetActive(false);
         }
         muroR.transform.position = puntoMuro.transform.position;
         muroR.SetActive(false);
@@ -255,7 +254,7 @@ public class AtaquesPrevisional : MonoBehaviour
                     //aleatoriaDisponible = false;
                     break;
                 case 4:
-                    StartCoroutine(nameof(InvocarArtilleria));
+                    InvocarArtilleria();
                     OnRandomSkillChange.Invoke("Ninguna");
                     habilidadAleatoria = 0;
                     //aleatoriaDisponible = false;
@@ -266,22 +265,13 @@ public class AtaquesPrevisional : MonoBehaviour
         //}
     }
 
-    private IEnumerator InvocarArtilleria()
+    private void InvocarArtilleria()
     {
         for (int i = 0; i < invocacionArtilleria.Length; i++)
         {
-            if (!invocacionArtilleria[i].activeInHierarchy)
-            {
-                invocacionArtilleria[i].SetActive(true);
-            }   
-        }
-        yield return new WaitForSeconds(duracionArtilleria);
-        for (int i = 0; i < invocacionArtilleria.Length; i++)
-        {
-            if (invocacionArtilleria[i].activeInHierarchy)
-            {
-                invocacionArtilleria[i].SetActive(false);
-            }
+            GameObject nuevaArtilleria = invocacionArtilleria[i];
+            nuevaArtilleria.transform.position = puntoArtilleria[i].transform.position;
+            Instantiate(nuevaArtilleria);
         }
     }
 

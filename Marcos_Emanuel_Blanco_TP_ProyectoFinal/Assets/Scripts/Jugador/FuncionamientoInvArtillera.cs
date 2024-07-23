@@ -7,6 +7,7 @@ public class FuncionamientoInvArtillera : MonoBehaviour
     [SerializeField] private GameObject proyectil;
     [SerializeField] private Transform puntoDisparo;
     [SerializeField] private float frecuenciaDisparo;
+    [SerializeField] private float velocidadInvocacion;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,13 @@ public class FuncionamientoInvArtillera : MonoBehaviour
 
     private void FixedUpdate()
     {
+        MovimientoInvocacion();
+    }
 
+    void MovimientoInvocacion()
+    {
+        Vector3 newPosition = transform.position + new Vector3(0.1f * velocidadInvocacion, 0f, 0f);
+        transform.position = newPosition;
     }
 
     void Disparo()

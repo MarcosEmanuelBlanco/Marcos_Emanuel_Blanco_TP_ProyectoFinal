@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7281425842559434395, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 8.500034
       objectReference: {fileID: 0}
     - target: {fileID: 7281425842559434395, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 7281425842559434395, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -54,11 +54,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7504493822723789612, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
       propertyPath: fuerzaLanzamiento.x
-      value: 3
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7504493822723789612, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
       propertyPath: fuerzaLanzamiento.y
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

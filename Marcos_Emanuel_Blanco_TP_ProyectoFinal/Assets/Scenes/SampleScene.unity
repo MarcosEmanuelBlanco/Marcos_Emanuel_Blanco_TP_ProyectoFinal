@@ -14655,6 +14655,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 773730621345373940, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
+      propertyPath: habilidadAleatoria
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 773730621345373940, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: OnRandomSkillChange.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
