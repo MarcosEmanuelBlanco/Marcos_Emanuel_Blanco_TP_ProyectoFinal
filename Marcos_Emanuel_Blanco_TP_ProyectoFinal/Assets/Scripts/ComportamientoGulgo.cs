@@ -88,7 +88,7 @@ public class ComportamientoGulgo : MonoBehaviour
         velocidadCorreteoReal = distanciaCorreteo;
         estadoActual = Correteo;
         StartCoroutine(Espera());
-        StartCoroutine(Comportamientos());
+        
         representacionAtaqueCuerpoACuerpo.gameObject.SetActive(false);
         representacionAtaqueMordisco.gameObject.SetActive(false);
         representacionAtaqueRaices.gameObject.SetActive(false);
@@ -119,7 +119,7 @@ public class ComportamientoGulgo : MonoBehaviour
     private IEnumerator Espera()
     {
         yield return new WaitForSeconds(5.0f);
-        
+        StartCoroutine(Comportamientos());
     }
 
     private void Update()
@@ -189,17 +189,17 @@ public class ComportamientoGulgo : MonoBehaviour
         //miAnimator.SetBool("Correteando", true);
         tiempo = Time.time;
         Vector2 posicionInicial = transform.position;
-        Vector2 posicionObjetivo;// = new(transform.position.x - distanciaCorreteo, transform.position.y); //Debería ser la del jugador.
+        Vector2 posicionObjetivo = new(transform.position.x - distanciaCorreteo, transform.position.y); //Debería ser la del jugador.
         GameObject jugador = GameObject.FindGameObjectWithTag("Player");
         GameObject muro = GameObject.FindGameObjectWithTag("Muro");
-        if(muro != null)
-        {
-            posicionObjetivo = new(transform.position.x - muro.transform.position.x, transform.position.y);
-        }
-        else
-        {
-            posicionObjetivo = new(transform.position.x - jugador.transform.position.x, transform.position.y);
-        }
+        //if(muro != null)
+        //{
+        //    posicionObjetivo = new(transform.position.x - muro.transform.position.x, transform.position.y);
+        //}
+        //else
+        //{
+        //    posicionObjetivo = new(transform.position.x - jugador.transform.position.x, transform.position.y);
+        //}
         while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
         {
             transform.position = Vector2.Lerp(posicionInicial, posicionObjetivo, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));

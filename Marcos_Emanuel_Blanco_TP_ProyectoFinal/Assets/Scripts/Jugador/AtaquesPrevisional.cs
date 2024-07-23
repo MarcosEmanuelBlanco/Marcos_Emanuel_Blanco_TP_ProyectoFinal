@@ -24,8 +24,8 @@ public class AtaquesPrevisional : MonoBehaviour
 
     [Header("E")]
 
-    [SerializeField] private GameObject grupoInvocacionesE;
-    [SerializeField] private Transform puntoInvocacionE;
+    [SerializeField] private GameObject[] grupoInvocacionesE;
+    [SerializeField] private Transform[] puntoInvocacionE;
     [SerializeField] private float esperaSiguienteAtaqueE;
     [SerializeField] private float intervaloEntreGolpesE;
 
@@ -40,7 +40,7 @@ public class AtaquesPrevisional : MonoBehaviour
     [Header("Aleatoria")]
 
     [SerializeField] private int habilidadAleatoria;
-    private bool aleatoriaDisponible;
+    //private bool aleatoriaDisponible;
 
     [Header("Corte Aplastante")]
 
@@ -81,7 +81,7 @@ public class AtaquesPrevisional : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        aleatoriaDisponible = false;
+        //aleatoriaDisponible = false;
         representacionAtaqueQ.gameObject.SetActive(false);
         representacionAtaqueCA.gameObject.SetActive(false);
         representacionAtaqueRE.gameObject.SetActive(false);
@@ -105,7 +105,7 @@ public class AtaquesPrevisional : MonoBehaviour
     public void CambiarHabilidadAleatoria(int habAl)
     {
         habilidadAleatoria += habAl;
-        aleatoriaDisponible = true;
+        //aleatoriaDisponible = true;
         switch (habilidadAleatoria)
         {
             case 1:
@@ -204,9 +204,13 @@ public class AtaquesPrevisional : MonoBehaviour
 
     private void InvocarE()
     {
-        GameObject nuevaInvocacion = grupoInvocacionesE;
-        nuevaInvocacion.transform.position = puntoInvocacionE.transform.position;
-        Instantiate(nuevaInvocacion);
+        for(int i = 0; i< grupoInvocacionesE.Length; i++)
+        {
+            GameObject nuevaInvocacion = grupoInvocacionesE[i];
+            nuevaInvocacion.transform.position = puntoInvocacionE[i].transform.position;
+            Instantiate(nuevaInvocacion);
+        }
+        
     }
 
     private void UsarR()
@@ -228,31 +232,37 @@ public class AtaquesPrevisional : MonoBehaviour
 
     private void UsarT()
     {
-        while (aleatoriaDisponible)
-        {
+        //while (aleatoriaDisponible)
+        //{
             switch(habilidadAleatoria)
             {
                 case 1:
                     CorteAplastante();
                     OnRandomSkillChange.Invoke("Ninguna");
-                    aleatoriaDisponible = false;
+                    habilidadAleatoria = 0;
+                    //aleatoriaDisponible = false;
                     break;
                 case 2:
                     Relampago();
                     OnRandomSkillChange.Invoke("Ninguna");
-                    aleatoriaDisponible = false;                    
+                    habilidadAleatoria = 0;
+                    //aleatoriaDisponible = false;                    
                     break;
                 case 3:
                     RecuperarMunicion();
                     OnRandomSkillChange.Invoke("Ninguna");
-                    aleatoriaDisponible = false;
+                    habilidadAleatoria = 0;
+                    //aleatoriaDisponible = false;
                     break;
                 case 4:
                     StartCoroutine(nameof(InvocarArtilleria));
-                    aleatoriaDisponible = false;
+                    habilidadAleatoria = 0;
+                    //aleatoriaDisponible = false;
+                    break;
+                default:
                     break;
             }
-        }
+        //}
     }
 
     private IEnumerator InvocarArtilleria()
@@ -439,7 +449,7 @@ public class AtaquesPrevisional : MonoBehaviour
         {
             UsarR();
         }
-        if (Input.GetKeyDown(KeyCode.T) && aleatoriaDisponible) {
+        if (Input.GetKeyDown(KeyCode.T) && habilidadAleatoria != 0) {
             UsarT();
         }
         if (esperaSiguienteAtaqueQ > 0)

@@ -52,19 +52,19 @@ public class FuncionamientoInvocacion : MonoBehaviour
         if (collision.CompareTag("EnemigoBasico"))
         {
             collision.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoChoque);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
         if (collision.CompareTag("Jefe"))
         {
             collision.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoChoque);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
         if (collision.CompareTag("Aventurero"))
         {
             collision.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoChoque);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
             Debug.Log("Enemigo Herido");
         }
     }

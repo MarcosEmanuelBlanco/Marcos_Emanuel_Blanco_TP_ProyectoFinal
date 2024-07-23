@@ -465,7 +465,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4049127710460925861}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -499,37 +499,37 @@ MonoBehaviour:
   representacionAtaqueMordisco: {fileID: 4762028416841437794}
   puntoMordisco: {fileID: 7967389507360172810}
   alcanceMordisco: {x: 2, y: 3}
-  dagnoMordisco: 0
-  dagnoVeneno: 0
-  duracionVeneno: 0
-  lapsoTicksVeneno: 0
-  tiempoEntreCorreteos: 0
-  duracionDeCorreteo: 0
-  distanciaCorreteo: 0
-  divisorDuracionDeCorreteo: 0
+  dagnoMordisco: 100
+  dagnoVeneno: 20
+  duracionVeneno: 10
+  lapsoTicksVeneno: 2
+  tiempoEntreCorreteos: 3
+  duracionDeCorreteo: 2
+  distanciaCorreteo: 5
+  divisorDuracionDeCorreteo: 2
   representacionAtaqueRaices: {fileID: 960371958934829589}
   alcanceRaices: {x: 10, y: 1}
   puntoRaices: {fileID: 9191251393650614923}
-  dagnoRaices: 0
-  tiempoCargaRaices: 0
-  tiempoEntreRaices: 0
+  dagnoRaices: 150
+  tiempoCargaRaices: 2
+  tiempoEntreRaices: 4
   representacionAtaqueCuerpoACuerpo: {fileID: 5059627430740638650}
   alcanceCuerpoACuerpo: {x: 2, y: 3}
   puntoCuerpoACuerpo: {fileID: 3223207428753576816}
-  dagnoCuerpoACuerpo: 0
-  intervaloEntreGolpes: 0
-  cantidadGolpes: 0
-  tiempoEntreGolpizas: 0
+  dagnoCuerpoACuerpo: 50
+  intervaloEntreGolpes: 0.5
+  cantidadGolpes: 5
+  tiempoEntreGolpizas: 6
   proyectilGulgo: {fileID: 2325456436052681418, guid: 9cda95125da90de419b417ad5d50d7c7, type: 3}
   puntoDisparoGulgo: {fileID: 6901731249311109550}
-  tiempoCargaDisparo: 0
-  tiempoEntreDisparos: 0
+  tiempoCargaDisparo: 1
+  tiempoEntreDisparos: 8
   representacionAtaqueEsporas: {fileID: 5883268638003660212}
   alcanceEsporas: {x: 15, y: 5}
   puntoEsporas: {fileID: 8743706817189635013}
-  dagnoEsporas: 0
-  tiempoCargaEsporas: 0
-  tiempoEntreEsporas: 0
+  dagnoEsporas: 200
+  tiempoCargaEsporas: 1
+  tiempoEntreEsporas: 12
 --- !u!114 &-1942177386135572278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,7 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vidaMaxima: 5000
-  valorEnemigo: 0
+  valorEnemigo: 1000
 --- !u!1 &4348504668592986302
 GameObject:
   m_ObjectHideFlags: 0

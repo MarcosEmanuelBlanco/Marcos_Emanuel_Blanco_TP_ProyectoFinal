@@ -19,6 +19,7 @@ public class FuncionamientoPegote : MonoBehaviour
         jugador.GetComponent<Movimiento>().CambiarAturdido(true);
         yield return new WaitForSeconds(duracionPegote);
         jugador.GetComponent<Movimiento>().CambiarAturdido(false);
+        Destroy(gameObject);
 
     }
 

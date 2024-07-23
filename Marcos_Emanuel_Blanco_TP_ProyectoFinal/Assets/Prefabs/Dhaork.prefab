@@ -901,15 +901,21 @@ MonoBehaviour:
   representacionAtaqueQ: {fileID: 8681445497018554714}
   posicionControladorGolpeQ: {fileID: 3484530106142843409}
   esperaSiguienteAtaqueQ: 0
-  intervaloEntreGolpesQ: 2
+  intervaloEntreGolpesQ: 1
   radioGolpeQ: 3
-  dagnoGolpeQ: 40
+  dagnoGolpeQ: 80
   proyectilW: {fileID: 4061640550055002892, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
   puntoDisparoW: {fileID: 8260259103823881352}
   esperaSiguienteAtaqueW: 0
   intervaloEntreGolpesW: 5
-  grupoInvocacionesE: {fileID: 6845887637064565261, guid: b12127e20af2ca04e9b61b01404ca4a4, type: 3}
-  puntoInvocacionE: {fileID: 4652654010582765333}
+  grupoInvocacionesE:
+  - {fileID: 546655808612666973, guid: 3007c6db14264c747ab9fdcf117b04a3, type: 3}
+  - {fileID: 546655808612666973, guid: 3007c6db14264c747ab9fdcf117b04a3, type: 3}
+  - {fileID: 546655808612666973, guid: 3007c6db14264c747ab9fdcf117b04a3, type: 3}
+  puntoInvocacionE:
+  - {fileID: 8937607185369357671}
+  - {fileID: 1796315185395019115}
+  - {fileID: 620433485248594113}
   esperaSiguienteAtaqueE: 0
   intervaloEntreGolpesE: 8
   muroR: {fileID: 5929394106119555842}
