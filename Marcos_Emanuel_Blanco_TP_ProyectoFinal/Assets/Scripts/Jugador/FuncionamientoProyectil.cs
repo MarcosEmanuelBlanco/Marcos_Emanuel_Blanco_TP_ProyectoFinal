@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class FuncionamientoProyectil : MonoBehaviour
 {
-    [SerializeField] private Transform representacionExplosion;
     [SerializeField] private Transform posicionControladorExplosion;
     [SerializeField] private float radioExplosion;
     [SerializeField] private float dagnoExplosion;
     private float dagnoPorMultitud;
     //[SerializeField] private float bonusDagnoMultitud;
     private Rigidbody2D rb;
+    private Animator miAnimator;
     [SerializeField] private Vector2 fuerzaLanzamiento;
     // Start is called before the first frame update
     void Start()
     {
         dagnoPorMultitud = 0f;
-        representacionExplosion.gameObject.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
+        miAnimator = GetComponent<Animator>();
         rb.AddForce(fuerzaLanzamiento, ForceMode2D.Impulse);
     }
 
@@ -37,8 +37,9 @@ public class FuncionamientoProyectil : MonoBehaviour
 
     private IEnumerator ActivarExplosion()
     {
-        representacionExplosion.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
+        miAnimator.Play("BolaFuegoExplosion");
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        yield return new WaitForSeconds(0.25f);
         Destroy(gameObject);
     }
 

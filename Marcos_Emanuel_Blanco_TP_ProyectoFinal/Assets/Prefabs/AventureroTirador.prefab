@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4731765075898922364}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4841,7 +4841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9432e4fe44c07d4c8ff87f4bd548bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puntos: 10
+  puntos: 200
 --- !u!1 &5647050304118686187
 GameObject:
   m_ObjectHideFlags: 0
@@ -4931,15 +4931,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: vidaEnemigo
-      value: 200
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: valorEnemigo
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: alcanceVision.x
-      value: 13
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: alcanceVision.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: velocidadEnemigo
@@ -4953,6 +4957,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -2413806693520163455, guid: 13efa96cb51670d43815a9604073a355, type: 3}
+    - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_IsTrigger
       value: 0

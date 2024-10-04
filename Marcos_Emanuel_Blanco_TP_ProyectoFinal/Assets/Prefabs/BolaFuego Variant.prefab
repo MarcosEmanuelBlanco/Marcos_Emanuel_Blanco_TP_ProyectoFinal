@@ -53,6 +53,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7504493822723789612, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
+      propertyPath: dagnoExplosion
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 7504493822723789612, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
       propertyPath: fuerzaLanzamiento.x
       value: 15
       objectReference: {fileID: 0}

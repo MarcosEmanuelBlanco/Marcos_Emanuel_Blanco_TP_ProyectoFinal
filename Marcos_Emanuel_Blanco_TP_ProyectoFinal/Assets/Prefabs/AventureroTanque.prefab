@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1216570782072174198}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 2.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 5253853464479832049}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 2.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -173,15 +173,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: vidaEnemigo
-      value: 1000
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: valorEnemigo
-      value: 20
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: alcanceVision.x
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: alcanceVision.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: velocidadEnemigo
@@ -192,8 +196,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -9095717837082945937, guid: 04d954e85488b4541b987ba43dd120f6, type: 3}
     - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
-      propertyPath: m_Size.y
+      propertyPath: m_Size.x
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_Size.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_IsTrigger
@@ -236,9 +244,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   representacionAtaque: {fileID: 2871378142185948982}
   posicionAtaque: {fileID: 2182495846882972734}
-  areaAtaque: {x: 3, y: 2}
+  areaAtaque: {x: 3, y: 3}
   fuerzaMazazo: {x: 0, y: 5}
-  dagnoGolpe: 10
+  dagnoGolpe: 1000
   tiempoEntreGolpes: 2
 --- !u!4 &8309676897710492908 stripped
 Transform:

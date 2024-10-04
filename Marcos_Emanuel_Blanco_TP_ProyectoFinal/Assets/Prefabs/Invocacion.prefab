@@ -177,7 +177,7 @@ MonoBehaviour:
   posicionSensorSalto: {fileID: 4995280502139990746}
   alcanceSensorSalto: 4
   fuerzaSalto: {x: 5, y: 1}
-  dagnoChoque: 5
+  dagnoChoque: 100
 --- !u!114 &1372178941783393573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f347aaf34e107841beb841589f97e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaInvocacion: 100
+  vidaInvocacion: 500
 --- !u!1 &2782602622634451309
 GameObject:
   m_ObjectHideFlags: 0

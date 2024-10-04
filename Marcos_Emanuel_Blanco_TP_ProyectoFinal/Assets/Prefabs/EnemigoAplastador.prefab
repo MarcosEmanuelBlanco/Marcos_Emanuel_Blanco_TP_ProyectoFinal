@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 2004782520867812919}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: -0.25, z: 0}
+  m_LocalPosition: {x: -3.5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -94,7 +94,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5966767148728485254}
@@ -197,7 +197,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 3}
   m_EdgeRadius: 0
 --- !u!50 &1526692674110609227
 Rigidbody2D:
@@ -241,7 +241,7 @@ MonoBehaviour:
   representacionAtaque: {fileID: 3561095524156730525}
   posicionAtaque: {fileID: 5966767148728485254}
   rectGolpe: {x: 5, y: 0.5}
-  dagnoGolpe: 30
+  dagnoGolpe: 230
 --- !u!114 &159421662843536783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,8 +254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887117741b1009b4cbbb9619e1b9a8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaMaxima: 200
-  valorEnemigo: 25
+  vidaMaxima: 2000
+  valorEnemigo: 250
 --- !u!114 &5293345248092003554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,7 +303,7 @@ Transform:
   m_GameObject: {fileID: 5615105778407835184}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: -0.25, z: 0}
+  m_LocalPosition: {x: -3.5, y: -1, z: 0}
   m_LocalScale: {x: 5, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
