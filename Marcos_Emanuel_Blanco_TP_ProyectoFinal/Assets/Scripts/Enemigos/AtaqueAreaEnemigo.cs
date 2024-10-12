@@ -18,10 +18,22 @@ public class AtaqueAreaEnemigo : MonoBehaviour
     {
         Ataque();
     }
+
+    private bool DetectarAtacando()
+    {
+        return gameObject.GetComponent<MovimientoEnemigo>().GetAtacando();
+    }
+
+    private bool DetectarAturdido()
+    {
+        return gameObject.GetComponent<MovimientoEnemigo>().GetAturdido();
+    }
+
     // Update is called once per frame
     void Update()
     {
-
+        DetectarAtacando();
+        DetectarAturdido();
     }
 
     void Ataque()
@@ -37,7 +49,7 @@ public class AtaqueAreaEnemigo : MonoBehaviour
 
     void Golpear()
     {
-        if (gameObject.GetComponent<MovimientoEnemigo>().GetMoviendose() == false && gameObject.GetComponent<MovimientoEnemigo>().GetAturdido() == false)
+        if (DetectarAtacando() == true && DetectarAturdido() == false)
         {
             Collider2D[] areaGolpe = Physics2D.OverlapBoxAll(posicionAtaque.position, rectGolpe, 0);
             foreach (Collider2D col in areaGolpe)
@@ -61,10 +73,10 @@ public class AtaqueAreaEnemigo : MonoBehaviour
                 
             }
         }
-        else
-        {
-            transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform.position);
-        }
+        //else
+        //{
+        //    transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform.position);
+        //}
     }
     private IEnumerator ActivarAtaque()
     {

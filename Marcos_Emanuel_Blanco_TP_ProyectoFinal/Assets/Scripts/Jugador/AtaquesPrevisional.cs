@@ -33,6 +33,7 @@ public class AtaquesPrevisional : MonoBehaviour
 
     [SerializeField] private GameObject muroR;
     [SerializeField] private Transform puntoMuro;
+    [SerializeField] private Transform explosionMuro;
     [SerializeField] private float esperaSiguienteAtaqueR;
     [SerializeField] private float intervaloEntreGolpesR;
     [SerializeField] private float duracionMuroR;
@@ -82,6 +83,7 @@ public class AtaquesPrevisional : MonoBehaviour
     {
         //aleatoriaDisponible = false;
         representacionAtaqueQ.gameObject.SetActive(false);
+        explosionMuro.gameObject.SetActive(false);
         representacionAtaqueCA.gameObject.SetActive(false);
         representacionAtaqueRE.gameObject.SetActive(false);
         representacionPreparacionRE.gameObject.SetActive(false);
@@ -98,7 +100,7 @@ public class AtaquesPrevisional : MonoBehaviour
         OnWAmmoChange.Invoke(munWActual.ToString());
         OnEAmmoChange.Invoke(munEActual.ToString());
         OnRAmmoChange.Invoke(munRActual.ToString());
-        OnRandomSkillChange.Invoke("Ninguna");
+        OnRandomSkillChange.Invoke(" ");
     }
 
     public void CambiarHabilidadAleatoria(int habAl)
@@ -225,8 +227,16 @@ public class AtaquesPrevisional : MonoBehaviour
     {
         muroR.SetActive(true);
         yield return new WaitForSeconds(duracionMuroR);
+        StartCoroutine(nameof(ExplosionMuro));
         muroR.SetActive(false);
         muroR.GetComponent<FuncionamientoMuro>().GolpeR();
+    }
+
+    private IEnumerator ExplosionMuro()
+    {
+        explosionMuro.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        explosionMuro.gameObject.SetActive(false);
     }
 
     private void UsarT()

@@ -9,7 +9,7 @@ public class EnemigoArtillero : MonoBehaviour
     [SerializeField] private float frecuenciaDisparo;
     void Start()
     {
-        Ataque();
+        
     }
 
     private void OnBecameInvisible()
@@ -18,12 +18,22 @@ public class EnemigoArtillero : MonoBehaviour
     }
     private void OnBecameVisible()
     {
-        
+        Ataque();
     }
 
+    private bool DetectarAtacando()
+    {
+        return gameObject.GetComponent<MovimientoEnemigo>().GetAtacando();
+    }
+
+    private bool DetectarAturdido()
+    {
+        return gameObject.GetComponent<MovimientoEnemigo>().GetAturdido();
+    }
     void Update()
     {
-        
+        DetectarAtacando();
+        DetectarAturdido();
     }
 
     private void FixedUpdate()
@@ -33,18 +43,22 @@ public class EnemigoArtillero : MonoBehaviour
 
     void Disparo()
     {
-        GameObject nuevoProyectil = proyectil;
-        nuevoProyectil.transform.position = puntoDisparo.transform.position;
-        Instantiate(nuevoProyectil);
+        if (/*Mathf.Abs(transform.position.x - jugador.transform.position.x) <= gameObject.GetComponent<MovimientoEnemigo>().GetDistancia() && */
+            DetectarAtacando() == true && DetectarAturdido() == false)
+        {
+            GameObject nuevoProyectil = proyectil;
+            nuevoProyectil.transform.position = puntoDisparo.transform.position;
+            Instantiate(nuevoProyectil);
+        }
     }
 
     void Ataque()
     {
         //RaycastHit2D rayoSensorBorde = Physics2D.Raycast(transform.position, Vector2.left, 10);
         //if (rayoSensorBorde.transform.CompareTag("Player") == true || rayoSensorBorde.transform.CompareTag("Aventurero") == true)
-        //{
-            InvokeRepeating(nameof(Disparo), 0, frecuenciaDisparo);
-        //}
+        //GameObject jugador = GameObject.FindGameObjectWithTag("Player");
+        InvokeRepeating(nameof(Disparo), 0, frecuenciaDisparo);
+        
     }
 
     private void OnDrawGizmos()

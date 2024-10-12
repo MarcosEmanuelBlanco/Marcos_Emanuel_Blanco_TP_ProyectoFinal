@@ -281,18 +281,19 @@ public class ComportamientoGulgo : MonoBehaviour
     private void GolpeRaices()
     {
         Collider2D[] areaRaices = Physics2D.OverlapBoxAll(puntoRaices.position, alcanceRaices, 0);
+        StartCoroutine(nameof(RepresentarRaices));
         foreach (Collider2D col in areaRaices)
         {
             if (col.CompareTag("Player"))
             {
-                StartCoroutine(nameof(RepresentarRaices));
+                
                 col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoRaices);
                 gameObject.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(dagnoRaices * 0.5f);
             }
 
             if (col.CompareTag("Invocacion"))
             {
-                StartCoroutine(nameof(RepresentarRaices));
+                //StartCoroutine(nameof(RepresentarRaices));
                 col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoRaices);
                 gameObject.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(dagnoRaices * 0.5f);
                 Debug.Log("Enemigo Herido");
@@ -337,17 +338,18 @@ public class ComportamientoGulgo : MonoBehaviour
         {
             yield return new WaitForSeconds(intervaloEntreGolpes);
             Collider2D[] areaRaices = Physics2D.OverlapBoxAll(puntoCuerpoACuerpo.position, alcanceCuerpoACuerpo, 0);
+            StartCoroutine(nameof(RepresentarGolpiza));
             foreach (Collider2D col in areaRaices)
             {
                 if (col.CompareTag("Player"))
                 {
-                    StartCoroutine(nameof(RepresentarGolpiza));
+                    
                     col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoCuerpoACuerpo);
                 }
 
                 if (col.CompareTag("Pegote"))
                 {
-                    StartCoroutine(nameof(RepresentarGolpiza));
+                    //StartCoroutine(nameof(RepresentarGolpiza));
                     col.transform.GetComponent<FuncionamientoPegote>().ModificarVidaPegote(-dagnoCuerpoACuerpo);
                 }
             }
@@ -383,17 +385,18 @@ public class ComportamientoGulgo : MonoBehaviour
     private void GolpeEsporas()
     {
         Collider2D[] areaEsporas = Physics2D.OverlapBoxAll(puntoEsporas.position, alcanceEsporas, 0);
+        StartCoroutine(nameof(RepresentarEsporas));
         foreach (Collider2D col in areaEsporas)
         {
             if (col.CompareTag("Player"))
             {
-                StartCoroutine(nameof(RepresentarEsporas));
+                
                 col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoEsporas);
             }
 
             if (col.CompareTag("Invocacion"))
             {
-                StartCoroutine(nameof(RepresentarEsporas));
+                //StartCoroutine(nameof(RepresentarEsporas));
                 col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoEsporas);
                 Debug.Log("Enemigo Herido");
             }

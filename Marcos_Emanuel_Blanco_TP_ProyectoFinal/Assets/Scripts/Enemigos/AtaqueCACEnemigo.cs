@@ -18,10 +18,22 @@ public class AtaqueCACEnemigo : MonoBehaviour
     {
         /*Deteccion*/Ataque();
     }
+
+    private bool DetectarAtacando()
+    {
+        return gameObject.GetComponent<MovimientoEnemigo>().GetAtacando();
+    }
+
+    private bool DetectarAturdido()
+    {
+        return gameObject.GetComponent<MovimientoEnemigo>().GetAturdido();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        DetectarAtacando();
+        DetectarAturdido();
     }
 
     void Ataque()
@@ -32,6 +44,7 @@ public class AtaqueCACEnemigo : MonoBehaviour
 
     void DeteccionAtaque()
     {
+        gameObject.GetComponent<MovimientoEnemigo>().CambiarAtacando(false);
         Collider2D[] areaGolpe = Physics2D.OverlapCircleAll(posicionAtaque.position, radioGolpe);
         foreach (Collider2D col in areaGolpe)
         {
@@ -44,8 +57,8 @@ public class AtaqueCACEnemigo : MonoBehaviour
 
     void Golpear()
     {
-        //if (gameObject.GetComponent<MovimientoEnemigo>().GetMoviendose() == true && gameObject.GetComponent<MovimientoEnemigo>().GetAturdido() == false)
-        //{
+        if (DetectarAtacando() == true && DetectarAturdido() == false)
+        {
             Collider2D[] areaGolpe = Physics2D.OverlapCircleAll(posicionAtaque.position, radioGolpe);
             foreach (Collider2D col in areaGolpe)
             {
@@ -64,14 +77,12 @@ public class AtaqueCACEnemigo : MonoBehaviour
                     StartCoroutine(nameof(ActivarAtaque));
                     col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoGolpe);
                 }
-
-
+                //else
+                //{
+                //    gameObject.GetComponent<MovimientoEnemigo>().CambiarAtacando(true);
+                //}
             }
-        //}
-        //else
-        //{
-        //    
-        //}
+        }
     }
     private IEnumerator ActivarAtaque()
     {

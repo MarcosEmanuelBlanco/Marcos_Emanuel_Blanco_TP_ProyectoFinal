@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MovimientoEnemigo : MonoBehaviour
@@ -13,6 +14,7 @@ public class MovimientoEnemigo : MonoBehaviour
     [SerializeField] private bool atacadoPorAventurero;
     public int rotacion;
     [SerializeField] private Vector2 alcanceVision;
+    [SerializeField] private TextMeshProUGUI textoVida;
     void Start()
     {
         atacando = false;
@@ -80,11 +82,12 @@ public class MovimientoEnemigo : MonoBehaviour
             {
                 if (Mathf.Abs(transform.position.x - aventurero.transform.position.x) > distanciaAlAventurero && transform.position.x < aventurero.transform.position.x && !aturdido)
                 {
+                    textoVida.gameObject.transform.localScale = new(1.0f, 1.0f, 1.0f);
                     transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.left);
                 }
                 else if (Mathf.Abs(transform.position.x - aventurero.transform.position.x) < distanciaAlAventurero && transform.position.x > aventurero.transform.position.x && !aturdido)
                 {
-                    //Rotar();
+                    textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
                     transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
                 }
                 else
@@ -112,23 +115,29 @@ public class MovimientoEnemigo : MonoBehaviour
     //}
     void MovimientoHaciaJugador()
     {
-        
-        if (!aturdido)
+        GameObject jugador = GameObject.FindGameObjectWithTag("Player");        
+        if (!aturdido && !atacando)
         {
-            GameObject jugador = GameObject.FindGameObjectWithTag("Player");
+
             if (Mathf.Abs(transform.position.x - jugador.transform.position.x) > distanciaAlJugador && !aturdido)
             {
-                transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.left);
                 
-                CambiarAtqAventurero(false);
+                transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.left);
+                textoVida.gameObject.transform.localScale = new(1.0f, 1.0f, 1.0f);
+                //CambiarAtacando(false);
+
             }
-            else if (Mathf.Abs(transform.position.x - jugador.transform.position.x) < distanciaAlJugador && !aturdido)
+            else if (Mathf.Abs(transform.position.x - jugador.transform.position.x) <= distanciaAlJugador && !aturdido)
             {
                 atacando = true;
             }
         }
+        if (Mathf.Abs(transform.position.x - jugador.transform.position.x) > distanciaAlJugador && !aturdido && atacando)
+        {
+            atacando = false;
+        }
     }
-    public bool GetMoviendose()
+    public bool GetAtacando()
     {
         return atacando;
     }
@@ -147,7 +156,10 @@ public class MovimientoEnemigo : MonoBehaviour
     {
         atacando = atacandox;
     }
-
+    public float GetDistancia()
+    {
+        return distanciaAlJugador;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

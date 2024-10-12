@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Aventurero : MonoBehaviour
 {
@@ -10,18 +12,22 @@ public class Aventurero : MonoBehaviour
     [SerializeField] private Vector2 alcanceVision;
     [SerializeField] private float velocidadEnemigo;
     [SerializeField] private float distanciaAlJugador;
+    [SerializeField] private UnityEvent<string> OnHealthChange;
+    [SerializeField] private TextMeshProUGUI textoVida;
     //[SerializeField] private Transform jugador;
-    private bool moviendose;
-    public bool aturdido;
+    [SerializeField] private bool moviendose;
+    [SerializeField] private bool aturdido;
     // Start is called before the first frame update
     private void Start()
     {
         bonusHabilidad = Random.Range(1, 5);
+        OnHealthChange.Invoke(vidaEnemigo.ToString());
         aturdido = false;
     }
     public void ModificarVidaEnemigo(float puntos)
     {
         vidaEnemigo += puntos;
+        OnHealthChange.Invoke(vidaEnemigo.ToString());
         Debug.Log("Enemigo herido");
         Muerte();
     }
@@ -57,6 +63,7 @@ public class Aventurero : MonoBehaviour
     public void ModificarVidaEnemigoNoJugador(float puntos)
     {
         vidaEnemigo += puntos;
+        OnHealthChange.Invoke(vidaEnemigo.ToString());
         Debug.Log("Enemigo herido");
         MuerteNoJugador();
     }
@@ -96,22 +103,24 @@ public class Aventurero : MonoBehaviour
                 if (!aturdido)
                 {
                     transform.rotation = Quaternion.Euler(0, 180, 0);
+                    textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
                     if (Mathf.Abs(transform.position.x - jugador.transform.position.x) > distanciaAlJugador)
                     {
                         moviendose = true;
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
-                    
+
                     }
                     else
                     {
                         moviendose = false;
                     }
-                //col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
-                    Debug.Log("Jugador Herido");
+
+                    ////col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
+                    //Debug.Log("Jugador Herido");
                 } 
             }
 
-            if (col.CompareTag("EnemigoBasico"))
+            else if (col.CompareTag("EnemigoBasico"))
             {
                 if (!aturdido)
                 {
@@ -121,23 +130,25 @@ public class Aventurero : MonoBehaviour
                         moviendose = true;
                         transform.rotation = Quaternion.Euler(0, 0, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
+                        textoVida.gameObject.transform.localScale = new(1.0f,1.0f,1.0f);
                     }
                     else if (enemigo != null && Mathf.Abs(transform.position.x - enemigo.transform.position.x) > distanciaAlJugador && transform.position.x > enemigo.transform.position.x && !aturdido)
                     {
                         moviendose = true;
                         transform.rotation = Quaternion.Euler(0, 180, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
+                        textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
                     }
                     else
                     {
                         moviendose = false;
                     }
-                //col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpe);
-                    Debug.Log("Enemigo Herido");
+                    ////col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpe);
+                    //Debug.Log("Enemigo Herido");
                 } 
             }
 
-            if (col.CompareTag("EnemigoMina"))
+            else if (col.CompareTag("EnemigoMina"))
             {
                 if (!aturdido)
                 {
@@ -158,10 +169,11 @@ public class Aventurero : MonoBehaviour
                     {
                         moviendose = false;
                     }
-                //col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpe);
-                    Debug.Log("Enemigo Herido");
-                }   
+                    ////col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpe);
+                    //Debug.Log("Enemigo Herido");
+                }
             }
+
         }
     }
 
