@@ -10,6 +10,7 @@ public class AtaqueCAventurero : MonoBehaviour
     [SerializeField] private float radioGolpe;
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float tiempoEntreGolpes;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +54,7 @@ public class AtaqueCAventurero : MonoBehaviour
             {
                 if (col.CompareTag("Player"))
                 {
+
                     StartCoroutine(nameof(ActivarAtaque));
                     col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
                     Debug.Log("Jugador Herido");
@@ -67,6 +69,7 @@ public class AtaqueCAventurero : MonoBehaviour
 
                 if (col.CompareTag("EnemigoBasico"))
                 {
+
                     StartCoroutine(nameof(ActivarAtaque));
                     col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
                     if(col.transform.position.x < transform.position.x)
