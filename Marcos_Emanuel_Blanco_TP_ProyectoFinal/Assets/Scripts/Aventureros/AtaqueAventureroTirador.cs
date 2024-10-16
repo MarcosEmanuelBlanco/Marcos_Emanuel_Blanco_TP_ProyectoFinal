@@ -10,36 +10,30 @@ public class AtaqueAventureroTirador : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //arma.SetActive(false);
+        arma.SetActive(false);
     }
 
     private void OnBecameVisible()
     {
-        Disparar();
+        //Disparar();
     }
 
     private void Disparar()
     {
-        if (gameObject.GetComponent<Aventurero>().GetMoviendose() == false && gameObject.GetComponent<Aventurero>().GetAturdido() == false)
+        if (DetectarMoviendose() == true && DetectarAturdido() == false)
         {
             Collider2D[] areaAlcanceArma = Physics2D.OverlapBoxAll(posicionAtaque.position, areaAtaque, 0);
             foreach (Collider2D col in areaAlcanceArma)
             {
-                if (col.CompareTag("Player"))
-                {
-                    arma.SetActive(true);
-                }
-
-                if (col.CompareTag("EnemigoMina"))
-                {
-                    arma.SetActive(true);
-                }
-
-                if (col.CompareTag("EnemigoBasico"))
+                if (col.CompareTag("Player") || col.CompareTag("EnemigoMina") || col.CompareTag("EnemigoBasico"))
                 {
                     arma.SetActive(true);
                 }
             }
+        }
+        else if (DetectarMoviendose() == false && DetectarAturdido() == false)
+        {
+            arma.SetActive(false);
         }
     }
 
@@ -49,9 +43,21 @@ public class AtaqueAventureroTirador : MonoBehaviour
         Gizmos.DrawWireCube(posicionAtaque.position, areaAtaque);
     }
 
+    private bool DetectarMoviendose()
+    {
+        return gameObject.GetComponent<Aventurero>().GetMoviendose();
+    }
+
+    private bool DetectarAturdido()
+    {
+        return gameObject.GetComponent<Aventurero>().GetAturdido();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        DetectarMoviendose();
+        DetectarAturdido();
+        Disparar();
     }
 }

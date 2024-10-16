@@ -128,7 +128,7 @@ public class MovimientoEnemigo : MonoBehaviour
             }
         }
     }
-    public bool GetMoviendose()
+    public bool GetAtacando()
     {
         return atacando;
     }
@@ -136,6 +136,11 @@ public class MovimientoEnemigo : MonoBehaviour
     public bool GetAturdido()
     {
         return aturdido;
+    }
+
+    public float GetDistancia()
+    {
+        return distanciaAlJugador;
     }
 
     public void CambiarAturdido(bool atu)

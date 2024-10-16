@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemigoPrevisional : MonoBehaviour
 {
     [SerializeField] private float vidaMaxima;
     [SerializeField] private int valorEnemigo;
+    [SerializeField] private UnityEvent<string> OnHealthChange;
     private float vidaActual;
 
     private void Start()
     {
         vidaActual = vidaMaxima;
+        OnHealthChange.Invoke(vidaActual.ToString());
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemigo"), LayerMask.NameToLayer("Enemigo"), true);
     }
     public void ModificarVidaEnemigo(float puntos)
     {
         vidaActual += puntos;
+        OnHealthChange.Invoke(vidaActual.ToString());
         Debug.Log("Enemigo herido");
         Muerte();
     }
@@ -40,6 +44,7 @@ public class EnemigoPrevisional : MonoBehaviour
     public void ModificarVidaEnemigoNoJugador(float puntos)
     {
         vidaActual += puntos;
+        OnHealthChange.Invoke(vidaActual.ToString());
         Debug.Log("Enemigo herido");
         MuerteNoJugador();
     }

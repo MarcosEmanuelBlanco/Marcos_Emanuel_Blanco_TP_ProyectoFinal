@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Aventurero : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class Aventurero : MonoBehaviour
     [SerializeField] private Vector2 alcanceVision;
     [SerializeField] private float velocidadEnemigo;
     [SerializeField] private float distanciaAlJugador;
+    [SerializeField] private UnityEvent<string> OnHealthChange;
+    [SerializeField] private TextMeshProUGUI textoVida;
     //[SerializeField] private Transform jugador;
     private bool moviendose;
     public bool aturdido;
@@ -17,11 +21,13 @@ public class Aventurero : MonoBehaviour
     private void Start()
     {
         bonusHabilidad = Random.Range(1, 5);
+        OnHealthChange.Invoke(vidaEnemigo.ToString());
         aturdido = false;
     }
     public void ModificarVidaEnemigo(float puntos)
     {
         vidaEnemigo += puntos;
+        OnHealthChange.Invoke(vidaEnemigo.ToString());
         Debug.Log("Enemigo herido");
         Muerte();
     }
@@ -57,6 +63,7 @@ public class Aventurero : MonoBehaviour
     public void ModificarVidaEnemigoNoJugador(float puntos)
     {
         vidaEnemigo += puntos;
+        OnHealthChange.Invoke(vidaEnemigo.ToString());
         Debug.Log("Enemigo herido");
         MuerteNoJugador();
     }
@@ -96,6 +103,7 @@ public class Aventurero : MonoBehaviour
                 if (!aturdido)
                 {
                     transform.rotation = Quaternion.Euler(0, 180, 0);
+                    textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
                     if (Mathf.Abs(transform.position.x - jugador.transform.position.x) > distanciaAlJugador)
                     {
                         moviendose = true;
@@ -121,12 +129,14 @@ public class Aventurero : MonoBehaviour
                         moviendose = true;
                         transform.rotation = Quaternion.Euler(0, 0, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
+                        textoVida.gameObject.transform.localScale = new(1.0f, 1.0f, 1.0f);
                     }
                     else if (enemigo != null && Mathf.Abs(transform.position.x - enemigo.transform.position.x) > distanciaAlJugador && transform.position.x > enemigo.transform.position.x && !aturdido)
                     {
                         moviendose = true;
                         transform.rotation = Quaternion.Euler(0, 180, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
+                        textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
                     }
                     else
                     {
@@ -147,12 +157,14 @@ public class Aventurero : MonoBehaviour
                         moviendose = true;
                         transform.rotation = Quaternion.Euler(0, 0, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
+                        textoVida.gameObject.transform.localScale = new(1.0f, 1.0f, 1.0f);
                     }
                     else if (enemigoMina != null && Mathf.Abs(transform.position.x - enemigoMina.transform.position.x) > distanciaAlJugador && transform.position.x > enemigoMina.transform.position.x && !aturdido)
                     {
                         moviendose = true;
                         transform.rotation = Quaternion.Euler(0, 180, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
+                        textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
                     }
                     else
                     {

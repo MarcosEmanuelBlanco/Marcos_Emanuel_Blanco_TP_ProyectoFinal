@@ -19,10 +19,22 @@ public class AtaqueMagoAventurero : MonoBehaviour
     {
         Ataque();
     }
+
+    private bool DetectarMoviendose()
+    {
+        return gameObject.GetComponent<Aventurero>().GetMoviendose();
+    }
+
+    private bool DetectarAturdido()
+    {
+        return gameObject.GetComponent<Aventurero>().GetAturdido();
+    }
+
     // Update is called once per frame
     void Update()
     {
-
+        DetectarMoviendose();
+        DetectarAturdido();
     }
 
     void Ataque()
@@ -33,7 +45,7 @@ public class AtaqueMagoAventurero : MonoBehaviour
 
     void Golpear()
     {
-        if (gameObject.GetComponent<Aventurero>().GetMoviendose() == false && gameObject.GetComponent<Aventurero>().GetAturdido() == false)
+        if (DetectarMoviendose() == false && DetectarAturdido() == false)
         {
             Collider2D[] areaGolpe = Physics2D.OverlapBoxAll(posicionAtaque.position, areaAtaque, 0);
             foreach (Collider2D col in areaGolpe)
