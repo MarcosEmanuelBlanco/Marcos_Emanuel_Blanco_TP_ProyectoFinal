@@ -459,7 +459,7 @@ MonoBehaviour:
   atacadoPorAventurero: 0
   rotacion: 180
   alcanceVision: {x: 25, y: 1}
-  textoVida: {fileID: 0}
+  textoVida: {fileID: 4473388069678867019}
 --- !u!1 &4462331002051434722
 GameObject:
   m_ObjectHideFlags: 0

@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67bc80e2e65f75469cf801c2b6680c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  proyectil: {fileID: 6107167513743186964, guid: 6d26709785d0d6e439669d54a1a5f620, type: 3}
+  proyectil: {fileID: 8667484381745091493, guid: 6d26709785d0d6e439669d54a1a5f620, type: 3}
   puntoDisparo: {fileID: 7036952986133965209}
   frecuenciaDisparo: 2
 --- !u!114 &-6253099453617466463
@@ -573,4 +573,4 @@ MonoBehaviour:
   atacadoPorAventurero: 0
   rotacion: 180
   alcanceVision: {x: 25, y: 1}
-  textoVida: {fileID: 0}
+  textoVida: {fileID: 1185798441439309338}
