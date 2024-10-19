@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9ee612dfc64864d9997aeb65f9836b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  proyectil: {fileID: 408131198898889715, guid: 50dc7eb790882b4429fb3881fea6a90b, type: 3}
+  proyectil: {fileID: 3904442452710247798, guid: d477a40e076bc0047aff69b829b0569c, type: 3}
   puntoDisparo: {fileID: 100485387671052318}
   frecuenciaDisparo: 3
   velocidadInvocacion: 0.1

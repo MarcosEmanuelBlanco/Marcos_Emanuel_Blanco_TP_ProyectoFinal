@@ -865,7 +865,7 @@ Transform:
   m_GameObject: {fileID: 6993374216130999993}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: -2.5, z: 0}
+  m_LocalPosition: {x: 6, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -989,7 +989,7 @@ MonoBehaviour:
   intervaloEntreGolpesQ: 1
   radioGolpeQ: 3
   dagnoGolpeQ: 160
-  proyectilW: {fileID: 4061640550055002892, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
+  proyectilW: {fileID: 3904442452710247798, guid: 2afd84d6768a43643a3072b8eb1f4c4d, type: 3}
   puntoDisparoW: {fileID: 8260259103823881352}
   esperaSiguienteAtaqueW: 0
   intervaloEntreGolpesW: 5
@@ -1455,7 +1455,7 @@ Transform:
   m_GameObject: {fileID: 8595861902017477895}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: -2.5, z: 0}
+  m_LocalPosition: {x: 9, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -49,23 +49,10 @@ public class ProyectilEnemigo : MonoBehaviour
         }
     }
 
-    //void GolpeProyectil()
-    //{
-    //    Collider2D[] objetos = Physics2D.OverlapCircleAll(posicionControladorExplosion.position, radioExplosion);
-    //    foreach (Collider2D col in objetos)
-    //    {
-    //        if (col.CompareTag("Jugador"))
-    //        {
-    //            col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoExplosion);
-    //        }
-
-    //        if (col.CompareTag("Aventurero"))
-    //        {
-    //            col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoExplosion);
-    //            Debug.Log("Enemigo Herido");
-    //        }
-    //    }
-    //}
+    private void Update()
+    {
+        rb.rotation += 0.15f;
+    }
 
     private void OnDrawGizmos()
     {
