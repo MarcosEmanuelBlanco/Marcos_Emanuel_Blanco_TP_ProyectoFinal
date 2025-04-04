@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 650964111867235701}
   - component: {fileID: 717869939360539508}
   - component: {fileID: 5099009041231779965}
+  - component: {fileID: 4449842679743671056}
   m_Layer: 0
   m_Name: ProyectilEnemigo
   m_TagString: Untagged
@@ -60,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 5648191912545587621}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.84303, y: -0.9850271, z: -0.13869485}
+  m_LocalPosition: {x: 35.76963, y: -0.9850271, z: -0.42548466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -197,3 +198,24 @@ MonoBehaviour:
   radioExplosion: 1
   dagnoExplosion: 50
   fuerzaLanzamiento: {x: -5, y: 10}
+--- !u!95 &4449842679743671056
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5648191912545587621}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc51a51a12038214db3690b7ef68ae09, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

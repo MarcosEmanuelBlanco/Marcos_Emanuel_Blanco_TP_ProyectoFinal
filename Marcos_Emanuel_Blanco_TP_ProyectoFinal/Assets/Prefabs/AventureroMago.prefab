@@ -144,6 +144,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6055919173887148847}
   - component: {fileID: 7654510466682509924}
+  - component: {fileID: 3204881710118858728}
+  - component: {fileID: 247353798316183108}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -160,8 +162,8 @@ Transform:
   m_GameObject: {fileID: 6215538605550641556}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.5, y: 1, z: 0}
-  m_LocalScale: {x: 7, y: 4, z: 1}
+  m_LocalPosition: {x: 4.4988, y: 1.0028, z: 0}
+  m_LocalScale: {x: 5.8619266, y: 5.8165174, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4188522568835621342}
@@ -207,7 +209,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 781090f1704bc40488a0d284aa838385, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -218,6 +220,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &3204881710118858728
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215538605550641556}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 681b2bbaa8c33a84897c28883050effb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &247353798316183108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215538605550641556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb134e452c676f4abc91d13c1916038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6438633220661445920
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,6 +457,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: barraVida
+      value: 
+      objectReference: {fileID: 6857536537106907506}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: textoVida
       value: 
       objectReference: {fileID: 8451122208068314478}
@@ -474,9 +513,29 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8144431737517271331, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_Size.x
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144431737517271331, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_Size.y
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144431737517271331, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
+      objectReference: {fileID: 21300000, guid: 6662ae7909e5e1c4ea6fcdd0ff0b6f2d, type: 3}
+    - target: {fileID: 8144431737517271331, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144431737517271331, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144431737517271331, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_Size.x
       value: 2
@@ -490,8 +549,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.0078433
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292743880688440006, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.8828125
+      value: 2.0078433
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -509,6 +580,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2650642941041396563, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5292816414433117712}
+    - targetCorrespondingSourceObject: {fileID: 2650642941041396563, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6471221073500207151}
   m_SourcePrefab: {fileID: 100100000, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
 --- !u!1 &3050094974871577021 stripped
 GameObject:
@@ -532,6 +606,27 @@ MonoBehaviour:
   areaAtaque: {x: 7, y: 4}
   dagnoGolpe: 350
   tiempoEntreGolpes: 3
+--- !u!95 &6471221073500207151
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3050094974871577021}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f571c8240bacdb488df4881e2994f9d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &4188522568835621342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3800048093699803952, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}

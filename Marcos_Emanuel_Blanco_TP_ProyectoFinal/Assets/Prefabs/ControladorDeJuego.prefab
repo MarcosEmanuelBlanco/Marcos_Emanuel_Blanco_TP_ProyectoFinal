@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 482106310260257595}
   m_Layer: 0
   m_Name: ControladorDeJuego
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,3 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b816fb03f8fa694fab9371285d6caf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalEnemigos: 0
+  textoJuegoDetenido: {fileID: 0}
+  OnRemainingSoulsChange:
+    m_PersistentCalls:
+      m_Calls: []

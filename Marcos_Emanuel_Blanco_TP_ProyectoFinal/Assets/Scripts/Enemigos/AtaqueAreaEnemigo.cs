@@ -8,12 +8,21 @@ public class AtaqueAreaEnemigo : MonoBehaviour
     [SerializeField] private Transform posicionAtaque;
     [SerializeField] private Vector2 rectGolpe;
     [SerializeField] private float dagnoGolpe;
+    [SerializeField] private float frecuenciaAtaque;
+    private Animator animatorMov;
     // Start is called before the first frame update
     void Start()
     {
         representacionAtaque.gameObject.SetActive(false);
-
+        animatorMov = GetComponent<Animator>();
     }
+
+    public void ActivarAnimacionAtaque()
+    {
+        animatorMov.SetTrigger("Atacando");
+        //animatorMov.SetBool("Persiguiendo", false);
+    }
+
     private void OnBecameVisible()
     {
         Ataque();
@@ -39,13 +48,21 @@ public class AtaqueAreaEnemigo : MonoBehaviour
     void Ataque()
     {
 
-        InvokeRepeating(nameof(Golpear), 0, 1.0f);
+        InvokeRepeating(nameof(ActivarAnimacionAtaque), 0, frecuenciaAtaque);
     }
 
-    void DeteccionAtaque()
-    {
-
-    }
+    //void DeteccionAtaque()
+    //{
+    //    gameObject.GetComponent<MovimientoEnemigo>().CambiarAtacando(false);
+    //    Collider2D[] areaGolpe = Physics2D.OverlapBoxAll(posicionAtaque.position, rectGolpe, 0);
+    //    foreach (Collider2D col in areaGolpe)
+    //    {
+    //        if (col.CompareTag("Player") || col.CompareTag("Aventurero") || col.CompareTag("Invocacion"))
+    //        {
+    //            Ataque();
+    //        }
+    //    }
+    //}
 
     void Golpear()
     {
@@ -56,33 +73,25 @@ public class AtaqueAreaEnemigo : MonoBehaviour
             {
                 if (col.CompareTag("Player"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
                     Debug.Log("Jugador Herido");
                 }else if (col.CompareTag("Aventurero"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<Aventurero>().ModificarVidaEnemigoNoJugador(-dagnoGolpe);
                     Debug.Log("Enemigo Herido");
                 }else if (col.CompareTag("Invocacion"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoGolpe);
-                }
-
-                
+                }       
             }
         }
-        //else
-        //{
-        //    transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform.position);
-        //}
     }
-    private IEnumerator ActivarAtaque()
+    private void ActivarAtaque()
     {
         representacionAtaque.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaque.gameObject.SetActive(false);
     }
     private void OnDrawGizmos()
     {

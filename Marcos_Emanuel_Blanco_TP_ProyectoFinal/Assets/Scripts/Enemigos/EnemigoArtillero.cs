@@ -7,20 +7,34 @@ public class EnemigoArtillero : MonoBehaviour
     [SerializeField] private GameObject proyectil;
     [SerializeField] private Transform puntoDisparo;
     [SerializeField] private float frecuenciaDisparo;
+    [SerializeField] private GameObject setParticulas;
+    private Animator animatorMov;
+    private bool activarParticulas;
     void Start()
     {
-        
+        activarParticulas = true;
+        animatorMov = GetComponent<Animator>();
     }
 
-    private void OnBecameInvisible()
+    public void ActivarAnimacionAtaque()
     {
-
+        animatorMov.SetTrigger("Atacando");
+        //animatorMov.SetBool("Persiguiendo", false);
     }
+
     private void OnBecameVisible()
     {
         Ataque();
     }
 
+    void Ataque()
+    {
+        //RaycastHit2D rayoSensorBorde = Physics2D.Raycast(transform.position, Vector2.left, 10);
+        //if (rayoSensorBorde.transform.CompareTag("Player") == true || rayoSensorBorde.transform.CompareTag("Aventurero") == true)
+        //GameObject jugador = GameObject.FindGameObjectWithTag("Player");
+        InvokeRepeating(nameof(ActivarAnimacionAtaque), 0, frecuenciaDisparo);
+        
+    }
     private bool DetectarAtacando()
     {
         return gameObject.GetComponent<MovimientoEnemigo>().GetAtacando();
@@ -34,11 +48,7 @@ public class EnemigoArtillero : MonoBehaviour
     {
         DetectarAtacando();
         DetectarAturdido();
-    }
-
-    private void FixedUpdate()
-    {
-
+        ActivacionParticulas();
     }
 
     void Disparo()
@@ -49,16 +59,26 @@ public class EnemigoArtillero : MonoBehaviour
             GameObject nuevoProyectil = proyectil;
             nuevoProyectil.transform.position = puntoDisparo.transform.position;
             Instantiate(nuevoProyectil);
+            activarParticulas = false;
+        }
+        else
+        {
+            activarParticulas = true;
         }
     }
 
-    void Ataque()
+
+
+    private void ActivacionParticulas()
     {
-        //RaycastHit2D rayoSensorBorde = Physics2D.Raycast(transform.position, Vector2.left, 10);
-        //if (rayoSensorBorde.transform.CompareTag("Player") == true || rayoSensorBorde.transform.CompareTag("Aventurero") == true)
-        //GameObject jugador = GameObject.FindGameObjectWithTag("Player");
-        InvokeRepeating(nameof(Disparo), 0, frecuenciaDisparo);
-        
+        if (!activarParticulas)
+        {
+            setParticulas.SetActive(false);
+        }
+        else
+        {
+            setParticulas.SetActive(true);
+        }
     }
 
     private void OnDrawGizmos()

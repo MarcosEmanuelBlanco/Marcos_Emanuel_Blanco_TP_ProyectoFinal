@@ -4,29 +4,87 @@ using UnityEngine;
 
 public class BalaAventurero : MonoBehaviour
 {
-    [SerializeField] int puntos;
-
-    private void OnParticleCollision(GameObject other)
+    [SerializeField] private Transform posicionControladorDagno;
+    [SerializeField] private float areaBala;
+    [SerializeField] private float dagnoBala;
+    private Rigidbody2D rb;
+    //private Animator miAnimator;
+    [SerializeField] private Vector2 fuerzaLanzamiento;
+    // Start is called before the first frame update
+    void Start()
     {
-        if (other.CompareTag("Player"))
-        {
-            EstadoJugador jugador = other.GetComponent<EstadoJugador>();
-            jugador.ModificarVidaJugador(-puntos);
-            Debug.Log(" PUNTOS DE DAÑO REALIZADOS AL JUGADOR " + puntos);
-        }
+        rb = GetComponent<Rigidbody2D>();
+        CambiarDireccionBala();
+        //miAnimator = GetComponent<Animator>();
+        rb.AddForce(fuerzaLanzamiento, ForceMode2D.Impulse);
+    }
 
-        if (other.CompareTag("EnemigoBasico"))
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EnemigoBasico") || collision.CompareTag("Player") || collision.CompareTag("Invocacion"))
         {
-            EnemigoPrevisional enemigo = other.GetComponent<EnemigoPrevisional>();
-            enemigo.ModificarVidaEnemigoNoJugador(-puntos);
-            Debug.Log(" PUNTOS DE DAÑO REALIZADOS AL JUGADOR " + puntos);
+            GolpeProyectil();
+            //Explotar();
         }
+    }
 
-        if (other.CompareTag("Invocacion"))
+    //void Explotar()
+    //{
+    //    StartCoroutine(nameof(ActivarExplosion));
+    //}
+
+    //private IEnumerator ActivarExplosion()
+    //{
+    //    miAnimator.Play("BolaFuegoExplosion");
+    //    //rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    //    yield return new WaitForSeconds(0.25f);
+    //    Destroy(gameObject);
+    //}
+
+    void GolpeProyectil()
+    {
+        Collider2D[] objetos = Physics2D.OverlapCircleAll(posicionControladorDagno.position, areaBala);
+        foreach (Collider2D col in objetos)
         {
-            Invocacion invocacion = other.GetComponent<Invocacion>();
-            invocacion.ModificarVidaEnemigo(-puntos);
-            Debug.Log(" PUNTOS DE DAÑO REALIZADOS AL JUGADOR " + puntos);
+            if (col.CompareTag("EnemigoBasico"))
+            {
+                col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoBala);
+                Destroy(gameObject);
+            }
+
+            if (col.CompareTag("Player"))
+            {
+                col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoBala);
+                Destroy(gameObject);
+            }
+
+            //if (col.CompareTag("Invocacion"))
+            //{
+            //    col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoBala);
+            //    Destroy(gameObject);
+            //}
         }
+    }
+
+    public void CambiarDireccionBala()
+    {
+        GameObject aventurero = GameObject.FindGameObjectWithTag("Aventurero");
+        
+        if (aventurero.GetComponent<Aventurero>().HaciaDonde())
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+            fuerzaLanzamiento = -fuerzaLanzamiento;
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            fuerzaLanzamiento = fuerzaLanzamiento;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(posicionControladorDagno.position, areaBala);
     }
 }

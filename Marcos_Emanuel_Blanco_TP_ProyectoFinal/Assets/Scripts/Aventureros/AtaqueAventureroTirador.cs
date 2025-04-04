@@ -1,54 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AtaqueAventureroTirador : MonoBehaviour
 {
-    [SerializeField] private GameObject arma;
+    [SerializeField] private GameObject bala;
+    [SerializeField] private Transform puntoDisparo;
+    [SerializeField] private float tiempoEntreDisparos;
     [SerializeField] private Transform posicionAtaque;
     [SerializeField] private Vector2 areaAtaque;
-    //[SerializeField] private bool armaActiva;
-    // Start is called before the first frame update
+    private Animator animatorMov;
     void Start()
     {
-        //armaActiva = false;
-        arma.SetActive(true);
+        animatorMov = GetComponent<Animator>();
     }
 
     private void OnBecameVisible()
     {
-        //Disparar();
+        Ataque();
     }
 
-    private void Disparar()
-    {
-        if (DetectarMoviendose() == true && DetectarAturdido() == false)
-        {
-            Collider2D[] areaAlcanceArma = Physics2D.OverlapBoxAll(posicionAtaque.position, areaAtaque, 0);
-            foreach (Collider2D col in areaAlcanceArma)
-            {
-                if (col.CompareTag("Player") || col.CompareTag("EnemigoMina") || col.CompareTag("EnemigoBasico"))
-                {
-                    arma.SetActive(true);
-                }
-            }
-        }else if (gameObject.GetComponent<Aventurero>().GetMoviendose() == false && gameObject.GetComponent<Aventurero>().GetAturdido() == false)
-        {
-            arma.SetActive(false);
-        }
-    }
-
-    //private void AlternarArma()
-    //{
-    //    if (armaActiva)
-    //    {
-    //        arma.SetActive(true);
-    //    }
-    //    else
-    //    {
-    //        arma.SetActive(false);
-    //    }
-    //}
     private bool DetectarMoviendose()
     {
         return gameObject.GetComponent<Aventurero>().GetMoviendose();
@@ -58,18 +30,61 @@ public class AtaqueAventureroTirador : MonoBehaviour
     {
         return gameObject.GetComponent<Aventurero>().GetAturdido();
     }
-    private void OnDrawGizmos()
+
+    private bool DetectarALaDerecha()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(posicionAtaque.position, areaAtaque);
+        return gameObject.GetComponent<Aventurero>().HaciaDonde();
     }
 
-    // Update is called once per frame
+    //private void ActivarCambioDirección()
+    //{
+    //    if (DetectarALaDerecha())
+    //    {
+    //        bala.CambiarDireccionBala();
+    //    }
+    //}
     void Update()
     {
         DetectarMoviendose();
         DetectarAturdido();
-        Disparar();
-        //AlternarArma();
+        DetectarALaDerecha();
+    }
+
+    void Ataque()
+    {
+        InvokeRepeating(nameof(ActivarAnimacionAtaque), 0, tiempoEntreDisparos);
+    }
+
+    private void ActivarAnimacionAtaque()
+    {
+        animatorMov.SetTrigger("Atacando");
+    }
+
+    private void Disparar()
+    {
+        if (DetectarMoviendose() == true && DetectarAturdido() == false)
+        {
+            Collider2D[] areaAlcanceArma = Physics2D.OverlapBoxAll(posicionAtaque.position, areaAtaque, 0);
+            foreach (Collider2D col in areaAlcanceArma)
+            {
+                if (col.CompareTag("Player") || col.CompareTag("Invocacion") || col.CompareTag("EnemigoBasico"))
+                {
+                    GenerarBala();
+                }
+            }
+        }
+    }
+
+    private void GenerarBala()
+    {
+        GameObject nuevoProyectil = bala;
+        nuevoProyectil.transform.position = puntoDisparo.transform.position;
+        Instantiate(nuevoProyectil);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(posicionAtaque.position, areaAtaque);
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8292743880688440006}
   - component: {fileID: 2510749366613702455}
   - component: {fileID: 6681549750798760056}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Aventurero
   m_TagString: Aventurero
   m_Icon: {fileID: 0}
@@ -171,10 +171,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4f91279f17b3c438f64138e5b259fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barraVida: {fileID: 0}
   vidaEnemigo: 30
   valorEnemigo: 0
   bonusHabilidad: 0
   alcanceVision: {x: 5, y: 1}
   velocidadEnemigo: 1
   distanciaAlJugador: 3
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  textoVida: {fileID: 0}
+  moviendose: 0
   aturdido: 0

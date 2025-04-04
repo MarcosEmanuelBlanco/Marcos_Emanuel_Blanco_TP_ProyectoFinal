@@ -5,20 +5,21 @@ using UnityEngine;
 public class AtaqueMina : MonoBehaviour
 {
     [SerializeField] private float vidaMina;
-    [SerializeField] private Transform representacionAtaque;
     [SerializeField] private Transform posicionAtaque;
     [SerializeField] private Vector2 rectGolpe;
     [SerializeField] private float dagnoGolpe;
+    [SerializeField] private bool contacto;
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        representacionAtaque.gameObject.SetActive(false);
-
+        contacto = false;
+        animator = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
     {
-
+        Muerte();
     }
     public void ModificarVidaEnemigo(float puntos)
     {
@@ -31,18 +32,38 @@ public class AtaqueMina : MonoBehaviour
     {
         if (vidaMina <= 0)
         {
-            Invoke(nameof(Golpear), 0);
-            Destroy(gameObject);
+            Invoke(nameof(AnimacionExplosion), 0);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") || collision.CompareTag("Aventurero") || collision.CompareTag("Invocacion"))
+        if (collision.CompareTag("Player"))/*Al parecer a ninguno*/
         {
-            Invoke(nameof(Golpear), 0);
-            Destroy(gameObject);
+            vidaMina = 0;
+            contacto = true;
+            //Muerte();
         }
+        else if (collision.CompareTag("Aventurero"))
+        {
+            vidaMina = 0;
+            //Muerte();
+        }
+        else if (collision.CompareTag("Invocacion"))
+        {
+            vidaMina = 0;
+            //Muerte();
+        }
+    }
+
+    private void AnimacionExplosion()
+    {
+        animator.SetTrigger("Explosion");
+    }
+
+    private void Destruir()
+    {
+        Destroy(gameObject);
     }
 
     void Golpear()
@@ -52,25 +73,17 @@ public class AtaqueMina : MonoBehaviour
             {
                 if (col.CompareTag("Player"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
                     col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
                     Debug.Log("Jugador Herido");
                 }
 
                 if (col.CompareTag("Aventurero"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
                     col.transform.GetComponent<Aventurero>().ModificarVidaEnemigoNoJugador(-dagnoGolpe);
                     Debug.Log("Enemigo Herido");
                 }
             }
         
-    }
-    private IEnumerator ActivarAtaque()
-    {
-        representacionAtaque.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaque.gameObject.SetActive(false);
     }
     private void OnDrawGizmos()
     {

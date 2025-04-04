@@ -15,13 +15,32 @@ public class MovimientoEnemigo : MonoBehaviour
     public int rotacion;
     [SerializeField] private Vector2 alcanceVision;
     [SerializeField] private TextMeshProUGUI textoVida;
+    private Animator animatorMov;
     void Start()
     {
         atacando = false;
         aturdido = false;
         //representacionAtaque.gameObject.SetActive(false);
         atacadoPorAventurero = false;
+        animatorMov = GetComponent<Animator>();
 
+    }
+
+
+
+    public void ActivarAnimacionAturdimiento()
+    {
+        animatorMov.SetBool("Aturdimiento", true);
+    }
+
+    public void DesactivarAnimacionAturdimiento()
+    {
+        animatorMov.SetBool("Aturdimiento", false);
+    }
+
+    public void ActivarAnimacionMovimiento()
+    {
+        animatorMov.SetBool("Persiguiendo", true);
     }
 
     private void OnBecameVisible()
@@ -82,11 +101,13 @@ public class MovimientoEnemigo : MonoBehaviour
             {
                 if (Mathf.Abs(transform.position.x - aventurero.transform.position.x) > distanciaAlAventurero && transform.position.x < aventurero.transform.position.x && !aturdido)
                 {
+                    animatorMov.SetBool("Persiguiendo", true);
                     textoVida.gameObject.transform.localScale = new(1.0f, 1.0f, 1.0f);
                     transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.left);
                 }
                 else if (Mathf.Abs(transform.position.x - aventurero.transform.position.x) < distanciaAlAventurero && transform.position.x > aventurero.transform.position.x && !aturdido)
                 {
+                    animatorMov.SetBool("Persiguiendo", true);
                     textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
                     transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
                 }
@@ -121,7 +142,7 @@ public class MovimientoEnemigo : MonoBehaviour
 
             if (Mathf.Abs(transform.position.x - jugador.transform.position.x) > distanciaAlJugador && !aturdido)
             {
-                
+                animatorMov.SetBool("Persiguiendo", true);
                 transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.left);
                 textoVida.gameObject.transform.localScale = new(1.0f, 1.0f, 1.0f);
                 //CambiarAtacando(false);
@@ -130,10 +151,12 @@ public class MovimientoEnemigo : MonoBehaviour
             else if (Mathf.Abs(transform.position.x - jugador.transform.position.x) <= distanciaAlJugador && !aturdido)
             {
                 atacando = true;
+                animatorMov.SetBool("Persiguiendo", false);
             }
         }
         if (Mathf.Abs(transform.position.x - jugador.transform.position.x) > distanciaAlJugador && !aturdido && atacando)
         {
+            animatorMov.SetBool("Persiguiendo", false);
             atacando = false;
         }
     }

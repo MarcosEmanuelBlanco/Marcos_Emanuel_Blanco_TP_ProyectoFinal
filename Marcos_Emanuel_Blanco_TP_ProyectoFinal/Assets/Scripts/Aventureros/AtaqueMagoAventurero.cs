@@ -9,11 +9,17 @@ public class AtaqueMagoAventurero : MonoBehaviour
     [SerializeField] private Vector2 areaAtaque;
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float tiempoEntreGolpes;
-    // Start is called before the first frame update
+    private Animator animatorMov;
     void Start()
     {
         representacionAtaque.gameObject.SetActive(false);
+        animatorMov = GetComponent<Animator>();
+    }
 
+    public void ActivarAnimacionAtaque()
+    {
+        animatorMov.SetTrigger("Atacando");
+        //animatorMov.SetBool("Persiguiendo", false);
     }
     private void OnBecameVisible()
     {
@@ -40,8 +46,7 @@ public class AtaqueMagoAventurero : MonoBehaviour
 
     void Ataque()
     {
-
-        InvokeRepeating(nameof(Golpear), 0, tiempoEntreGolpes);
+        InvokeRepeating(nameof(ActivarAnimacionAtaque), 0.5f, tiempoEntreGolpes);
     }
 
     void Golpear()
@@ -53,30 +58,30 @@ public class AtaqueMagoAventurero : MonoBehaviour
             {
                 if (col.CompareTag("Player"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
                     Debug.Log("Jugador Herido");
                 }
 
                 if (col.CompareTag("EnemigoMina"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<AtaqueMina>().ModificarVidaEnemigo(-dagnoGolpe);
                     Debug.Log("Enemigo Herido");
                 }
 
                 if (col.CompareTag("Invocacion"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoGolpe);
                     Debug.Log("Enemigo Herido");
                 }
 
                 if (col.CompareTag("EnemigoBasico"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     //col.transform.GetComponent<MovimientoEnemigo>().CambiarAturdido(true);
-                    
+
                     col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
                     //col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
                     
@@ -94,15 +99,13 @@ public class AtaqueMagoAventurero : MonoBehaviour
         }
     }
 
-    private IEnumerator Aturdir()
-    {
-        yield return new WaitForSeconds(1);
-    }
-    private IEnumerator ActivarAtaque()
+    //private IEnumerator Aturdir()
+    //{
+    //    yield return new WaitForSeconds(1);
+    //}
+    private void ActivarAtaque()
     {
         representacionAtaque.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaque.gameObject.SetActive(false);
     }
     private void OnDrawGizmos()
     {

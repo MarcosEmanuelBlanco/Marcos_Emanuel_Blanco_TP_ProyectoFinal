@@ -26,7 +26,7 @@ public class FuncionamientoInvocacion : MonoBehaviour
         {
             Debug.Log("saltando");
             SaltoInvocacion();
-        }
+        }//ajustar para evitar errores al usarlos como limpiadores de minas
     }
 
     void MovimientoInvocacion()

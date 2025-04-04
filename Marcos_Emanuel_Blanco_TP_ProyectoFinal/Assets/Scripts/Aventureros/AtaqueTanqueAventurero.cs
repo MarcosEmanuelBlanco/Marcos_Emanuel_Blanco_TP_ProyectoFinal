@@ -10,11 +10,17 @@ public class AtaqueTanqueAventurero : MonoBehaviour
     [SerializeField] private Vector2 fuerzaMazazo;
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float tiempoEntreGolpes;
+    private Animator animatorMov;
     // Start is called before the first frame update
     void Start()
     {
         representacionAtaque.gameObject.SetActive(false);
-
+        animatorMov = GetComponent<Animator>();
+    }
+    public void ActivarAnimacionAtaque()
+    {
+        animatorMov.SetTrigger("Atacando");
+        //animatorMov.SetBool("Persiguiendo", false);
     }
     private void OnBecameVisible()
     {
@@ -40,7 +46,7 @@ public class AtaqueTanqueAventurero : MonoBehaviour
 
     void Ataque()
     {
-        InvokeRepeating(nameof(Golpear), 0, tiempoEntreGolpes);
+        InvokeRepeating(nameof(ActivarAnimacionAtaque), 0.5f, tiempoEntreGolpes);
     }
 
     void Golpear()
@@ -52,22 +58,22 @@ public class AtaqueTanqueAventurero : MonoBehaviour
             {
                 if (col.CompareTag("Player"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
                     Debug.Log("Jugador Herido");
                 }
 
                 if (col.CompareTag("EnemigoMina"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<AtaqueMina>().ModificarVidaEnemigo(-dagnoGolpe);
                     Debug.Log("Enemigo Herido");
                 }
 
                 if (col.CompareTag("EnemigoBasico"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
-                    
+                    ActivarAtaque();
+
                     col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
                     col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
                     col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigoNoJugador(-dagnoGolpe);
@@ -96,11 +102,9 @@ public class AtaqueTanqueAventurero : MonoBehaviour
             
         
     }
-    private IEnumerator ActivarAtaque()
+    private void ActivarAtaque()
     {
         representacionAtaque.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaque.gameObject.SetActive(false);
     }
     private void OnDrawGizmos()
     {

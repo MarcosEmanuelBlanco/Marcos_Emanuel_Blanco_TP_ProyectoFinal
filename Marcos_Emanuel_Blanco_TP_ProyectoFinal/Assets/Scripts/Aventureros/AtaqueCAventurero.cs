@@ -10,13 +10,19 @@ public class AtaqueCAventurero : MonoBehaviour
     [SerializeField] private float radioGolpe;
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float tiempoEntreGolpes;
-
-    // Start is called before the first frame update
+    private Animator animatorMov;
     void Start()
     {
         representacionAtaque.gameObject.SetActive(false);
-
+        animatorMov = GetComponent<Animator>();
     }
+
+    public void ActivarAnimacionAtaque()
+    {
+        animatorMov.SetTrigger("Atacando");
+        //animatorMov.SetBool("Persiguiendo", false);
+    }
+
     private void OnBecameVisible()
     {
         Ataque();
@@ -41,8 +47,7 @@ public class AtaqueCAventurero : MonoBehaviour
 
     void Ataque()
     {
-        
-        InvokeRepeating(nameof(Golpear), 0, tiempoEntreGolpes);
+        InvokeRepeating(nameof(ActivarAnimacionAtaque), 0.5f, tiempoEntreGolpes);
     }
 
     void Golpear()
@@ -55,14 +60,14 @@ public class AtaqueCAventurero : MonoBehaviour
                 if (col.CompareTag("Player"))
                 {
 
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
                     Debug.Log("Jugador Herido");
                 }
 
                 if (col.CompareTag("EnemigoMina"))
                 {
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<AtaqueMina>().ModificarVidaEnemigo(-dagnoGolpe);
                     Debug.Log("Enemigo Herido");
                 }
@@ -70,7 +75,7 @@ public class AtaqueCAventurero : MonoBehaviour
                 if (col.CompareTag("EnemigoBasico"))
                 {
 
-                    StartCoroutine(nameof(ActivarAtaque));
+                    ActivarAtaque();
                     col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
                     if(col.transform.position.x < transform.position.x)
                     {
@@ -83,11 +88,9 @@ public class AtaqueCAventurero : MonoBehaviour
             }
         }
     }
-    private IEnumerator ActivarAtaque()
+    private void ActivarAtaque()
     {
         representacionAtaque.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaque.gameObject.SetActive(false);
     }
     private void OnDrawGizmos()
     {
@@ -95,3 +98,21 @@ public class AtaqueCAventurero : MonoBehaviour
         Gizmos.DrawWireSphere(posicionAtaque.position, radioGolpe);
     }
 }
+    //void DetectarAlcance()
+    //{
+    //    //gameObject.GetComponent<MovimientoEnemigo>().CambiarAtacando(false);
+    //    Collider2D[] areaGolpe = Physics2D.OverlapCircleAll(posicionAtaque.position, radioGolpe);
+    //    foreach (Collider2D col in areaGolpe)
+    //    {
+    //        if (col.CompareTag("Player") || col.CompareTag("EnemigoBasico") || col.CompareTag("Invocacion") /*&& !DetectarMoviendose()*/)
+    //        {
+    //            enAlcance = true;
+    //            //Ataque();
+    //        }
+    //        else
+    //        {
+    //            enAlcance = false;
+    //        }
+    //    }
+    //    //Ataque();
+    //}

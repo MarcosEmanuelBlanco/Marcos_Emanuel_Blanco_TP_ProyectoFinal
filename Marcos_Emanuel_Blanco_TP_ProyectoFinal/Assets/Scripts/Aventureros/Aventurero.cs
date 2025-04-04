@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class Aventurero : MonoBehaviour
 {
+    [SerializeField] private Canvas barraVida;
     [SerializeField] private float vidaEnemigo;
     [SerializeField] private int valorEnemigo;
     [SerializeField] private int bonusHabilidad;
@@ -16,14 +17,27 @@ public class Aventurero : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textoVida;
     //[SerializeField] private Transform jugador;
     [SerializeField] private bool moviendose;
+    private bool aLaDerecha;
     [SerializeField] private bool aturdido;
-    // Start is called before the first frame update
+    private Rigidbody2D rigidbody2;
+    private Collider2D collider2;
+    private Animator animatorMov;
+    // Para hacer la animación de aparición tendría que hacer que la caja de visión valga 0 en ambos ejes al principio. Cuando termine la animación, debería pasar a valer lo que haga falta.
     private void Start()
     {
         bonusHabilidad = Random.Range(1, 5);
         OnHealthChange.Invoke(vidaEnemigo.ToString());
         aturdido = false;
+        rigidbody2 = GetComponent<Rigidbody2D>();
+        collider2 = GetComponent<Collider2D>();
+        animatorMov = GetComponent<Animator>();
     }
+
+    //public void ActivarAnimacionMovimiento()
+    //{
+    //    animatorMov.SetBool("Persiguiendo", true);
+    //}
+
     public void ModificarVidaEnemigo(float puntos)
     {
         vidaEnemigo += puntos;
@@ -36,6 +50,11 @@ public class Aventurero : MonoBehaviour
     {
         if (vidaEnemigo <= 0)
         {
+            barraVida.gameObject.SetActive(false);
+            GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
+            controlador.GetComponent<GameManager>().contarDerribados();
+            collider2.enabled = false;
+            rigidbody2.Sleep();
             if (GameObject.FindGameObjectWithTag("Player") != null)
             {
                 GameObject jugador = GameObject.FindGameObjectWithTag("Player");
@@ -56,8 +75,13 @@ public class Aventurero : MonoBehaviour
             //        enemigos[i].GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
             //    }
             //}
-            Destroy(gameObject);
+            animatorMov.SetBool("Muerto", true);
         }
+    }
+
+    private void DestruirAventurero()
+    {
+        Destroy(gameObject);
     }
 
     public void ModificarVidaEnemigoNoJugador(float puntos)
@@ -72,6 +96,11 @@ public class Aventurero : MonoBehaviour
     {
         if (vidaEnemigo <= 0)
         {
+            barraVida.gameObject.SetActive(false);
+            GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
+            controlador.GetComponent<GameManager>().contarDerribados();
+            collider2.enabled = false;
+            rigidbody2.Sleep();
             Destroy(gameObject);
         }
     }
@@ -106,12 +135,14 @@ public class Aventurero : MonoBehaviour
                     textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
                     if (Mathf.Abs(transform.position.x - jugador.transform.position.x) > distanciaAlJugador)
                     {
+                        animatorMov.SetBool("Persiguiendo", true);
                         moviendose = true;
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
-
+                        aLaDerecha = true;
                     }
                     else
                     {
+                        animatorMov.SetBool("Persiguiendo", false);
                         moviendose = false;
                     }
 
@@ -127,20 +158,25 @@ public class Aventurero : MonoBehaviour
                     enemigo = col.gameObject;
                     if (enemigo != null && Mathf.Abs(transform.position.x - enemigo.transform.position.x) > distanciaAlJugador && transform.position.x < enemigo.transform.position.x && !aturdido)
                     {
+                        animatorMov.SetBool("Persiguiendo", true);
                         moviendose = true;
+                        aLaDerecha = false;
                         transform.rotation = Quaternion.Euler(0, 0, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
                         textoVida.gameObject.transform.localScale = new(1.0f,1.0f,1.0f);
                     }
                     else if (enemigo != null && Mathf.Abs(transform.position.x - enemigo.transform.position.x) > distanciaAlJugador && transform.position.x > enemigo.transform.position.x && !aturdido)
                     {
+                        animatorMov.SetBool("Persiguiendo", true);
                         moviendose = true;
+                        aLaDerecha = true;
                         transform.rotation = Quaternion.Euler(0, 180, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
                         textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
                     }
                     else
                     {
+                        animatorMov.SetBool("Persiguiendo", false);
                         moviendose = false;
                     }
                     ////col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpe);
@@ -155,18 +191,23 @@ public class Aventurero : MonoBehaviour
                     enemigoMina = col.gameObject;
                     if (enemigoMina != null && Mathf.Abs(transform.position.x - enemigoMina.transform.position.x) > distanciaAlJugador && transform.position.x < enemigoMina.transform.position.x && !aturdido)
                     {
+                        animatorMov.SetBool("Persiguiendo", true);
                         moviendose = true;
+                        aLaDerecha = false;
                         transform.rotation = Quaternion.Euler(0, 0, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
                     }
                     else if (enemigoMina != null && Mathf.Abs(transform.position.x - enemigoMina.transform.position.x) > distanciaAlJugador && transform.position.x > enemigoMina.transform.position.x && !aturdido)
                     {
+                        animatorMov.SetBool("Persiguiendo", true);
                         moviendose = true;
+                        aLaDerecha = true;
                         transform.rotation = Quaternion.Euler(0, 180, 0);
                         transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
                     }
                     else
                     {
+                        animatorMov.SetBool("Persiguiendo", false);
                         moviendose = false;
                     }
                     ////col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpe);
@@ -175,6 +216,11 @@ public class Aventurero : MonoBehaviour
             }
 
         }
+    }
+
+    public bool HaciaDonde()
+    {
+        return aLaDerecha;
     }
 
     private void OnDrawGizmos()

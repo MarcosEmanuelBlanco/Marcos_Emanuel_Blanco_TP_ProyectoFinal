@@ -10,15 +10,23 @@ public class GameManager : MonoBehaviour
     private bool puedeVolver;
     private bool juegoDetenido;
     private bool gulgoVivo;
+    [SerializeField] private int enemigosDerribados;
+    [SerializeField] private int totalEnemigos;
     [SerializeField] private TextMeshProUGUI textoJuegoDetenido;
     [SerializeField] private UnityEvent<string> OnRemainingSoulsChange;
     // Start is called before the first frame update
     void Start()
     {
+        enemigosDerribados = 0;
         juegoDetenido = false;
         puedeVolver = true;
         gulgoVivo = true;
         textoJuegoDetenido.gameObject.SetActive(false);
+    }
+
+    public void contarDerribados()
+    {
+        enemigosDerribados++;
     }
 
     // Update is called once per frame
@@ -76,7 +84,7 @@ public class GameManager : MonoBehaviour
     void VolverAlMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene(2);
         juegoDetenido = false;
     }
 
@@ -97,6 +105,13 @@ public class GameManager : MonoBehaviour
 
     void AreaAsegurada()
     {
+        if (enemigosDerribados == totalEnemigos && SceneManager.GetActiveScene().buildIndex != 5)
+        {
+            OnRemainingSoulsChange.Invoke("ÁREA ASEGURADA. Presioná ESPACIO para reiniciar o ESCAPE para volver.");
+            textoJuegoDetenido.gameObject.SetActive(true);
+            Time.timeScale = 0;
+            juegoDetenido = true;
+        }
         GameObject gulgo = GameObject.FindGameObjectWithTag("Jefe");
         if(gulgo != null && gulgo.GetComponent<EnemigoPrevisional>().GetVidaActual() <= 0)
         {

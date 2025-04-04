@@ -9,9 +9,11 @@ public class ProyectilEnemigo : MonoBehaviour
     [SerializeField] private float dagnoExplosion;
     private Rigidbody2D rb;
     [SerializeField] private Vector2 fuerzaLanzamiento;
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(fuerzaLanzamiento, ForceMode2D.Impulse);
     }
@@ -20,33 +22,43 @@ public class ProyectilEnemigo : MonoBehaviour
     {
         if (collision.CompareTag("Suelo"))
         {
-
-            Destroy(gameObject);
+            AnimarYParalizar();
         }
 
         if (collision.CompareTag("Player"))
         {
+            AnimarYParalizar();
             collision.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoExplosion);
-            Destroy(gameObject);
         }
 
         if(collision.CompareTag("Invocacion"))
         {
+            AnimarYParalizar();
             collision.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoExplosion);
-            Destroy(gameObject);
         }
 
         if (collision.CompareTag("Aventurero"))
         {
+            AnimarYParalizar();
             collision.transform.GetComponent<Aventurero>().ModificarVidaEnemigoNoJugador(-dagnoExplosion);
-            Destroy(gameObject);
         }
 
         if (collision.CompareTag("Muro"))
         {
+            AnimarYParalizar();
             collision.transform.GetComponent<FuncionamientoMuro>().DagnarMuro(-dagnoExplosion);
-            Destroy(gameObject);
         }
+    }
+
+    private void AnimarYParalizar()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        animator.SetTrigger("Explosion");
+    }
+
+    private void Destruir()
+    {
+        Destroy(gameObject);
     }
 
     private void Update()
