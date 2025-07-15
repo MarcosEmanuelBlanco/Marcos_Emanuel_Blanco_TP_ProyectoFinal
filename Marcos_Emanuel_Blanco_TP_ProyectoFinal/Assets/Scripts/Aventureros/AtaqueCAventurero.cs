@@ -19,8 +19,13 @@ public class AtaqueCAventurero : MonoBehaviour
 
     public void ActivarAnimacionAtaque()
     {
+        StartCoroutine(nameof(EsperaAtaque));   
+    }
+
+    private IEnumerator EsperaAtaque()
+    {
+        yield return new WaitForSeconds(4);
         animatorMov.SetTrigger("Atacando");
-        //animatorMov.SetBool("Persiguiendo", false);
     }
 
     private void OnBecameVisible()
@@ -38,21 +43,41 @@ public class AtaqueCAventurero : MonoBehaviour
         return gameObject.GetComponent<Aventurero>().GetAturdido();
     }
 
+    private bool DetectarInvulnerable()
+    {
+        return gameObject.GetComponent<Aventurero>().GetInvulnerable();
+    }
+
     // Update is called once per frame
     void Update()
     {
         DetectarMoviendose();
         DetectarAturdido();
+        DetectarInvulnerable();
     }
-
     void Ataque()
     {
+        //Collider2D[] areaGolpe = Physics2D.OverlapCircleAll(posicionAtaque.position, radioGolpe);
+        //foreach (Collider2D col in areaGolpe)
+        //{
+        //    if (col.CompareTag("Player"))
+        //    {
+        //        InvokeRepeating(nameof(ActivarAnimacionAtaque), 0.5f, tiempoEntreGolpes);
+        //    }
+
+        //    if (col.CompareTag("EnemigoBasico"))
+        //    {
+        //        InvokeRepeating(nameof(ActivarAnimacionAtaque), 0.5f, tiempoEntreGolpes);
+        //    }
+        //}
+
         InvokeRepeating(nameof(ActivarAnimacionAtaque), 0.5f, tiempoEntreGolpes);
+        
     }
 
     void Golpear()
     {
-        if (DetectarMoviendose() == false && DetectarAturdido() == false)
+        if (DetectarMoviendose() == false && DetectarAturdido() == false && DetectarInvulnerable() == false)
         {
             Collider2D[] areaGolpe = Physics2D.OverlapCircleAll(posicionAtaque.position, radioGolpe);
             foreach (Collider2D col in areaGolpe)
@@ -74,7 +99,6 @@ public class AtaqueCAventurero : MonoBehaviour
 
                 if (col.CompareTag("EnemigoBasico"))
                 {
-
                     ActivarAtaque();
                     col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
                     if(col.transform.position.x < transform.position.x)

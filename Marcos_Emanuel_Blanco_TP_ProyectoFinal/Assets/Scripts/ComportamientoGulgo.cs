@@ -45,6 +45,7 @@ public class ComportamientoGulgo : MonoBehaviour
     [SerializeField] private Transform puntoDisparoGulgo;
     [SerializeField] private float tiempoCargaDisparo;
     [SerializeField] private float tiempoEntreDisparos;
+    private PoolProyectilGulgo poolProyectilPegote;
 
     [Header("Esporas")]
 
@@ -78,21 +79,25 @@ public class ComportamientoGulgo : MonoBehaviour
 
     private const int Disparo = 0;
     private const int Esporas = 1;
-    private const int Correteo = 2;
+    private const int Morder = 2;
     private const int EcharRaices = 3;
     private const int Golpiza = 4;
+    private Animator animator;
+
     
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         velocidadCorreteoReal = distanciaCorreteo;
-        estadoActual = Correteo;
+        estadoActual = Morder;
         StartCoroutine(Espera());
         
         representacionAtaqueCuerpoACuerpo.gameObject.SetActive(false);
         representacionAtaqueMordisco.gameObject.SetActive(false);
         representacionAtaqueRaices.gameObject.SetActive(false);
         representacionAtaqueEsporas.gameObject.SetActive(false);
+        poolProyectilPegote = GetComponent<PoolProyectilGulgo>();
     }
 
     //private void OnCollisionEnter2D(Collision2D collision)
@@ -124,6 +129,7 @@ public class ComportamientoGulgo : MonoBehaviour
 
     private void Update()
     {
+        GolpeEsporas();
         //miAnimator.SetBool("JefeEnAire", !JefeEnContactoConPlataforma());
     }
     private void OnDrawGizmos()
@@ -150,24 +156,23 @@ public class ComportamientoGulgo : MonoBehaviour
             switch (estadoActual)
             {
                 case Disparo:
-                    //miAnimator.SetTrigger("Cargando");
-                    StartCoroutine(Disparar());
+                    Disparar();
                     tiempoActualEspera = tiempoEntreDisparos;
                     break;
                 case Esporas:
-                    StartCoroutine(ActivarEsporas());
+                    LanzarEsporas();
                     tiempoActualEspera = tiempoEntreEsporas;
                     break;
-                case Correteo:
-                    StartCoroutine(Mordisco());
+                case Morder:
+                    Mordisco();
                     tiempoActualEspera = tiempoEntreCorreteos;
                     break;
                 case EcharRaices:
-                    StartCoroutine(Raices());
+                    Raices();
                     tiempoActualEspera = tiempoEntreRaices;
                     break;
                 case Golpiza:
-                    ActivarGolpiza();
+                    Golpear();
                     tiempoActualEspera = tiempoEntreGolpizas;
                     break;
             }
@@ -176,22 +181,28 @@ public class ComportamientoGulgo : MonoBehaviour
             ActualizarEstado();
         }
     }
-
     private void ActualizarEstado()
     {
-        // Actualiza el estado actual según las probabilidades y condiciones que desees
-        // Puedes usar Random.Range para generar números aleatorios y decidir el siguiente estado
         estadoActual = Random.Range(0, 5);
     }
-
-    private IEnumerator Mordisco()
+    private void Mordisco()
     {
-        //miAnimator.SetBool("Correteando", true);
         tiempo = Time.time;
         Vector2 posicionInicial = transform.position;
         Vector2 posicionObjetivo = new(transform.position.x - distanciaCorreteo, transform.position.y); //Debería ser la del jugador.
         GameObject jugador = GameObject.FindGameObjectWithTag("Player");
         GameObject muro = GameObject.FindGameObjectWithTag("Muro");
+        StartCoroutine(MoverAdelante(posicionInicial,posicionObjetivo,jugador,muro));
+        animator.SetBool("Muerde", true);
+    }
+    private IEnumerator MoverAdelante(Vector2 posicionInicial, Vector2 posicionObjetivo, GameObject jugador, GameObject muro)
+    {
+        animator.SetBool("CorreAdelante", true);
+        //tiempo = Time.time;
+        Vector2 posI = posicionInicial;
+        Vector2 posOb = posicionObjetivo; //Debería ser la del jugador.
+        GameObject j = jugador;
+        GameObject m = muro;
         //if(muro != null)
         //{
         //    posicionObjetivo = new(transform.position.x - muro.transform.position.x, transform.position.y);
@@ -202,31 +213,19 @@ public class ComportamientoGulgo : MonoBehaviour
         //}
         while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
         {
-            transform.position = Vector2.Lerp(posicionInicial, posicionObjetivo, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
+            transform.position = Vector2.Lerp(posI, posOb, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
             yield return null;
         }
-        GolpeMordisco();
-        //miSprite.flipX = !miSprite.flipX;
-        // Mover hacia atrás (retroceso)
-        tiempo = Time.time;
-        while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
-        {
-            transform.position = Vector2.Lerp(posicionObjetivo, posicionInicial, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
-
-            yield return null;
-        }
-        //miAnimator.SetBool("Correteando", false);
-        //miSprite.flipX = !miSprite.flipX;
+        animator.SetBool("CorreAdelante", false);
     }
-
-    void GolpeMordisco()
+    private void GolpeMordisco()
     {
         Collider2D[] areaMordisco = Physics2D.OverlapBoxAll(puntoMordisco.position, alcanceMordisco, 0);
         foreach (Collider2D col in areaMordisco)
         {
             if (col.CompareTag("Player"))
             {
-                StartCoroutine(nameof(RepresentarMordisco));
+                RepresentarMordisco();
                 col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoMordisco);
                 gameObject.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(dagnoMordisco * 0.5f);
                 tiempo = Time.time;
@@ -234,54 +233,65 @@ public class ComportamientoGulgo : MonoBehaviour
             }
         }
     }
-
-    private IEnumerator RepresentarMordisco()
+    private void RepresentarMordisco()
     {
         representacionAtaqueMordisco.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaqueMordisco.gameObject.SetActive(false);
     }
-
     private IEnumerator ActivacionVeneno()
     {
         InvokeRepeating(nameof(DagnarConVeneno), 0, lapsoTicksVeneno);
         yield return new WaitForSeconds(duracionVeneno);
         CancelInvoke(nameof(DagnarConVeneno));
     }
-
-    void DagnarConVeneno()
+    private void DagnarConVeneno()
     {
         GameObject jugador = GameObject.FindGameObjectWithTag("Player");
         jugador.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoVeneno);
     }
+    private void FinalMordisco()
+    {
+        animator.SetBool("Muerde", false);
+        tiempo = Time.time;
+        Vector2 posicionInicial = transform.position;
+        Vector2 posicionObjetivo = new(transform.position.x + distanciaCorreteo, transform.position.y); //Debería ser la del jugador.
+        GameObject jugador = GameObject.FindGameObjectWithTag("Player");
+        GameObject muro = GameObject.FindGameObjectWithTag("Muro");
+        StartCoroutine(MoverAtras(posicionInicial, posicionObjetivo, jugador, muro));
+    }
+    private IEnumerator MoverAtras(Vector2 posicionInicial, Vector2 posicionObjetivo, GameObject jugador, GameObject muro)
+    {
+        animator.SetBool("CorreAtras", true);
+        Vector2 posI = posicionInicial;
+        Vector2 posOb = posicionObjetivo; //Debería ser la del jugador.
+        GameObject j = jugador;
+        GameObject m = muro;
+        while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
+        {
+            transform.position = Vector2.Lerp(posI, posOb, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
 
+            yield return null;
+        }
+        animator.SetBool("CorreAtras", false);
+    }
     public void ModificarVelocidadCorreteo(float puntos)
     {
         distanciaCorreteo += puntos;
     }
-
     public void RestaurarVelocidadCorreteo()
     {
         distanciaCorreteo = velocidadCorreteoReal;
     }
-
-    private IEnumerator Raices()
+    private void Raices()
     {
-        yield return new WaitForSeconds(tiempoCargaRaices);
-        GolpeRaices();
+        animator.SetBool("SueltaRaices", true);
     }
-
-    private IEnumerator RepresentarRaices()
+    private void RepresentarRaices()
     {
         representacionAtaqueRaices.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaqueRaices.gameObject.SetActive(false);
     }
-
     private void GolpeRaices()
     {
         Collider2D[] areaRaices = Physics2D.OverlapBoxAll(puntoRaices.position, alcanceRaices, 0);
-        StartCoroutine(nameof(RepresentarRaices));
         foreach (Collider2D col in areaRaices)
         {
             if (col.CompareTag("Player"))
@@ -293,112 +303,131 @@ public class ComportamientoGulgo : MonoBehaviour
 
             if (col.CompareTag("Invocacion"))
             {
-                //StartCoroutine(nameof(RepresentarRaices));
                 col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoRaices);
                 gameObject.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(dagnoRaices * 0.5f);
                 Debug.Log("Enemigo Herido");
             }
         }
     }
-
-    private IEnumerator CorrerParaGolpear()
+    private void Golpear()
     {
-        //miAnimator.SetBool("Correteando", true);
         tiempo = Time.time;
         Vector2 posicionInicial = transform.position;
         Vector2 posicionObjetivo = new(transform.position.x - distanciaCorreteo, transform.position.y); //Debería ser la del jugador.
-
-        while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
-        {
-            transform.position = Vector2.Lerp(posicionInicial, posicionObjetivo, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
-            yield return null;
-        }
-        ActivarGolpiza();
-        //miSprite.flipX = !miSprite.flipX;
-        // Mover hacia atrás (retroceso)
-        tiempo = Time.time;
-        while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
-        {
-            transform.position = Vector2.Lerp(posicionObjetivo, posicionInicial, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
-
-            yield return null;
-        }
-        //miAnimator.SetBool("Correteando", false);
-        //miSprite.flipX = !miSprite.flipX;
+        GameObject jugador = GameObject.FindGameObjectWithTag("Player");
+        GameObject muro = GameObject.FindGameObjectWithTag("Muro");
+        StartCoroutine(MoverAdelante(posicionInicial, posicionObjetivo, jugador, muro));
+        animator.SetBool("Golpea", true);
     }
+    //private IEnumerator CorrerParaGolpear()
+    //{
+    //    //miAnimator.SetBool("Correteando", true);
+    //    tiempo = Time.time;
+    //    Vector2 posicionInicial = transform.position;
+    //    Vector2 posicionObjetivo = new(transform.position.x - distanciaCorreteo, transform.position.y); //Debería ser la del jugador.
 
-    private void ActivarGolpiza()
-    {
-        StartCoroutine(nameof(GolpeCAC));
-    }
+    //    while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
+    //    {
+    //        transform.position = Vector2.Lerp(posicionInicial, posicionObjetivo, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
+    //        yield return null;
+    //    }
+    //    //ActivarGolpiza();
+    //    //miSprite.flipX = !miSprite.flipX;
+    //    // Mover hacia atrás (retroceso)
+    //    tiempo = Time.time;
+    //    while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
+    //    {
+    //        transform.position = Vector2.Lerp(posicionObjetivo, posicionInicial, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
 
-    private IEnumerator GolpeCAC()
+    //        yield return null;
+    //    }
+    //    //miAnimator.SetBool("Correteando", false);
+    //    //miSprite.flipX = !miSprite.flipX;
+    //}
+
+    //private void ActivarGolpiza()
+    //{
+    //    StartCoroutine(nameof(GolpeCAC));
+    //}
+    private void GolpeCAC()
     {
-        for(int i = 0; i < cantidadGolpes;i++)
+        Collider2D[] areaGolpe = Physics2D.OverlapBoxAll(puntoCuerpoACuerpo.position, alcanceCuerpoACuerpo, 0);
+        foreach (Collider2D col in areaGolpe)
         {
-            yield return new WaitForSeconds(intervaloEntreGolpes);
-            Collider2D[] areaRaices = Physics2D.OverlapBoxAll(puntoCuerpoACuerpo.position, alcanceCuerpoACuerpo, 0);
-            StartCoroutine(nameof(RepresentarGolpiza));
-            foreach (Collider2D col in areaRaices)
+            if (col.CompareTag("Player"))
             {
-                if (col.CompareTag("Player"))
-                {
-                    
-                    col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoCuerpoACuerpo);
-                }
-
-                if (col.CompareTag("Pegote"))
-                {
-                    //StartCoroutine(nameof(RepresentarGolpiza));
-                    col.transform.GetComponent<FuncionamientoPegote>().ModificarVidaPegote(-dagnoCuerpoACuerpo);
-                }
+                RepresentarGolpiza();
+                 col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoCuerpoACuerpo);
+            }
+            if (col.CompareTag("Pegote"))
+            {
+                RepresentarGolpiza();
+                col.transform.GetComponent<FuncionamientoPegote>().ModificarVidaPegote(-dagnoCuerpoACuerpo);
             }
         }
     }
-
-    private IEnumerator RepresentarGolpiza()
+    private void RepresentarGolpiza()
     {
         representacionAtaqueCuerpoACuerpo.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaqueCuerpoACuerpo.gameObject.SetActive(false);
+        //yield return new WaitForSeconds(0.1f);
+        //representacionAtaqueCuerpoACuerpo.gameObject.SetActive(false);
     }
-
-    private IEnumerator Disparar()
+    private void FinalGolpiza()
     {
-        yield return new WaitForSeconds(tiempoCargaDisparo);
-        Instantiate(proyectilGulgo, puntoDisparoGulgo.position, Quaternion.identity);
+        animator.SetBool("Golpea", false);
+        tiempo = Time.time;
+        Vector2 posicionInicial = transform.position;
+        Vector2 posicionObjetivo = new(transform.position.x + distanciaCorreteo, transform.position.y); //Debería ser la del jugador.
+        GameObject jugador = GameObject.FindGameObjectWithTag("Player");
+        GameObject muro = GameObject.FindGameObjectWithTag("Muro");
+        StartCoroutine(MoverAtras(posicionInicial, posicionObjetivo, jugador, muro));
     }
-
-    private IEnumerator ActivarEsporas()
+    private void Disparar()
     {
-        yield return new WaitForSeconds(tiempoCargaRaices);
-        GolpeEsporas();
+        animator.SetBool("Escupe", true);
+    }
+    private void GenerarProyectilPegote()
+    {
+        GameObject pooledProyectilPegote = poolProyectilPegote.GetPooledBolasPegote();
+        if (pooledProyectilPegote != null)
+        {
+            pooledProyectilPegote.transform.position = puntoDisparoGulgo.position;
+            pooledProyectilPegote.SetActive(true);
+            pooledProyectilPegote.GetComponent<ProyectilGulgo>().FuerzaEscupitajo();
+            pooledProyectilPegote.GetComponent<ProyectilGulgo>().ActivarRotacion();
+        }
     }
 
-    private IEnumerator RepresentarEsporas()
+    private void LanzarEsporas()
+    {
+        animator.SetBool("SueltaEsporas", true);
+        //yield return new WaitForSeconds(tiempoCargaRaices);
+        //GolpeEsporas();
+    }
+
+    private void RepresentarEsporas()
     {
         representacionAtaqueEsporas.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaqueEsporas.gameObject.SetActive(false);
+        //yield return new WaitForSeconds(0.1f);
+        //representacionAtaqueEsporas.gameObject.SetActive(false);
     }
 
     private void GolpeEsporas()
     {
-        Collider2D[] areaEsporas = Physics2D.OverlapBoxAll(puntoEsporas.position, alcanceEsporas, 0);
-        StartCoroutine(nameof(RepresentarEsporas));
-        foreach (Collider2D col in areaEsporas)
+        if (representacionAtaqueEsporas.gameObject.activeInHierarchy)
         {
-            if (col.CompareTag("Player"))
+            Collider2D[] areaEsporas = Physics2D.OverlapBoxAll(puntoEsporas.position, alcanceEsporas, 0);
+            foreach (Collider2D col in areaEsporas)
             {
-                
-                col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoEsporas);
-            }
-
-            if (col.CompareTag("Invocacion"))
-            {
-                //StartCoroutine(nameof(RepresentarEsporas));
-                col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoEsporas);
-                Debug.Log("Enemigo Herido");
+                if (col.CompareTag("Player"))
+                {
+                    col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoEsporas);
+                }
+                if (col.CompareTag("Invocacion"))
+                {
+                    col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoEsporas);
+                    Debug.Log("Enemigo Herido");
+                }
             }
         }
     }

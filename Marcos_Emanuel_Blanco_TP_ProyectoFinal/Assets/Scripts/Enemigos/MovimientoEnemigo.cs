@@ -11,6 +11,7 @@ public class MovimientoEnemigo : MonoBehaviour
     [SerializeField] private Transform puntoVision;
     public bool atacando;
     public bool aturdido;
+    //[SerializeField] private float posicionABS;
     [SerializeField] private bool atacadoPorAventurero;
     public int rotacion;
     [SerializeField] private Vector2 alcanceVision;
@@ -52,7 +53,7 @@ public class MovimientoEnemigo : MonoBehaviour
     void Update()
     {
         Movimiento();
-
+        //DetectarABS();
         CambiarMoviendose();
     }
 
@@ -66,14 +67,16 @@ public class MovimientoEnemigo : MonoBehaviour
         Collider2D[] areaVision = Physics2D.OverlapBoxAll(puntoVision.position, alcanceVision, 0);
         foreach (Collider2D col in areaVision)
         {
-            if (!atacadoPorAventurero || col.CompareTag("Player") && !GameObject.FindGameObjectWithTag("Aventurero"))
+            if (!atacadoPorAventurero && col.CompareTag("Player"))
             {
-                MovimientoHaciaJugador();
+                Invoke(nameof(MovimientoHaciaJugador),0);
+                CancelInvoke(nameof(MovimientoHaciaAventurero));
                 
             }
             if (atacadoPorAventurero && col.CompareTag("Aventurero"))
             {
-                MovimientoHaciaAventurero();
+                Invoke(nameof(MovimientoHaciaAventurero),0);
+                CancelInvoke(nameof(MovimientoHaciaJugador));
             }
         }
         if (!DetectarAventureros())
@@ -83,6 +86,12 @@ public class MovimientoEnemigo : MonoBehaviour
             
         }
     }
+
+    //private void DetectarABS()
+    //{
+    //    GameObject aventurero = GameObject.FindGameObjectWithTag("Aventurero");
+    //    posicionABS = Mathf.Abs(transform.position.x - aventurero.transform.position.x);
+    //}
 
     bool DetectarAventureros()
     {
@@ -94,12 +103,13 @@ public class MovimientoEnemigo : MonoBehaviour
     }
     void MovimientoHaciaAventurero()
     {
+        GameObject aventurero = GameObject.FindGameObjectWithTag("Aventurero");
         if(!aturdido)
         {
-            GameObject aventurero = GameObject.FindGameObjectWithTag("Aventurero");
+            
             if(aventurero != null)
             {
-                if (Mathf.Abs(transform.position.x - aventurero.transform.position.x) > distanciaAlAventurero && transform.position.x < aventurero.transform.position.x && !aturdido)
+                if (Mathf.Abs(transform.position.x - aventurero.transform.position.x) > distanciaAlAventurero && transform.position.x > aventurero.transform.position.x && !aturdido)
                 {
                     animatorMov.SetBool("Persiguiendo", true);
                     textoVida.gameObject.transform.localScale = new(1.0f, 1.0f, 1.0f);
@@ -108,21 +118,30 @@ public class MovimientoEnemigo : MonoBehaviour
                 else if (Mathf.Abs(transform.position.x - aventurero.transform.position.x) < distanciaAlAventurero && transform.position.x > aventurero.transform.position.x && !aturdido)
                 {
                     animatorMov.SetBool("Persiguiendo", true);
-                    textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
+                    if(textoVida.gameObject.transform.localScale.x != 1.0f)
+                    {
+                        textoVida.gameObject.transform.localScale = new(1.0f, 1.0f, 1.0f);
+                    }
                     transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
                 }
-                else
+                else if(/*2.0f > Mathf.Abs(transform.position.x - aventurero.transform.position.x) &&*/ Mathf.Abs(transform.position.x - aventurero.transform.position.x)/*posicionABS*/ <= distanciaAlAventurero && !aturdido)
                 {
-                    //atacando = true;
+                    atacando = true;
+                    animatorMov.SetBool("Persiguiendo", false);
                 }
             }
-            else
-            {
-                //Rotar();
+            //else
+            //{
+            //    //Rotar();
                 
-            }
+            //}
             
-        }  
+        }
+        //if (Mathf.Abs(transform.position.x - aventurero.transform.position.x) > distanciaAlAventurero && !aturdido && atacando)
+        //{
+        //    animatorMov.SetBool("Persiguiendo", false);
+        //    atacando = false;
+        //}
     }
 
     public void Rotar()
@@ -156,8 +175,8 @@ public class MovimientoEnemigo : MonoBehaviour
         }
         if (Mathf.Abs(transform.position.x - jugador.transform.position.x) > distanciaAlJugador && !aturdido && atacando)
         {
-            animatorMov.SetBool("Persiguiendo", false);
             atacando = false;
+            animatorMov.SetBool("Persiguiendo", false);
         }
     }
     public bool GetAtacando()
@@ -196,7 +215,7 @@ public class MovimientoEnemigo : MonoBehaviour
         //}
         //else { atacando = false; }
     }
-    public bool GetAtacado()
+    public bool GetAtacadoPorAventurero()
     {
         return atacadoPorAventurero;
     }

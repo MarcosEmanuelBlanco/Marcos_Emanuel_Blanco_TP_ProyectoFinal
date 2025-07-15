@@ -15,6 +15,13 @@ public class ProyectilEnemigo : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        rb.rotation = 0f;
+        FuerzaCanonazo();
+    }
+
+
+    public void FuerzaCanonazo()
+    {
         rb.AddForce(fuerzaLanzamiento, ForceMode2D.Impulse);
     }
 
@@ -58,7 +65,13 @@ public class ProyectilEnemigo : MonoBehaviour
 
     private void Destruir()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        rb.constraints = RigidbodyConstraints2D.None;
+    }
+
+    public void ActivarRotacion()
+    {
+        rb.rotation = 0f;
     }
 
     private void Update()

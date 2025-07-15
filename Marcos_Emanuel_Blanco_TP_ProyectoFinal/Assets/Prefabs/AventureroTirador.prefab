@@ -386,7 +386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: alcanceVision.x
-      value: 25
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: alcanceVision.y
@@ -479,6 +479,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2650642941041396563, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7388554850798359947}
+    - targetCorrespondingSourceObject: {fileID: 2650642941041396563, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4835164859315743647}
   m_SourcePrefab: {fileID: 100100000, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
 --- !u!1 &756754953737438079 stripped
 GameObject:
@@ -523,6 +526,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4835164859315743647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756754953737438079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2c56e79d23ad540ae04f1c1c7bbf2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bala: {fileID: 6355716301710261829, guid: d9b04088c14802343ba31e3e821cc7ce, type: 3}
+  tamanoPoolBala: 3
 --- !u!4 &1942189105010066204 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3800048093699803952, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}

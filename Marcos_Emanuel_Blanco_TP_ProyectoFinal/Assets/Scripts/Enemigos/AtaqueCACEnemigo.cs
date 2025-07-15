@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AtaqueCACEnemigo : MonoBehaviour
 {
+    //[SerializeField] private Transform representacionAtaque;
     [SerializeField] private Transform posicionAtaque;
     [SerializeField] private float radioGolpe;
     [SerializeField] private float dagnoGolpe;
@@ -13,8 +14,8 @@ public class AtaqueCACEnemigo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       animatorMov = GetComponent<Animator>();
-       
+        //representacionAtaque.gameObject.SetActive(false);
+        animatorMov = GetComponent<Animator>();
     }
     private void OnBecameVisible()
     {
@@ -23,6 +24,7 @@ public class AtaqueCACEnemigo : MonoBehaviour
 
     private void ActivarAnimacionAtaque()
     {
+        //animatorMov.SetBool("Persiguiendo", false);
         animatorMov.SetTrigger("Atacando");
     }
 
@@ -58,19 +60,27 @@ public class AtaqueCACEnemigo : MonoBehaviour
             {
                 if (col.CompareTag("Player"))
                 {
+                    //ActivarAtaque();
                     col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
                     Debug.Log("Jugador Herido");
                 }else if (col.CompareTag("Aventurero"))
                 {
+                    //ActivarAtaque();
                     col.transform.GetComponent<Aventurero>().ModificarVidaEnemigoNoJugador(-dagnoGolpe);
                     Debug.Log("Enemigo Herido");
                 }else if (col.CompareTag("Invocacion"))
                 {
+                    //ActivarAtaque();
                     col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoGolpe);
                 }
             }
         }
     }
+
+    //private void ActivarAtaque()
+    //{
+    //    representacionAtaque.gameObject.SetActive(true);
+    //}
 
     private void OnDrawGizmos()
     {

@@ -183,4 +183,7 @@ MonoBehaviour:
       m_Calls: []
   textoVida: {fileID: 0}
   moviendose: 0
+  atacando: 0
   aturdido: 0
+  invulnerable: 0
+  duracionInvulnerabilidad: 3

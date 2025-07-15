@@ -16,7 +16,7 @@ public class BalaAventurero : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         CambiarDireccionBala();
         //miAnimator = GetComponent<Animator>();
-        rb.AddForce(fuerzaLanzamiento, ForceMode2D.Impulse);
+        FuerzaDisparo();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,6 +26,11 @@ public class BalaAventurero : MonoBehaviour
             GolpeProyectil();
             //Explotar();
         }
+    }
+
+    public void FuerzaDisparo()
+    {
+        rb.AddForce(fuerzaLanzamiento, ForceMode2D.Impulse);
     }
 
     //void Explotar()
@@ -49,13 +54,13 @@ public class BalaAventurero : MonoBehaviour
             if (col.CompareTag("EnemigoBasico"))
             {
                 col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoBala);
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
 
             if (col.CompareTag("Player"))
             {
                 col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoBala);
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
 
             //if (col.CompareTag("Invocacion"))

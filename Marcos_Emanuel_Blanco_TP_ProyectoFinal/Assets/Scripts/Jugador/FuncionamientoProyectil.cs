@@ -18,7 +18,7 @@ public class FuncionamientoProyectil : MonoBehaviour
         dagnoPorMultitud = 0f;
         rb = GetComponent<Rigidbody2D>();
         miAnimator = GetComponent<Animator>();
-        rb.AddForce(fuerzaLanzamiento, ForceMode2D.Impulse);
+        FuerzaFuego();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,6 +28,11 @@ public class FuncionamientoProyectil : MonoBehaviour
             GolpeProyectil();
             Explotar();
         }
+    }
+
+    public void FuerzaFuego()
+    {
+        rb.AddForce(fuerzaLanzamiento, ForceMode2D.Impulse);
     }
 
     void Explotar()
@@ -40,7 +45,8 @@ public class FuncionamientoProyectil : MonoBehaviour
         miAnimator.Play("BolaFuegoExplosion");
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.25f);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        rb.constraints = RigidbodyConstraints2D.None;
     }
 
     void GolpeProyectil()

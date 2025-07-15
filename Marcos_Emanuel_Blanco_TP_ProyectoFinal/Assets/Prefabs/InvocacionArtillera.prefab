@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5973755123803232511}
   - component: {fileID: 2858305532550752903}
   - component: {fileID: -7981652777638839516}
+  - component: {fileID: 1005440460235318041}
   m_Layer: 0
   m_Name: InvocacionArtillera
   m_TagString: Invocacion
@@ -190,6 +191,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vidaInvocacion: 200
+--- !u!114 &1005440460235318041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709596195482563737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6be9dbd4cbadfda48ab80247bb0e29c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bolaFuego: {fileID: 3904442452710247798, guid: d477a40e076bc0047aff69b829b0569c, type: 3}
+  tamanoPoolBolaFuego: 3
 --- !u!1 &6994173285859118635
 GameObject:
   m_ObjectHideFlags: 0

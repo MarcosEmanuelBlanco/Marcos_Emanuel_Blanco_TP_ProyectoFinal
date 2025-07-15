@@ -19,9 +19,16 @@ public class AtaqueTanqueAventurero : MonoBehaviour
     }
     public void ActivarAnimacionAtaque()
     {
-        animatorMov.SetTrigger("Atacando");
+        StartCoroutine(nameof(EsperaAtaque));
         //animatorMov.SetBool("Persiguiendo", false);
     }
+
+    private IEnumerator EsperaAtaque()
+    {
+        yield return new WaitForSeconds(4);
+        animatorMov.SetTrigger("Atacando");
+    }
+
     private void OnBecameVisible()
     {
         Ataque();
@@ -37,11 +44,17 @@ public class AtaqueTanqueAventurero : MonoBehaviour
         return gameObject.GetComponent<Aventurero>().GetAturdido();
     }
 
+    private bool DetectarInvulnerable()
+    {
+        return gameObject.GetComponent<Aventurero>().GetInvulnerable();
+    }
+
     // Update is called once per frame
     void Update()
     {
         DetectarMoviendose();
         DetectarAturdido();
+        DetectarInvulnerable();
     }
 
     void Ataque()
@@ -51,7 +64,7 @@ public class AtaqueTanqueAventurero : MonoBehaviour
 
     void Golpear()
     {
-        if (DetectarMoviendose() == false && DetectarAturdido() == false)
+        if (DetectarMoviendose() == false && DetectarAturdido() == false && DetectarInvulnerable() == false)
         {
             Collider2D[] areaGolpe = Physics2D.OverlapBoxAll(posicionAtaque.position, areaAtaque, 0);
             foreach (Collider2D col in areaGolpe)
@@ -75,7 +88,7 @@ public class AtaqueTanqueAventurero : MonoBehaviour
                     ActivarAtaque();
 
                     col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
-                    col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
+                    //col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
                     col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigoNoJugador(-dagnoGolpe);
                     col.transform.GetComponent<MovimientoEnemigo>().CambiarAturdido(true);
 
@@ -86,8 +99,8 @@ public class AtaqueTanqueAventurero : MonoBehaviour
                     //    col.transform.GetComponent<MovimientoEnemigo>().Rotar();
                     //}
                     col.transform.GetComponent<Rigidbody2D>().AddForce(fuerzaMazazo, ForceMode2D.Impulse);
-                    StartCoroutine(Aturdir());
-                    col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
+                    //StartCoroutine(Aturdir());
+                    //col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
                     Debug.Log("Enemigo Herido");
                 }
             }

@@ -8,10 +8,11 @@ public class FuncionamientoInvArtillera : MonoBehaviour
     [SerializeField] private Transform puntoDisparo;
     [SerializeField] private float frecuenciaDisparo;
     [SerializeField] private float velocidadInvocacion;
+    private PoolProyectilInvocacion poolBolasFuego;
     // Start is called before the first frame update
     void Start()
     {
-        
+        poolBolasFuego = GetComponent<PoolProyectilInvocacion>();
     }
 
     void OnBecameVisible()
@@ -32,9 +33,21 @@ public class FuncionamientoInvArtillera : MonoBehaviour
 
     void Disparo()
     {
-        GameObject nuevoProyectil = proyectil;
-        nuevoProyectil.transform.position = puntoDisparo.transform.position;
-        Instantiate(nuevoProyectil);
+        //GameObject nuevoProyectil = proyectil;
+        //nuevoProyectil.transform.position = puntoDisparo.transform.position;
+        //Instantiate(nuevoProyectil);
+        GenerarBolaFuego();
+    }
+
+    private void GenerarBolaFuego()
+    {
+        GameObject pooledBolas = poolBolasFuego.GetPooledBolasFuego();
+        if (pooledBolas != null)
+        {
+            pooledBolas.transform.position = puntoDisparo.position;
+            pooledBolas.SetActive(true);
+            pooledBolas.GetComponent<FuncionamientoProyectil>().FuerzaFuego();
+        }
     }
 
     void Ataque()

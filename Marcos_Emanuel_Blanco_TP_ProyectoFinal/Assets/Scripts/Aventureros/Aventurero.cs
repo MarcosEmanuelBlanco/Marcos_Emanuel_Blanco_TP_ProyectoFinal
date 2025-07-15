@@ -17,20 +17,27 @@ public class Aventurero : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textoVida;
     //[SerializeField] private Transform jugador;
     [SerializeField] private bool moviendose;
+    [SerializeField] private bool atacando;
     private bool aLaDerecha;
     [SerializeField] private bool aturdido;
     private Rigidbody2D rigidbody2;
     private Collider2D collider2;
     private Animator animatorMov;
-    // Para hacer la animación de aparición tendría que hacer que la caja de visión valga 0 en ambos ejes al principio. Cuando termine la animación, debería pasar a valer lo que haga falta.
+    [SerializeField] private bool invulnerable;
+    [SerializeField] private float duracionInvulnerabilidad;
     private void Start()
     {
+        invulnerable = true;
+        StartCoroutine(nameof(InvulnerabilidadInicial));
         bonusHabilidad = Random.Range(1, 5);
         OnHealthChange.Invoke(vidaEnemigo.ToString());
         aturdido = false;
+        atacando = false;
+        moviendose = true;
         rigidbody2 = GetComponent<Rigidbody2D>();
         collider2 = GetComponent<Collider2D>();
         animatorMov = GetComponent<Animator>();
+        animatorMov.SetBool("Invulnerable", true);
     }
 
     //public void ActivarAnimacionMovimiento()
@@ -38,12 +45,27 @@ public class Aventurero : MonoBehaviour
     //    animatorMov.SetBool("Persiguiendo", true);
     //}
 
+    private IEnumerator InvulnerabilidadInicial()
+    {
+        yield return new WaitForSeconds(duracionInvulnerabilidad);
+        invulnerable = false;
+        animatorMov.SetBool("Invulnerable", false);
+    }
+
+    public bool GetInvulnerable()
+    {
+        return invulnerable;
+    }
+
     public void ModificarVidaEnemigo(float puntos)
     {
-        vidaEnemigo += puntos;
-        OnHealthChange.Invoke(vidaEnemigo.ToString());
-        Debug.Log("Enemigo herido");
-        Muerte();
+        if (!invulnerable)
+        {
+            vidaEnemigo += puntos;
+            OnHealthChange.Invoke(vidaEnemigo.ToString());
+            Debug.Log("Enemigo herido");
+            Muerte();
+        }
     }
 
     private void Muerte()
@@ -51,6 +73,14 @@ public class Aventurero : MonoBehaviour
         if (vidaEnemigo <= 0)
         {
             barraVida.gameObject.SetActive(false);
+            GameObject[] enemigos = GameObject.FindGameObjectsWithTag("EnemigoBasico");
+            for (int i = 0; i < enemigos.Length; i++)
+            {
+                if (enemigos[i] != null && enemigos[i].GetComponent<MovimientoEnemigo>().GetAtacadoPorAventurero() == true)
+                {
+                    enemigos[i].GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
+                }
+            }
             GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
             controlador.GetComponent<GameManager>().contarDerribados();
             collider2.enabled = false;
@@ -67,14 +97,7 @@ public class Aventurero : MonoBehaviour
                 AtaquesPrevisional ataques = jugador.GetComponent<AtaquesPrevisional>();
                 ataques.CambiarHabilidadAleatoria(bonusHabilidad);
             }
-            //GameObject[] enemigos = GameObject.FindGameObjectsWithTag("EnemigoBasico");
-            //for (int i = 0; i < enemigos.Length; i++)
-            //{
-            //    if (enemigos[i] != null && enemigos[i].GetComponent<MovimientoEnemigo>().GetAtacado() == true)
-            //    {
-            //        enemigos[i].GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
-            //    }
-            //}
+
             animatorMov.SetBool("Muerto", true);
         }
     }
@@ -86,10 +109,13 @@ public class Aventurero : MonoBehaviour
 
     public void ModificarVidaEnemigoNoJugador(float puntos)
     {
-        vidaEnemigo += puntos;
-        OnHealthChange.Invoke(vidaEnemigo.ToString());
-        Debug.Log("Enemigo herido");
-        MuerteNoJugador();
+        if (!invulnerable)
+        {
+            vidaEnemigo += puntos;
+            OnHealthChange.Invoke(vidaEnemigo.ToString());
+            Debug.Log("Enemigo herido");
+            MuerteNoJugador();
+        }
     }
 
     private void MuerteNoJugador()
@@ -97,11 +123,16 @@ public class Aventurero : MonoBehaviour
         if (vidaEnemigo <= 0)
         {
             barraVida.gameObject.SetActive(false);
+            GameObject[] enemigos = GameObject.FindGameObjectsWithTag("EnemigoBasico");
+            for(int i = 0; i < enemigos.Length; i++)
+            {
+                enemigos[i].GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
+            }
             GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
             controlador.GetComponent<GameManager>().contarDerribados();
             collider2.enabled = false;
             rigidbody2.Sleep();
-            Destroy(gameObject);
+            animatorMov.SetBool("Muerto", true);
         }
     }
 
@@ -129,7 +160,7 @@ public class Aventurero : MonoBehaviour
         {
             if (col.CompareTag("Player") && enemigo == null)
             {
-                if (!aturdido)
+                if (!aturdido && !invulnerable)
                 {
                     transform.rotation = Quaternion.Euler(0, 180, 0);
                     textoVida.gameObject.transform.localScale = new(-1.0f, 1.0f, 1.0f);
@@ -145,15 +176,12 @@ public class Aventurero : MonoBehaviour
                         animatorMov.SetBool("Persiguiendo", false);
                         moviendose = false;
                     }
-
-                    ////col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoGolpe);
-                    //Debug.Log("Jugador Herido");
                 } 
             }
 
-            else if (col.CompareTag("EnemigoBasico"))
+            else if (col.CompareTag("EnemigoBasico") && !atacando)
             {
-                if (!aturdido)
+                if (!aturdido && !invulnerable)
                 {
                     enemigo = col.gameObject;
                     if (enemigo != null && Mathf.Abs(transform.position.x - enemigo.transform.position.x) > distanciaAlJugador && transform.position.x < enemigo.transform.position.x && !aturdido)
@@ -178,42 +206,43 @@ public class Aventurero : MonoBehaviour
                     {
                         animatorMov.SetBool("Persiguiendo", false);
                         moviendose = false;
+                        atacando = true;
                     }
                     ////col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpe);
                     //Debug.Log("Enemigo Herido");
                 } 
             }
 
-            else if (col.CompareTag("EnemigoMina"))
-            {
-                if (!aturdido)
-                {
-                    enemigoMina = col.gameObject;
-                    if (enemigoMina != null && Mathf.Abs(transform.position.x - enemigoMina.transform.position.x) > distanciaAlJugador && transform.position.x < enemigoMina.transform.position.x && !aturdido)
-                    {
-                        animatorMov.SetBool("Persiguiendo", true);
-                        moviendose = true;
-                        aLaDerecha = false;
-                        transform.rotation = Quaternion.Euler(0, 0, 0);
-                        transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
-                    }
-                    else if (enemigoMina != null && Mathf.Abs(transform.position.x - enemigoMina.transform.position.x) > distanciaAlJugador && transform.position.x > enemigoMina.transform.position.x && !aturdido)
-                    {
-                        animatorMov.SetBool("Persiguiendo", true);
-                        moviendose = true;
-                        aLaDerecha = true;
-                        transform.rotation = Quaternion.Euler(0, 180, 0);
-                        transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
-                    }
-                    else
-                    {
-                        animatorMov.SetBool("Persiguiendo", false);
-                        moviendose = false;
-                    }
-                    ////col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpe);
-                    //Debug.Log("Enemigo Herido");
-                }
-            }
+            //else if (col.CompareTag("EnemigoMina") && !col.CompareTag("Player"))
+            //{
+            //    if (!aturdido)
+            //    {
+            //        enemigoMina = col.gameObject;
+            //        if (enemigoMina != null && Mathf.Abs(transform.position.x - enemigoMina.transform.position.x) > distanciaAlJugador && transform.position.x < enemigoMina.transform.position.x && !aturdido)
+            //        {
+            //            animatorMov.SetBool("Persiguiendo", true);
+            //            moviendose = true;
+            //            aLaDerecha = false;
+            //            transform.rotation = Quaternion.Euler(0, 0, 0);
+            //            transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
+            //        }
+            //        else if (enemigoMina != null && Mathf.Abs(transform.position.x - enemigoMina.transform.position.x) > distanciaAlJugador && transform.position.x > enemigoMina.transform.position.x && !aturdido)
+            //        {
+            //            animatorMov.SetBool("Persiguiendo", true);
+            //            moviendose = true;
+            //            aLaDerecha = true;
+            //            transform.rotation = Quaternion.Euler(0, 180, 0);
+            //            transform.Translate(Time.deltaTime * velocidadEnemigo * Vector2.right);
+            //        }
+            //        else
+            //        {
+            //            animatorMov.SetBool("Persiguiendo", false);
+            //            moviendose = false;
+            //        }
+            //        ////col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpe);
+            //        //Debug.Log("Enemigo Herido");
+            //    }
+            //}
 
         }
     }

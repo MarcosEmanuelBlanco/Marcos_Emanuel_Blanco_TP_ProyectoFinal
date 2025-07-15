@@ -8,12 +8,12 @@ public class AtaqueMina : MonoBehaviour
     [SerializeField] private Transform posicionAtaque;
     [SerializeField] private Vector2 rectGolpe;
     [SerializeField] private float dagnoGolpe;
-    [SerializeField] private bool contacto;
+
     private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        contacto = false;
+
         animator = GetComponent<Animator>();
     }
     // Update is called once per frame
@@ -40,19 +40,15 @@ public class AtaqueMina : MonoBehaviour
     {
         if (collision.CompareTag("Player"))/*Al parecer a ninguno*/
         {
-            vidaMina = 0;
-            contacto = true;
-            //Muerte();
+            AnimacionExplosion();
         }
         else if (collision.CompareTag("Aventurero"))
         {
-            vidaMina = 0;
-            //Muerte();
+            AnimacionExplosion();
         }
         else if (collision.CompareTag("Invocacion"))
         {
-            vidaMina = 0;
-            //Muerte();
+            AnimacionExplosion();
         }
     }
 

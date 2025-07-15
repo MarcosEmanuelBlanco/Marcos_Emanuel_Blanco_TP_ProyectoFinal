@@ -18,9 +18,16 @@ public class AtaqueMagoAventurero : MonoBehaviour
 
     public void ActivarAnimacionAtaque()
     {
-        animatorMov.SetTrigger("Atacando");
+        StartCoroutine(nameof(EsperaAtaque));
         //animatorMov.SetBool("Persiguiendo", false);
     }
+
+    private IEnumerator EsperaAtaque()
+    {
+        yield return new WaitForSeconds(4);
+        animatorMov.SetTrigger("Atacando");
+    }
+
     private void OnBecameVisible()
     {
         Ataque();
@@ -36,12 +43,17 @@ public class AtaqueMagoAventurero : MonoBehaviour
         return gameObject.GetComponent<Aventurero>().GetAturdido();
     }
 
+    private bool DetectarInvulnerable()
+    {
+        return gameObject.GetComponent<Aventurero>().GetInvulnerable();
+    }
 
     // Update is called once per frame
     void Update()
     {
         DetectarMoviendose();
         DetectarAturdido();
+        DetectarInvulnerable();
     }
 
     void Ataque()
@@ -51,7 +63,7 @@ public class AtaqueMagoAventurero : MonoBehaviour
 
     void Golpear()
     {
-        if (DetectarMoviendose() == false && DetectarAturdido() == false)
+        if (DetectarMoviendose() == false && DetectarAturdido() == false && DetectarInvulnerable() == false)
         {
             Collider2D[] areaGolpe = Physics2D.OverlapBoxAll(posicionAtaque.position, areaAtaque, 0);
             foreach (Collider2D col in areaGolpe)
@@ -81,14 +93,15 @@ public class AtaqueMagoAventurero : MonoBehaviour
                 {
                     ActivarAtaque();
                     //col.transform.GetComponent<MovimientoEnemigo>().CambiarAturdido(true);
-
-                    col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
                     //col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
-                    
-                    if (col.transform.position.x < transform.position.x)
-                    {
-                        col.transform.GetComponent<MovimientoEnemigo>().Rotar();
-                    }
+                    //col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
+
+
+                    //if (col.transform.position.x < transform.position.x)
+                    //{
+                    //    col.transform.GetComponent<MovimientoEnemigo>().Rotar();
+                    //}
+                    col.transform.GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(true);
                     col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigoNoJugador(-dagnoGolpe);
                     //StartCoroutine(Aturdir());
                     //col.transform.GetComponent<MovimientoEnemigo>().CambiarAturdido(false);

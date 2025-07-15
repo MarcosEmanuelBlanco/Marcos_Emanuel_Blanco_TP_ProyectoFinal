@@ -21,6 +21,7 @@ public class AtaquesPrevisional : MonoBehaviour
     [SerializeField] private Transform puntoDisparoW;
     [SerializeField] private float esperaSiguienteAtaqueW;
     [SerializeField] private float intervaloEntreGolpesW;
+    private PoolProyectilW poolBolasInfernales;
 
     [Header("E")]
 
@@ -101,6 +102,7 @@ public class AtaquesPrevisional : MonoBehaviour
         OnEAmmoChange.Invoke(munEActual.ToString());
         OnRAmmoChange.Invoke(munRActual.ToString());
         OnRandomSkillChange.Invoke(" ");
+        poolBolasInfernales = GetComponent<PoolProyectilW>();
     }
 
     public void CambiarHabilidadAleatoria(int habAl)
@@ -188,10 +190,21 @@ public class AtaquesPrevisional : MonoBehaviour
 
     private void DisparoW()
     {
-        GameObject nuevoProyectil = proyectilW;
-        nuevoProyectil.transform.position = puntoDisparoW.transform.position;
-        Instantiate(nuevoProyectil);
-        
+        //GameObject nuevoProyectil = proyectilW;
+        //nuevoProyectil.transform.position = puntoDisparoW.transform.position;
+        //Instantiate(nuevoProyectil);
+        GenerarBolaInfernal();
+    }
+
+    private void GenerarBolaInfernal()
+    {
+        GameObject pooledBolasInfernales = poolBolasInfernales.GetPooledBolasInfernales();
+        if (pooledBolasInfernales != null)
+        {
+            pooledBolasInfernales.transform.position = puntoDisparoW.position;
+            pooledBolasInfernales.SetActive(true);
+            pooledBolasInfernales.GetComponent<FuncionamientoProyectil>().FuerzaFuego();
+        }
     }
 
     private void UsarE()

@@ -10044,6 +10044,7 @@ GameObject:
   - component: {fileID: 5873623679361212738}
   - component: {fileID: 5243261607491958021}
   - component: {fileID: 6950628895219759043}
+  - component: {fileID: 6115949929422944470}
   m_Layer: 3
   m_Name: EnemigoArtillero
   m_TagString: EnemigoBasico
@@ -10283,6 +10284,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6115949929422944470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6464168343485070226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfede98fb0859514fbd51e84c32ccb17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bomba: {fileID: 5648191912545587621, guid: 6d26709785d0d6e439669d54a1a5f620, type: 3}
+  tamanoPoolBomba: 1
 --- !u!1 &7658572372333239952
 GameObject:
   m_ObjectHideFlags: 0

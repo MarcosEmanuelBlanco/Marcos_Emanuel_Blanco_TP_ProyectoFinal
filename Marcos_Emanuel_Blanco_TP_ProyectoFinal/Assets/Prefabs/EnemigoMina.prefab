@@ -173,7 +173,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5564296611855883481}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -205,10 +205,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vidaMina: 1
-  representacionAtaque: {fileID: 0}
   posicionAtaque: {fileID: 3388171341551300667}
   rectGolpe: {x: 10, y: 6}
   dagnoGolpe: 500
+  contacto: 0
 --- !u!95 &6525390564711601093
 Animator:
   serializedVersion: 5

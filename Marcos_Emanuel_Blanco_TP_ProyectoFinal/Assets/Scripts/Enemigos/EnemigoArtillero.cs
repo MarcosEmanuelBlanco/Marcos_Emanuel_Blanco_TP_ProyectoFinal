@@ -9,11 +9,13 @@ public class EnemigoArtillero : MonoBehaviour
     [SerializeField] private float frecuenciaDisparo;
     [SerializeField] private GameObject setParticulas;
     private Animator animatorMov;
+    private PoolProyectilArtilleria poolBombas;
     private bool activarParticulas;
     void Start()
     {
         activarParticulas = true;
         animatorMov = GetComponent<Animator>();
+        poolBombas = GetComponent<PoolProyectilArtilleria>();
     }
 
     public void ActivarAnimacionAtaque()
@@ -56,9 +58,7 @@ public class EnemigoArtillero : MonoBehaviour
         if (/*Mathf.Abs(transform.position.x - jugador.transform.position.x) <= gameObject.GetComponent<MovimientoEnemigo>().GetDistancia() && */
             DetectarAtacando() == true && DetectarAturdido() == false)
         {
-            GameObject nuevoProyectil = proyectil;
-            nuevoProyectil.transform.position = puntoDisparo.transform.position;
-            Instantiate(nuevoProyectil);
+            GenerarBomba();
             activarParticulas = false;
         }
         else
@@ -67,7 +67,20 @@ public class EnemigoArtillero : MonoBehaviour
         }
     }
 
-
+    private void GenerarBomba()
+    {
+        GameObject pooledBombas = poolBombas.GetPooledBomba();
+        if (pooledBombas != null)
+        {
+            pooledBombas.transform.position = puntoDisparo.position;
+            pooledBombas.SetActive(true);
+            pooledBombas.GetComponent<ProyectilEnemigo>().FuerzaCanonazo();
+            pooledBombas.GetComponent<ProyectilEnemigo>().ActivarRotacion();
+        }
+        //GameObject nuevoProyectil = proyectil;
+        //nuevoProyectil.transform.position = puntoDisparo.transform.position;
+        //Instantiate(nuevoProyectil);
+    }
 
     private void ActivacionParticulas()
     {

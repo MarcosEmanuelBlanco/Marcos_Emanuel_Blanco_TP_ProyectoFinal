@@ -11,9 +11,22 @@ public class AtaqueAventureroTirador : MonoBehaviour
     [SerializeField] private Transform posicionAtaque;
     [SerializeField] private Vector2 areaAtaque;
     private Animator animatorMov;
+    private PoolBalas poolBalas;
     void Start()
     {
         animatorMov = GetComponent<Animator>();
+        poolBalas = GetComponent<PoolBalas>();
+    }
+
+    public void ActivarAnimacionAtaque()
+    {
+        StartCoroutine(nameof(EsperaAtaque));
+    }
+
+    private IEnumerator EsperaAtaque()
+    {
+        yield return new WaitForSeconds(3);
+        animatorMov.SetTrigger("Atacando");
     }
 
     private void OnBecameVisible()
@@ -36,6 +49,11 @@ public class AtaqueAventureroTirador : MonoBehaviour
         return gameObject.GetComponent<Aventurero>().HaciaDonde();
     }
 
+    private bool DetectarInvulnerable()
+    {
+        return gameObject.GetComponent<Aventurero>().GetInvulnerable();
+    }
+
     //private void ActivarCambioDirección()
     //{
     //    if (DetectarALaDerecha())
@@ -48,6 +66,7 @@ public class AtaqueAventureroTirador : MonoBehaviour
         DetectarMoviendose();
         DetectarAturdido();
         DetectarALaDerecha();
+        DetectarInvulnerable();
     }
 
     void Ataque()
@@ -55,14 +74,9 @@ public class AtaqueAventureroTirador : MonoBehaviour
         InvokeRepeating(nameof(ActivarAnimacionAtaque), 0, tiempoEntreDisparos);
     }
 
-    private void ActivarAnimacionAtaque()
-    {
-        animatorMov.SetTrigger("Atacando");
-    }
-
     private void Disparar()
     {
-        if (DetectarMoviendose() == true && DetectarAturdido() == false)
+        if (DetectarMoviendose() == true && DetectarAturdido() == false && DetectarInvulnerable() == false)
         {
             Collider2D[] areaAlcanceArma = Physics2D.OverlapBoxAll(posicionAtaque.position, areaAtaque, 0);
             foreach (Collider2D col in areaAlcanceArma)
@@ -77,9 +91,16 @@ public class AtaqueAventureroTirador : MonoBehaviour
 
     private void GenerarBala()
     {
-        GameObject nuevoProyectil = bala;
-        nuevoProyectil.transform.position = puntoDisparo.transform.position;
-        Instantiate(nuevoProyectil);
+        GameObject pooledBalas = poolBalas.GetPooledBalas();
+        if(pooledBalas != null)
+        {
+            pooledBalas.transform.position = puntoDisparo.position;
+            pooledBalas.SetActive(true);
+            pooledBalas.GetComponent<BalaAventurero>().FuerzaDisparo();
+        }
+        //GameObject nuevoProyectil = bala;
+        //nuevoProyectil.transform.position = puntoDisparo.transform.position;
+        //Instantiate(nuevoProyectil);
     }
 
     private void OnDrawGizmos()
