@@ -151,34 +151,37 @@ public class ComportamientoGulgo : MonoBehaviour
     }
     private IEnumerator Comportamientos()
     {
-        while (true)
+        if (!gameObject.GetComponent<EnemigoPrevisional>().GetMuerto())
         {
-            switch (estadoActual)
+            while (true)
             {
-                case Disparo:
-                    Disparar();
-                    tiempoActualEspera = tiempoEntreDisparos;
-                    break;
-                case Esporas:
-                    LanzarEsporas();
-                    tiempoActualEspera = tiempoEntreEsporas;
-                    break;
-                case Morder:
-                    Mordisco();
-                    tiempoActualEspera = tiempoEntreCorreteos;
-                    break;
-                case EcharRaices:
-                    Raices();
-                    tiempoActualEspera = tiempoEntreRaices;
-                    break;
-                case Golpiza:
-                    Golpear();
-                    tiempoActualEspera = tiempoEntreGolpizas;
-                    break;
+                switch (estadoActual)
+                {
+                    case Disparo:
+                        Disparar();
+                        tiempoActualEspera = tiempoEntreDisparos;
+                        break;
+                    case Esporas:
+                        LanzarEsporas();
+                        tiempoActualEspera = tiempoEntreEsporas;
+                        break;
+                    case Morder:
+                        Mordisco();
+                        tiempoActualEspera = tiempoEntreCorreteos;
+                        break;
+                    case EcharRaices:
+                        Raices();
+                        tiempoActualEspera = tiempoEntreRaices;
+                        break;
+                    case Golpiza:
+                        Golpear();
+                        tiempoActualEspera = tiempoEntreGolpizas;
+                        break;
+                }
+                Debug.Log(estadoActual);
+                yield return new WaitForSeconds(tiempoActualEspera);
+                ActualizarEstado();
             }
-            Debug.Log(estadoActual);
-            yield return new WaitForSeconds(tiempoActualEspera);
-            ActualizarEstado();
         }
     }
     private void ActualizarEstado()
@@ -303,7 +306,7 @@ public class ComportamientoGulgo : MonoBehaviour
 
             if (col.CompareTag("Invocacion"))
             {
-                col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoRaices);
+                col.transform.GetComponent<Invocacion>().ModificarVidaInvocacion(-dagnoRaices);
                 gameObject.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(dagnoRaices * 0.5f);
                 Debug.Log("Enemigo Herido");
             }
@@ -425,7 +428,7 @@ public class ComportamientoGulgo : MonoBehaviour
                 }
                 if (col.CompareTag("Invocacion"))
                 {
-                    col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoEsporas);
+                    col.transform.GetComponent<Invocacion>().ModificarVidaInvocacion(-dagnoEsporas);
                     Debug.Log("Enemigo Herido");
                 }
             }

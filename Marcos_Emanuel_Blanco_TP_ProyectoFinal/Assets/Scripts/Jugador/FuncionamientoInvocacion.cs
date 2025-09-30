@@ -1,23 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FuncionamientoInvocacion : MonoBehaviour
 {
-
+    private Animator animatorSoldado;
     [SerializeField] private float velocidadInvocacion;
     [SerializeField] private Transform posicionSensorSalto;
     [SerializeField] private float alcanceSensorSalto;
     [SerializeField] private Vector2 fuerzaSalto;
     [SerializeField] private float dagnoChoque;
+
+    private Collider2D collider2;
     private Rigidbody2D rb;
-    // Start is called before the first frame update
+
     void Start()
     {
+        animatorSoldado = GetComponent<Animator>();
+        collider2 = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+
     void FixedUpdate()
     {
         MovimientoInvocacion();
@@ -37,6 +43,7 @@ public class FuncionamientoInvocacion : MonoBehaviour
 
     void SaltoInvocacion()
     {
+        animatorSoldado.SetTrigger("Salto");
         rb.AddForce(fuerzaSalto, ForceMode2D.Impulse);
         gameObject.GetComponent<Collider2D>().isTrigger = true;
     }
@@ -49,23 +56,26 @@ public class FuncionamientoInvocacion : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        animatorSoldado.SetTrigger("Golpe");
         if (collision.CompareTag("EnemigoBasico"))
         {
             collision.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoChoque);
-            Destroy(gameObject);
+            collider2.enabled = false;
+            rb.Sleep();
         }
 
         if (collision.CompareTag("Jefe"))
         {
             collision.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoChoque);
-            Destroy(gameObject);
+            collider2.enabled = false;
+            rb.Sleep();
         }
 
         if (collision.CompareTag("Aventurero"))
         {
             collision.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoChoque);
-            Destroy(gameObject);
-            Debug.Log("Enemigo Herido");
+            collider2.enabled = false;
+            rb.Sleep();
         }
     }
 

@@ -6,10 +6,13 @@ using UnityEngine.Events;
 
 public class AtaquesPrevisional : MonoBehaviour
 {
+    private Animator animatorCuerpo;
+    [SerializeField] private bool habilidadActiva;
+
     [Header("Q")]
 
-    [SerializeField] private Transform representacionAtaqueQ;
     [SerializeField] private Transform posicionControladorGolpeQ;
+    [SerializeField] private GameObject brazoDerecho;
     [SerializeField] private float esperaSiguienteAtaqueQ;
     [SerializeField] private float intervaloEntreGolpesQ;
     [SerializeField] private float radioGolpeQ;
@@ -21,10 +24,11 @@ public class AtaquesPrevisional : MonoBehaviour
     [SerializeField] private Transform puntoDisparoW;
     [SerializeField] private float esperaSiguienteAtaqueW;
     [SerializeField] private float intervaloEntreGolpesW;
-    private PoolProyectilW poolBolasInfernales;
+    [SerializeField] private PoolProyectilW poolBolasInfernales;
 
     [Header("E")]
 
+    [SerializeField] private GameObject portales;
     [SerializeField] private GameObject[] grupoInvocacionesE;
     [SerializeField] private Transform[] puntoInvocacionE;
     [SerializeField] private float esperaSiguienteAtaqueE;
@@ -46,7 +50,7 @@ public class AtaquesPrevisional : MonoBehaviour
 
     [Header("Corte Aplastante")]
 
-    [SerializeField] private Transform representacionAtaqueCA;
+    [SerializeField] private GameObject representacionAtaqueCA;
     [SerializeField] private Transform posicionControladorGolpeCA;
     [SerializeField] private Vector2 areaGolpeCA;
     [SerializeField] private float dagnoGolpeCA;
@@ -54,8 +58,7 @@ public class AtaquesPrevisional : MonoBehaviour
 
     [Header("Relámpago")]
 
-    [SerializeField] private Transform representacionPreparacionRE;
-    [SerializeField] private Transform representacionAtaqueRE;
+    [SerializeField] private GameObject representacionAtaqueRE;
     [SerializeField] private Transform posicionControladorGolpeRE;
     [SerializeField] private Vector2 areaGolpeRE;
     [SerializeField] private float dagnoGolpeRE;
@@ -79,15 +82,16 @@ public class AtaquesPrevisional : MonoBehaviour
     [SerializeField] private int munR;
     private int munRActual;
     [SerializeField] private UnityEvent<string> OnRandomSkillChange;
-    // Start is called before the first frame update
+
     void Start()
     {
+        animatorCuerpo = GetComponent<Animator>();
+        habilidadActiva = false;
         //aleatoriaDisponible = false;
-        representacionAtaqueQ.gameObject.SetActive(false);
         explosionMuro.gameObject.SetActive(false);
         representacionAtaqueCA.gameObject.SetActive(false);
         representacionAtaqueRE.gameObject.SetActive(false);
-        representacionPreparacionRE.gameObject.SetActive(false);
+        //representacionPreparacionRE.gameObject.SetActive(false);
         for (int i = 0; i < invocacionArtilleria.Length; i++)
         {
             
@@ -103,6 +107,62 @@ public class AtaquesPrevisional : MonoBehaviour
         OnRAmmoChange.Invoke(munRActual.ToString());
         OnRandomSkillChange.Invoke(" ");
         poolBolasInfernales = GetComponent<PoolProyectilW>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && esperaSiguienteAtaqueQ <= 0) {
+            UsarQ();
+        }
+        if (Input.GetKeyDown(KeyCode.W) && esperaSiguienteAtaqueW <= 0 && munW > 0) {
+            UsarW();
+        }
+        if (Input.GetKeyDown(KeyCode.E) && esperaSiguienteAtaqueE <= 0 && munE > 0) {
+            UsarE();
+        }
+        if (Input.GetKeyDown(KeyCode.R) && esperaSiguienteAtaqueR <= 0 && munR > 0)
+        {
+            UsarR();
+        }
+        if (Input.GetKeyDown(KeyCode.T) && habilidadAleatoria != 0) {
+            UsarT();
+        }
+        if (esperaSiguienteAtaqueQ > 0)
+        {
+            esperaSiguienteAtaqueQ -= Time.deltaTime;
+        }
+        if (esperaSiguienteAtaqueW > 0)
+        {
+            esperaSiguienteAtaqueW -= Time.deltaTime;
+        }
+        if (esperaSiguienteAtaqueE > 0)
+        {
+            esperaSiguienteAtaqueE -= Time.deltaTime;
+        }
+        if (esperaSiguienteAtaqueR > 0)
+        {
+            esperaSiguienteAtaqueR -= Time.deltaTime;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(posicionControladorGolpeQ.position, radioGolpeQ);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(posicionControladorGolpeCA.position, areaGolpeCA);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(posicionControladorGolpeRE.position, areaGolpeRE);
+    }
+
+    public bool DetectarHabilidadActiva()
+    {
+        return habilidadActiva;
+    }
+
+    public void TerminarHabilidad()
+    {
+        animatorCuerpo.SetBool("HabilidadActiva", false);
     }
 
     public void CambiarHabilidadAleatoria(int habAl)
@@ -125,35 +185,36 @@ public class AtaquesPrevisional : MonoBehaviour
                 break;
         }
     }
-    private void UsarQ()
+
+    private void ReactivarBrazo()
     {
-        esperaSiguienteAtaqueQ = intervaloEntreGolpesQ;
-        GolpeQ();
-        StartCoroutine(nameof(ActivarAtaqueQ));
-        
+        brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadInactiva();
     }
 
-    private IEnumerator ActivarAtaqueQ()
+    public void ParalizarPorHabilidad()
     {
-        representacionAtaqueQ.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaqueQ.gameObject.SetActive(false);
+        gameObject.GetComponent<Movimiento>().CambiarAturdido(true);
     }
-    private void OnDrawGizmos()
+
+    public void ContinuarMovimiento()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(posicionControladorGolpeQ.position, radioGolpeQ);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(posicionControladorGolpeCA.position, areaGolpeCA);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(posicionControladorGolpeRE.position, areaGolpeRE);
+        gameObject.GetComponent<Movimiento>().CambiarAturdido(false);
     }
-    private void GolpeQ()
+    private void UsarQ()
+    {
+        animatorCuerpo.SetBool("HabilidadActiva", true);
+        esperaSiguienteAtaqueQ = intervaloEntreGolpesQ;
+        animatorCuerpo.SetTrigger("GolpeBasico");
+        brazoDerecho.GetComponent<AnimarBrazo>().AnimacionGolpeBasico();
+        brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
+    }
+  
+    public void GolpeQ()
     {
         Collider2D[] areaGolpe = Physics2D.OverlapCircleAll(posicionControladorGolpeQ.position, radioGolpeQ);
         foreach (Collider2D col in areaGolpe)
         {
-            if (col.CompareTag("EnemigoBasico"))
+            if (col.CompareTag("EnemigoBasico") || col.CompareTag("Jefe"))
             {
                 col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoGolpeQ);
                 Debug.Log("Enemigo Herido");
@@ -181,18 +242,17 @@ public class AtaquesPrevisional : MonoBehaviour
 
     private void UsarW()
     {
+        animatorCuerpo.SetTrigger("BolaDeFuego");
+        animatorCuerpo.SetBool("HabilidadActiva", true);//animatorCuerpo.SetBool("BrazoInerte", true);
+        brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
         munWActual--;
         OnWAmmoChange.Invoke(munWActual.ToString());
         esperaSiguienteAtaqueW = intervaloEntreGolpesW;
-        DisparoW();
         
     }
 
     private void DisparoW()
     {
-        //GameObject nuevoProyectil = proyectilW;
-        //nuevoProyectil.transform.position = puntoDisparoW.transform.position;
-        //Instantiate(nuevoProyectil);
         GenerarBolaInfernal();
     }
 
@@ -209,11 +269,18 @@ public class AtaquesPrevisional : MonoBehaviour
 
     private void UsarE()
     {
+        animatorCuerpo.SetBool("HabilidadActiva", true);
+        brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
         munEActual--;
         OnEAmmoChange.Invoke(munEActual.ToString());
         esperaSiguienteAtaqueE = intervaloEntreGolpesE;
-        InvocarE();
-        
+        animatorCuerpo.SetTrigger("InvocarSoldados");
+        portales.SetActive(true);
+    }
+
+    private void DesactivarPortales()
+    {
+        portales.SetActive(false);
     }
 
     private void InvocarE()
@@ -229,35 +296,29 @@ public class AtaquesPrevisional : MonoBehaviour
 
     private void UsarR()
     {
+        animatorCuerpo.SetBool("HabilidadActiva", true);
+        brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
         munRActual--;
         OnRAmmoChange.Invoke(munRActual.ToString());
         esperaSiguienteAtaqueR = intervaloEntreGolpesR;
-        StartCoroutine(nameof(ActivarR));
-        
+        animatorCuerpo.SetTrigger("ActivarEscudo");
     }
 
-    private IEnumerator ActivarR()
+    private void InicioR()
     {
         muroR.SetActive(true);
-        yield return new WaitForSeconds(duracionMuroR);
-        StartCoroutine(nameof(ExplosionMuro));
-        muroR.SetActive(false);
-        muroR.GetComponent<FuncionamientoMuro>().GolpeR();
     }
 
-    private IEnumerator ExplosionMuro()
+    private void ExplosionMuro()
     {
-        explosionMuro.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        explosionMuro.gameObject.SetActive(false);
+        muroR.GetComponent<FuncionamientoMuro>().DestruirMuro();
     }
 
     private void UsarT()
     {
-        //while (aleatoriaDisponible)
-        //{
-            switch(habilidadAleatoria)
-            {
+        animatorCuerpo.SetBool("HabilidadActiva", true);
+        switch (habilidadAleatoria)
+        {
                 case 1:
                     CorteAplastante();
                     OnRandomSkillChange.Invoke("Ninguna");
@@ -284,42 +345,67 @@ public class AtaquesPrevisional : MonoBehaviour
                     break;
                 default:
                     break;
-            }
-        //}
-    }
-
-    private void InvocarArtilleria()
-    {
-        for (int i = 0; i < invocacionArtilleria.Length; i++)
-        {
-            GameObject nuevaArtilleria = invocacionArtilleria[i];
-            nuevaArtilleria.transform.position = puntoArtilleria[i].transform.position;
-            Instantiate(nuevaArtilleria);
         }
     }
 
-    private void RecuperarMunicion()
+    private void CorteAplastante()
     {
-        munWActual = munW;
-        OnWAmmoChange.Invoke(munWActual.ToString());
-        munEActual = munE;
-        OnEAmmoChange.Invoke(munEActual.ToString());
-        munRActual = munR;
-        OnRAmmoChange.Invoke(munRActual.ToString());
-        //StartCoroutine(nameof(ParpadeoMunicion));
+        animatorCuerpo.SetBool("HabilidadActiva", true);
+        animatorCuerpo.SetTrigger("CorteAplastante");
+        brazoDerecho.GetComponent<AnimarBrazo>().AnimacionGolpeCA();
+        brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
     }
 
-    //private IEnumerator ParpadeoMunicion()
-    //{
-    //    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-    //    yield return new WaitForSeconds(0.1f);
-    //    gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-    //}
+    public void InicioEfectoCA()
+    {
+        representacionAtaqueCA.SetActive(true);
+    }
+
+    public void GolpeCA()
+    {
+        Collider2D[] areaGolpe = Physics2D.OverlapBoxAll(posicionControladorGolpeCA.position, areaGolpeCA, 0);
+        foreach (Collider2D col in areaGolpe)
+        {
+            if (col.CompareTag("EnemigoBasico"))
+            {
+                col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoGolpeCA);
+                col.transform.GetComponent<Rigidbody2D>().AddForce(fuerzaGolpeCA, ForceMode2D.Impulse);
+                Debug.Log("Enemigo Herido");
+            }
+
+            if (col.CompareTag("Jefe"))
+            {
+                col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoGolpeCA);
+                col.transform.GetComponent<Rigidbody2D>().AddForce(fuerzaGolpeCA, ForceMode2D.Impulse);
+                Debug.Log("Enemigo Herido");
+            }
+
+            if (col.CompareTag("EnemigoMina"))
+            {
+                col.transform.GetComponent<AtaqueMina>().ModificarVidaEnemigo(-dagnoGolpeCA);
+                Debug.Log("Enemigo Herido");
+            }
+
+            if (col.CompareTag("Aventurero"))
+            {
+                col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpeCA);
+                col.transform.GetComponent<Rigidbody2D>().AddForce(fuerzaGolpeCA, ForceMode2D.Impulse);
+                Debug.Log("Enemigo Herido");
+            }
+
+            if (col.CompareTag("Pegote"))
+            {
+                col.transform.GetComponent<FuncionamientoPegote>().ModificarVidaPegote(-dagnoGolpeCA);
+                Debug.Log("Enemigo Herido");
+            }
+        }
+    }
 
     private void Relampago()
     {
-        StartCoroutine(nameof(ActivacionRe));
-        
+        animatorCuerpo.SetBool("HabilidadActiva", true);
+        brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
+        animatorCuerpo.SetTrigger("Relampago");
     }
 
     private IEnumerator Aturdir(Collider2D col)
@@ -339,20 +425,9 @@ public class AtaquesPrevisional : MonoBehaviour
         }
     }
 
-    private IEnumerator RepresentarRelampago()
+    private void RepresentarRelampago()
     {
-        representacionPreparacionRE.gameObject.SetActive(false);
-        representacionAtaqueRE.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaqueRE.gameObject.SetActive(false);
-    }
-
-    private IEnumerator ActivacionRe()
-    {
-        representacionPreparacionRE.gameObject.SetActive(true);
-        yield return new WaitForSeconds(tiempoCargaRE);
-        GolpeRe();
-        StartCoroutine(nameof(RepresentarRelampago));
+        representacionAtaqueRE.SetActive(true);
     }
 
     private void GolpeRe()
@@ -394,94 +469,35 @@ public class AtaquesPrevisional : MonoBehaviour
         }
     }
 
-    private void CorteAplastante()
+    private void RecuperarMunicion()
     {
-        GolpeCA();
-        StartCoroutine(nameof(RepresentarAtaqueCA));
+        animatorCuerpo.SetBool("HabilidadActiva", true);
+        brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
+        animatorCuerpo.SetTrigger("Recargar");
+        munWActual = munW;
+        OnWAmmoChange.Invoke(munWActual.ToString());
+        munEActual = munE;
+        OnEAmmoChange.Invoke(munEActual.ToString());
+        munRActual = munR;
+        OnRAmmoChange.Invoke(munRActual.ToString());
+        //StartCoroutine(nameof(ParpadeoMunicion));
     }
 
-    private IEnumerator RepresentarAtaqueCA()
+    private void InvocarArtilleria()
     {
-        representacionAtaqueCA.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        representacionAtaqueCA.gameObject.SetActive(false);
+        animatorCuerpo.SetBool("HabilidadActiva", true);
+        brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
+        animatorCuerpo.SetTrigger("InvocarArtilleros");
+        portales.SetActive(true);
     }
 
-    private void GolpeCA()
+    private void AparicionArtilleria()
     {
-        Collider2D[] areaGolpe = Physics2D.OverlapBoxAll(posicionControladorGolpeCA.position, areaGolpeCA, 0);
-        foreach (Collider2D col in areaGolpe)
+        for (int i = 0; i < invocacionArtilleria.Length; i++)
         {
-            if (col.CompareTag("EnemigoBasico"))
-            {
-                col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoGolpeCA);
-                col.transform.GetComponent<Rigidbody2D>().AddForce(fuerzaGolpeCA, ForceMode2D.Impulse);
-                Debug.Log("Enemigo Herido");
-            }
-
-            if (col.CompareTag("Jefe"))
-            {
-                col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoGolpeCA);
-                col.transform.GetComponent<Rigidbody2D>().AddForce(fuerzaGolpeCA, ForceMode2D.Impulse);
-                Debug.Log("Enemigo Herido");
-            }
-
-            if (col.CompareTag("EnemigoMina"))
-            {
-                col.transform.GetComponent<AtaqueMina>().ModificarVidaEnemigo(-dagnoGolpeCA);
-                Debug.Log("Enemigo Herido");
-            }
-
-            if (col.CompareTag("Aventurero"))
-            {
-                col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoGolpeCA);
-                col.transform.GetComponent<Rigidbody2D>().AddForce(fuerzaGolpeCA, ForceMode2D.Impulse);
-                Debug.Log("Enemigo Herido");
-            }
-
-            if (col.CompareTag("Pegote"))
-            {
-                col.transform.GetComponent<FuncionamientoPegote>().ModificarVidaPegote(-dagnoGolpeCA);
-                Debug.Log("Enemigo Herido");
-            }
+            GameObject nuevaArtilleria = invocacionArtilleria[i];
+            nuevaArtilleria.transform.position = puntoArtilleria[i].transform.position;
+            Instantiate(nuevaArtilleria);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q) && esperaSiguienteAtaqueQ <= 0) {
-            UsarQ();
-        }
-        if (Input.GetKeyDown(KeyCode.W) && esperaSiguienteAtaqueW <= 0 && munW > 0) {
-            UsarW();
-        }
-        if (Input.GetKeyDown(KeyCode.E) && esperaSiguienteAtaqueE <= 0 && munE > 0) {
-            UsarE();
-        }
-        if (Input.GetKeyDown(KeyCode.R) && esperaSiguienteAtaqueR <= 0 && munR > 0)
-        {
-            UsarR();
-        }
-        if (Input.GetKeyDown(KeyCode.T) && habilidadAleatoria != 0) {
-            UsarT();
-        }
-        if (esperaSiguienteAtaqueQ > 0)
-        {
-            esperaSiguienteAtaqueQ -= Time.deltaTime;
-        }
-        if (esperaSiguienteAtaqueW > 0)
-        {
-            esperaSiguienteAtaqueW -= Time.deltaTime;
-        }
-        if (esperaSiguienteAtaqueE > 0)
-        {
-            esperaSiguienteAtaqueE -= Time.deltaTime;
-        }
-        if (esperaSiguienteAtaqueR > 0)
-        {
-            esperaSiguienteAtaqueR -= Time.deltaTime;
-        }
-    }
-
 }

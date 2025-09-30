@@ -17,6 +17,7 @@ public class FuncionamientoProyectil : MonoBehaviour
     {
         dagnoPorMultitud = 0f;
         rb = GetComponent<Rigidbody2D>();
+        rb.SetRotation(-90.0f);
         miAnimator = GetComponent<Animator>();
         FuerzaFuego();
     }
@@ -26,7 +27,7 @@ public class FuncionamientoProyectil : MonoBehaviour
         if (collision.CompareTag("Suelo") || collision.CompareTag("EnemigoBasico") || collision.CompareTag("Aventurero"))
         {
             GolpeProyectil();
-            Explotar();
+            ActivarExplosion();
         }
     }
 
@@ -35,18 +36,11 @@ public class FuncionamientoProyectil : MonoBehaviour
         rb.AddForce(fuerzaLanzamiento, ForceMode2D.Impulse);
     }
 
-    void Explotar()
-    {
-        StartCoroutine(nameof(ActivarExplosion));
-    }
 
-    private IEnumerator ActivarExplosion()
+    private void ActivarExplosion()
     {
-        miAnimator.Play("BolaFuegoExplosion");
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        yield return new WaitForSeconds(0.25f);
-        gameObject.SetActive(false);
-        rb.constraints = RigidbodyConstraints2D.None;
+        miAnimator.Play("BolaFuegoExplosion");
     }
 
     void GolpeProyectil()
@@ -81,8 +75,13 @@ public class FuncionamientoProyectil : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        rb.rotation -= 0.10f;
     }
 
-
+    private void ReiniciarRotacion()
+    {
+        gameObject.SetActive(false);
+        rb.constraints = RigidbodyConstraints2D.None;
+        rb.SetRotation(-90.0f);
+    }
 }

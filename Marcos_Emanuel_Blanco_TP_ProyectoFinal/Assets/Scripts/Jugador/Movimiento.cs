@@ -6,15 +6,19 @@ public class Movimiento : MonoBehaviour
 {
     private float moverHorizontal;
     private float direccion;
-    //private bool orientacionDer = true;
-    [SerializeField] private int velocidad;
+    [SerializeField] private GameObject cuerpo;
+    [SerializeField] private float velocidad;
     [SerializeField] private Transform limiteIzquierdo;
     [SerializeField] private Transform limiteDerecho;
+    [SerializeField] private GameObject piernas;
+    [SerializeField] private GameObject brazo;
+    private Animator animatorCuerpo;
     private bool paralizado;
     // Start is called before the first frame update
     void Start()
     {
         paralizado = false;
+        animatorCuerpo = GetComponent<Animator>();
     }
 
     public void CambiarAturdido(bool atu)
@@ -27,11 +31,30 @@ public class Movimiento : MonoBehaviour
     {
         if (!paralizado)
         {
-            moverHorizontal = Input.GetAxis("Horizontal");
+            moverHorizontal = Input.GetAxis("Horizontal") * velocidad;
             direccion = moverHorizontal;
-            //FlipHorizontal();
+            if(moverHorizontal > 0)
+            {
+                animatorCuerpo.SetBool("CaminandoAdelante", true);
+                animatorCuerpo.SetBool("CaminandoAtras", false);
+                brazo.GetComponent<AnimarBrazo>().CaminarAdelante();
+                piernas.GetComponent<AnimarPiernas>().CaminarAdelante();
+            }
+            if (moverHorizontal < 0)
+            {
+                animatorCuerpo.SetBool("CaminandoAdelante", false);
+                animatorCuerpo.SetBool("CaminandoAtras", true);
+                brazo.GetComponent<AnimarBrazo>().CaminarAtras();
+                piernas.GetComponent<AnimarPiernas>().CaminarAtras();
+            }
+            if (moverHorizontal == 0)
+            {
+                animatorCuerpo.SetBool("CaminandoAdelante", false);
+                animatorCuerpo.SetBool("CaminandoAtras", false);
+                brazo.GetComponent<AnimarBrazo>().Quieto();
+                piernas.GetComponent<AnimarPiernas>().Quieto();
+            }
         }
-        
     }
 
     private void FixedUpdate()
@@ -40,14 +63,4 @@ public class Movimiento : MonoBehaviour
         newPosition.x = Mathf.Clamp(newPosition.x, limiteIzquierdo.position.x, limiteDerecho.position.x);
         transform.position = newPosition;
     }
-
-    //private void FlipHorizontal()
-    //{
-    //    //if ((orientacionDer == true && moverHorizontal < 0f) || (orientacionDer == false && moverHorizontal > 0f))
-    //    //{
-    //    //    orientacionDer = !orientacionDer;
-    //    //    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
-    //    //}
-    //}
-
 }

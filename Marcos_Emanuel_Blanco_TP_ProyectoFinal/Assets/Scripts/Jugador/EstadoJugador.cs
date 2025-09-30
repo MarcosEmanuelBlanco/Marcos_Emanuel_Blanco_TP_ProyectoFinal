@@ -6,15 +6,20 @@ using UnityEngine.Events;
 public class EstadoJugador : MonoBehaviour
 {
     [SerializeField] private float vidaJugador;
-    private float vidaActual;
+    /*[SerializeField] */private float vidaActual;
     private int almas;
     private int puntaje;
     [SerializeField] private UnityEvent<string> OnHealthChange;
     [SerializeField] private UnityEvent<string> OnSoulsChange;
     [SerializeField] private UnityEvent<string> OnScoreChange;
-    // Start is called before the first frame update
+    private Animator animatorCuerpo;
+    [SerializeField] private GameObject brazo;
+    [SerializeField] private GameObject piernas;
+    [SerializeField] private bool finalMuerte;
     void Start()
     {
+        finalMuerte = false;
+        animatorCuerpo = GetComponent<Animator>();
         vidaActual = vidaJugador;
         puntaje = 0;
         almas = 3;
@@ -23,16 +28,45 @@ public class EstadoJugador : MonoBehaviour
         OnScoreChange.Invoke(puntaje.ToString());
     }
 
-    // Update is called once per frame
+    public void SetFinalMuerte(bool muerto)
+    {
+        finalMuerte = muerto;
+    }
+
+    public void MuertoTrue()
+    {
+        SetFinalMuerte(true);
+    }
+
+    public void MuertoFalse()
+    {
+        SetFinalMuerte(false);
+    }
+    public bool GetFinalMuerte()
+    {
+        return finalMuerte;
+    }
     void Update()
     {
-        
+
     }
 
     public void ModificarVidaJugador(float puntos)
     {
         vidaActual += puntos;
         OnHealthChange.Invoke(vidaActual.ToString());
+        MuerteJugador();
+    }
+
+    private void MuerteJugador()
+    {
+        if (vidaActual <= 0)
+        {
+            gameObject.GetComponent<Movimiento>().CambiarAturdido(true);
+            animatorCuerpo.SetTrigger("Muerte");
+            brazo.GetComponent<AnimarBrazo>().Muerte();
+            piernas.GetComponent<AnimarPiernas>().Quieto();
+        }
     }
 
     public float GetVidaActual()
@@ -63,5 +97,12 @@ public class EstadoJugador : MonoBehaviour
         OnHealthChange.Invoke(vidaActual.ToString());
         almas--;
         OnSoulsChange.Invoke(almas.ToString());
+    }
+
+    public void Destierro()
+    {
+        animatorCuerpo.SetTrigger("Destierro");
+        brazo.GetComponent<AnimarBrazo>().BrazoInerte();
+        piernas.GetComponent<AnimarPiernas>().Quieto();
     }
 }

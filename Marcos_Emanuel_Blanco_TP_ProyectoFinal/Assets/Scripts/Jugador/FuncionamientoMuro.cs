@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FuncionamientoMuro : MonoBehaviour
 {
+    private Animator animatorMuro;
     [SerializeField] private float vidaMuro;
-    //private float vidaActualMuro;
     [SerializeField] private float dagnoExplosionR;
     [SerializeField] private float dagnoBaseExplosionR;
     [SerializeField] private Transform puntoExplosionMuro;
@@ -13,13 +13,13 @@ public class FuncionamientoMuro : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //vidaActualMuro = vidaMuro;
+        animatorMuro = GetComponent<Animator>();
     }
     public void DagnarMuro(float dagnoEnemigo)
     {
         vidaMuro += dagnoEnemigo;
         dagnoExplosionR -= dagnoEnemigo;
-        DestruirMuro();
+        animatorMuro.SetTrigger("MuroImpacto");
     }
 
     public void GolpeR()
@@ -49,17 +49,15 @@ public class FuncionamientoMuro : MonoBehaviour
             }
         }
     }
-    private void DestruirMuro()
+    public void DestruirMuro()
     {
-        if (vidaMuro <= 0)
-        {
-            GolpeR();
-            
-            gameObject.SetActive(false);
-        }
-        vidaMuro = 200;
+        animatorMuro.SetTrigger("DestruirMuro");
     }
 
+    private void Desactivar()
+    {
+        gameObject.SetActive(false);
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

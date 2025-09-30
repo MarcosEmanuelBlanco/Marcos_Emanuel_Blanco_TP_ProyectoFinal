@@ -85,7 +85,7 @@ public class AtaqueMagoAventurero : MonoBehaviour
                 if (col.CompareTag("Invocacion"))
                 {
                     ActivarAtaque();
-                    col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoGolpe);
+                    col.transform.GetComponent<Invocacion>().ModificarVidaInvocacion(-dagnoGolpe);
                     Debug.Log("Enemigo Herido");
                 }
 

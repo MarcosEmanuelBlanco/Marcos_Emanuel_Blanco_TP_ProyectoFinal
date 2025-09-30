@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 3904442452710247798}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.647952, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -83,7 +83,7 @@ MonoBehaviour:
   posicionControladorExplosion: {fileID: 8992949370933617603}
   radioExplosion: 2
   dagnoExplosion: 200
-  fuerzaLanzamiento: {x: 5, y: 1}
+  fuerzaLanzamiento: {x: 10, y: -1}
 --- !u!50 &6015563861615656159
 Rigidbody2D:
   serializedVersion: 4

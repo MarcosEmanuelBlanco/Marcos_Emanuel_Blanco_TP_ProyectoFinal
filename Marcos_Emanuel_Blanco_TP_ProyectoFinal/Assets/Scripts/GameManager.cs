@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private bool puedeVolver;
     private bool juegoDetenido;
     private bool gulgoVivo;
+    [SerializeField] private GameObject dhaork;
     [SerializeField] private int enemigosDerribados;
     [SerializeField] private int totalEnemigos;
     [SerializeField] private TextMeshProUGUI textoJuegoDetenido;
@@ -35,10 +36,10 @@ public class GameManager : MonoBehaviour
         Derribado();
         RevivirOReiniciar();
         AreaAsegurada();
+        GrulgoshDerrotado();
         if(Input.GetKeyDown(KeyCode.Space) && puedeVolver && juegoDetenido)
         {
-            GameObject jugador = GameObject.FindGameObjectWithTag("Player");
-            jugador.GetComponent<EstadoJugador>().Revivir();
+            dhaork.GetComponent<EstadoJugador>().Revivir();
         }
 
         if(Input.GetKeyDown(KeyCode.Space) && !puedeVolver && juegoDetenido)
@@ -59,8 +60,7 @@ public class GameManager : MonoBehaviour
 
     void Derribado()
     {
-        GameObject jugador = GameObject.FindGameObjectWithTag("Player");
-        if (jugador.GetComponent<EstadoJugador>().GetVidaActual() <= 0)
+        if (dhaork.GetComponent<EstadoJugador>().GetFinalMuerte())
         {
             textoJuegoDetenido.gameObject.SetActive(true);
             Time.timeScale = 0;
@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         juegoDetenido = false;
+        dhaork.GetComponent<EstadoJugador>().MuertoFalse();
     }
 
     void VolverAlMenu()
@@ -90,8 +91,7 @@ public class GameManager : MonoBehaviour
 
     void RevivirOReiniciar()
     {
-        GameObject jugador = GameObject.FindGameObjectWithTag("Player");
-        if (jugador.GetComponent<EstadoJugador>().GetAlmas() > 0)
+        if (dhaork.GetComponent<EstadoJugador>().GetAlmas() > 0)
         {
             OnRemainingSoulsChange.Invoke("Te derrotaron, pero no es el fin. Consume 1 alma con ESPACIO para continuar.");
             puedeVolver = true;
@@ -112,8 +112,13 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             juegoDetenido = true;
         }
+
+    }
+
+    private void GrulgoshDerrotado()
+    {
         GameObject gulgo = GameObject.FindGameObjectWithTag("Jefe");
-        if(gulgo != null && gulgo.GetComponent<EnemigoPrevisional>().GetVidaActual() <= 0)
+        if(gulgo != null && gulgo.GetComponent<MuerteGrulgosh>().GetGMuerto())
         {
             gulgoVivo = false;
             OnRemainingSoulsChange.Invoke("ÁREA ASEGURADA. Presioná ESPACIO para reiniciar o ESCAPE para volver.");

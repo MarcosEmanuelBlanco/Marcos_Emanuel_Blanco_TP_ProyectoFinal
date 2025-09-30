@@ -41,7 +41,7 @@ public class ProyectilEnemigo : MonoBehaviour
         if(collision.CompareTag("Invocacion"))
         {
             AnimarYParalizar();
-            collision.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoExplosion);
+            collision.transform.GetComponent<Invocacion>().ModificarVidaInvocacion(-dagnoExplosion);
         }
 
         if (collision.CompareTag("Aventurero"))

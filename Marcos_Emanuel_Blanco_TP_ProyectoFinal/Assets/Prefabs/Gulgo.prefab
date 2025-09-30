@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 8493967475083376332}
   - component: {fileID: 4263210699756758641}
   - component: {fileID: 9121742136277465396}
+  - component: {fileID: 8776881199204720316}
   m_Layer: 0
   m_Name: Gulgo
   m_TagString: Jefe
@@ -385,7 +386,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.3333334, y: 1}
-    newSize: {x: 10.24, y: 7.68}
+    newSize: {x: 1.3333334, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -478,7 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887117741b1009b4cbbb9619e1b9a8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barraVida: {fileID: 0}
+  barraVida: {fileID: 2515512514281514882}
   vidaMaxima: 5000
   valorEnemigo: 1000
   OnHealthChange:
@@ -496,6 +497,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  textoVida: {fileID: 1053907952556233104}
+  vidaActual: 0
 --- !u!114 &8493967475083376332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,7 +559,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 10.24, y: 7.68}
+  m_Size: {x: 1.3333334, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -583,6 +586,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8776881199204720316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049127710460925861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb18a005b1bab2a4da88bdff0ab8c40f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4348504668592986302
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5349820439012549618
 RectTransform:
   m_ObjectHideFlags: 0

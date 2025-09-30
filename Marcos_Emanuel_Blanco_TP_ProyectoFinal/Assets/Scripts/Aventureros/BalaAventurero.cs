@@ -63,11 +63,11 @@ public class BalaAventurero : MonoBehaviour
                 gameObject.SetActive(false);
             }
 
-            //if (col.CompareTag("Invocacion"))
-            //{
-            //    col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-dagnoBala);
-            //    Destroy(gameObject);
-            //}
+            if (col.CompareTag("Invocacion"))
+            {
+                col.transform.GetComponent<Invocacion>().ModificarVidaInvocacion(-dagnoBala);
+                gameObject.SetActive(false);
+            }
         }
     }
 

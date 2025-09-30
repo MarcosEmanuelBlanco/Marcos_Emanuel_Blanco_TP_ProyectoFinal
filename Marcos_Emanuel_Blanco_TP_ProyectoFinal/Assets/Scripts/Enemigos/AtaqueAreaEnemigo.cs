@@ -84,7 +84,7 @@ public class AtaqueAreaEnemigo : MonoBehaviour
                 }else if (col.CompareTag("Invocacion"))
                 {
                     ActivarAtaque();
-                    col.transform.GetComponent<Invocacion>().ModificarVidaEnemigo(-dagnoGolpe);
+                    col.transform.GetComponent<Invocacion>().ModificarVidaInvocacion(-dagnoGolpe);
                 }       
             }
         }

@@ -357,6 +357,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  textoVida: {fileID: 4473388069678867019}
+  vidaActual: 0
 --- !u!114 &5293345248092003554
 MonoBehaviour:
   m_ObjectHideFlags: 0

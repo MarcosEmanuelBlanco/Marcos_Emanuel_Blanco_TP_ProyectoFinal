@@ -1312,6 +1312,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &289324941 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7749695349455577092, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
+  m_PrefabInstance: {fileID: 6886119447244489308}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &299181348
 GameObject:
   m_ObjectHideFlags: 0
@@ -21482,6 +21487,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 482106310260257595, guid: 8229988fd7fccc64197521484c7411f9, type: 3}
+      propertyPath: dhaork
+      value: 
+      objectReference: {fileID: 289324941}
+    - target: {fileID: 482106310260257595, guid: 8229988fd7fccc64197521484c7411f9, type: 3}
       propertyPath: totalEnemigos
       value: 29
       objectReference: {fileID: 0}
@@ -21839,6 +21848,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2994676879331515623, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
+      propertyPath: vidaActual
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2994676879331515623, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: vidaJugador
       value: 25000
       objectReference: {fileID: 0}
@@ -21896,7 +21909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 706610819626805644, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 496.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 706610819626805644, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21944,7 +21957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 773730621345373940, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: habilidadAleatoria
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 773730621345373940, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: OnRandomSkillChange.m_PersistentCalls.m_Calls.Array.size
