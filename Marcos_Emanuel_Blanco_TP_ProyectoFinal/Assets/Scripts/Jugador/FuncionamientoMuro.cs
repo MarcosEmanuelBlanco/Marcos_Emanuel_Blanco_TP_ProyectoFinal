@@ -30,21 +30,21 @@ public class FuncionamientoMuro : MonoBehaviour
             if (col.CompareTag("EnemigoBasico"))
             {
                 col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-(dagnoBaseExplosionR + dagnoExplosionR));
-                dagnoExplosionR = 0;
+                
                 Debug.Log("Enemigo Herido");
             }
 
             if (col.CompareTag("Jefe"))
             {
                 col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-(dagnoBaseExplosionR + dagnoExplosionR));
-                dagnoExplosionR = 0;
+                
                 Debug.Log("Enemigo Herido");
             }
 
             if (col.CompareTag("Aventurero"))
             {
                 col.transform.GetComponent<Aventurero>().ModificarVidaEnemigo(-(dagnoBaseExplosionR + dagnoExplosionR));
-                dagnoExplosionR = 0;
+                
                 Debug.Log("Enemigo Herido");
             }
         }
@@ -56,6 +56,7 @@ public class FuncionamientoMuro : MonoBehaviour
 
     private void Desactivar()
     {
+        dagnoExplosionR = 0.0f;
         gameObject.SetActive(false);
     }
     private void OnDrawGizmos()

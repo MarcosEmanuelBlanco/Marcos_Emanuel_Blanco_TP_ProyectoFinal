@@ -19,7 +19,7 @@ public class EnemigoPrevisional : MonoBehaviour
 
     private void Start()
     {
-        //vidaActual = vidaMaxima;
+        vidaActual = vidaMaxima;
         OnHealthChange.Invoke(vidaActual.ToString());
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemigo"), LayerMask.NameToLayer("Enemigo"), true);
         animatorMov = GetComponent<Animator>();
@@ -32,7 +32,7 @@ public class EnemigoPrevisional : MonoBehaviour
     {
         vidaActual += puntos;
         OnHealthChange.Invoke(vidaActual.ToString());
-        Debug.Log("Enemigo herido");
+        barraVida.GetComponent<ActualizarTextoVidaEnemigo>().ActivarAnimaciones();
         Muerte();
     }
 
@@ -47,8 +47,6 @@ public class EnemigoPrevisional : MonoBehaviour
         {
             muerto = true; 
             barraVida.gameObject.SetActive(false);
-            GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
-            controlador.GetComponent<GameManager>().contarDerribados();
             collider2.enabled = false;
             rigidbody2.Sleep();
             if (GameObject.FindGameObjectWithTag("Player") != null)
@@ -78,8 +76,6 @@ public class EnemigoPrevisional : MonoBehaviour
         if (vidaActual <= 0)
         {
             barraVida.gameObject.SetActive(false);
-            GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
-            controlador.GetComponent<GameManager>().contarDerribados();
             collider2.enabled = false;
             rigidbody2.Sleep();
             animatorMov.SetBool("Muerto", true);
@@ -88,6 +84,8 @@ public class EnemigoPrevisional : MonoBehaviour
 
     private void DestruirEnemigo()
     {
+        GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
+        controlador.GetComponent<GameManager>().ContarDerribados();
         Destroy(gameObject);
     }
 

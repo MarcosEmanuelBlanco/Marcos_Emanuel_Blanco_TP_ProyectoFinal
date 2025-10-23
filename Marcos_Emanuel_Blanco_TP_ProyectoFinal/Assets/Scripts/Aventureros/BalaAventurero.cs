@@ -8,14 +8,14 @@ public class BalaAventurero : MonoBehaviour
     [SerializeField] private float areaBala;
     [SerializeField] private float dagnoBala;
     private Rigidbody2D rb;
-    //private Animator miAnimator;
+    private Animator animatorBala;
     [SerializeField] private Vector2 fuerzaLanzamiento;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         CambiarDireccionBala();
-        //miAnimator = GetComponent<Animator>();
+        animatorBala = GetComponent<Animator>();
         FuerzaDisparo();
     }
 
@@ -54,19 +54,19 @@ public class BalaAventurero : MonoBehaviour
             if (col.CompareTag("EnemigoBasico"))
             {
                 col.transform.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-dagnoBala);
-                gameObject.SetActive(false);
+                animatorBala.SetTrigger("Impacto");
             }
 
             if (col.CompareTag("Player"))
             {
                 col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoBala);
-                gameObject.SetActive(false);
+                animatorBala.SetTrigger("Impacto");
             }
 
             if (col.CompareTag("Invocacion"))
             {
                 col.transform.GetComponent<Invocacion>().ModificarVidaInvocacion(-dagnoBala);
-                gameObject.SetActive(false);
+                animatorBala.SetTrigger("Impacto");
             }
         }
     }

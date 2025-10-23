@@ -14,7 +14,6 @@ public class Movimiento : MonoBehaviour
     [SerializeField] private GameObject brazo;
     private Animator animatorCuerpo;
     private bool paralizado;
-    // Start is called before the first frame update
     void Start()
     {
         paralizado = false;
@@ -26,7 +25,17 @@ public class Movimiento : MonoBehaviour
         paralizado = atu;
     }
 
-    // Update is called once per frame
+    public bool GetAturdido()
+    {
+        return paralizado;
+    }
+
+    private void OnDisable()
+    {
+        animatorCuerpo.SetBool("CaminandoAdelante", false);
+        animatorCuerpo.SetBool("CaminandoAtras", false);
+    }
+
     void Update()
     {
         if (!paralizado)
@@ -54,6 +63,12 @@ public class Movimiento : MonoBehaviour
                 brazo.GetComponent<AnimarBrazo>().Quieto();
                 piernas.GetComponent<AnimarPiernas>().Quieto();
             }
+        }
+
+        if (paralizado)
+        {
+            animatorCuerpo.SetBool("CaminandoAdelante", false);
+            animatorCuerpo.SetBool("CaminandoAtras", false);
         }
     }
 

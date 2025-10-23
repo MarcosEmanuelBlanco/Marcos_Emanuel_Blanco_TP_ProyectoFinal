@@ -91,8 +91,6 @@ public class ComportamientoGulgo : MonoBehaviour
         animator = GetComponent<Animator>();
         velocidadCorreteoReal = distanciaCorreteo;
         estadoActual = Morder;
-        StartCoroutine(Espera());
-        
         representacionAtaqueCuerpoACuerpo.gameObject.SetActive(false);
         representacionAtaqueMordisco.gameObject.SetActive(false);
         representacionAtaqueRaices.gameObject.SetActive(false);
@@ -100,36 +98,14 @@ public class ComportamientoGulgo : MonoBehaviour
         poolProyectilPegote = GetComponent<PoolProyectilGulgo>();
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Suelo"))
-    //    {
-    //        Collider2D[] objetos = Physics2D.OverlapBoxAll(areaEstruendo.position, tamanoEstruendo, 0);
-    //        foreach (Collider2D col in objetos)
-    //        {
-    //            if (col.CompareTag("Player"))
-    //            {
-    //                col.transform.GetComponent<Movimiento>().GetBody().AddForce(Vector2.up * fuerzaEstruendo, ForceMode2D.Impulse);
-    //                col.transform.GetComponent<Jugador>().ModificarVida(-dagnoEstruendo);
-    //            }
-    //        }
-    //    }
-
-    //    if (collision.gameObject.CompareTag("Player"))
-    //    {
-    //        collision.gameObject.GetComponent<Movimiento>().Rebotar(collision.GetContact(0).normal);
-    //    }
-    //}
-
-    private IEnumerator Espera()
+    public void Espera()
     {
-        yield return new WaitForSeconds(5.0f);
         StartCoroutine(Comportamientos());
     }
 
     private void Update()
     {
-        GolpeEsporas();
+        //GolpeEsporas();
         //miAnimator.SetBool("JefeEnAire", !JefeEnContactoConPlataforma());
     }
     private void OnDrawGizmos()
@@ -140,15 +116,7 @@ public class ComportamientoGulgo : MonoBehaviour
         Gizmos.DrawWireCube(puntoCuerpoACuerpo.position, alcanceCuerpoACuerpo);
         Gizmos.DrawWireCube(puntoEsporas.position, alcanceEsporas);
     }
-    // Codigo ejecutado cuando el objeto se activa en el nivel
-    private void OnEnable()
-    {
-        //miRigidbody2D = GetComponent<Rigidbody2D>();
-        //miSprite = GetComponent<SpriteRenderer>();
-        //miAnimator = GetComponent<Animator>();
-        //miBoxCollider = GetComponent<BoxCollider2D>();
-        //saltoMask = LayerMask.GetMask("Plataformas");
-    }
+
     private IEnumerator Comportamientos()
     {
         if (!gameObject.GetComponent<EnemigoPrevisional>().GetMuerto())
@@ -288,6 +256,11 @@ public class ComportamientoGulgo : MonoBehaviour
     {
         animator.SetBool("SueltaRaices", true);
     }
+
+    private void FinalRaices()
+    {
+        animator.SetBool("SueltaRaices", false);
+    }
     private void RepresentarRaices()
     {
         representacionAtaqueRaices.gameObject.SetActive(true);
@@ -389,6 +362,11 @@ public class ComportamientoGulgo : MonoBehaviour
     {
         animator.SetBool("Escupe", true);
     }
+
+    private void FinalDisparar()
+    {
+        animator.SetBool("Escupe", false);
+    }
     private void GenerarProyectilPegote()
     {
         GameObject pooledProyectilPegote = poolProyectilPegote.GetPooledBolasPegote();
@@ -408,9 +386,17 @@ public class ComportamientoGulgo : MonoBehaviour
         //GolpeEsporas();
     }
 
+    private void FinalLanzarEsporas()
+    {
+        animator.SetBool("SueltaEsporas", false);
+        //yield return new WaitForSeconds(tiempoCargaRaices);
+        //GolpeEsporas();
+    }
+
     private void RepresentarEsporas()
     {
         representacionAtaqueEsporas.gameObject.SetActive(true);
+        InvokeRepeating(nameof(GolpeEsporas), 0, 1);
         //yield return new WaitForSeconds(0.1f);
         //representacionAtaqueEsporas.gameObject.SetActive(false);
     }
@@ -434,25 +420,4 @@ public class ComportamientoGulgo : MonoBehaviour
             }
         }
     }
-    //private bool JefeEnContactoConPlataforma()
-    //{
-    //    return miBoxCollider.IsTouchingLayers(saltoMask);
-    //}
-    //private IEnumerator Disparar()
-    //{
-    //    yield return new WaitForSeconds(tiempoDeCarga);
-
-    //    for (int i = 0; i < 5; i++)
-    //    {
-    //        Instantiate(orbesRojas[i], puntoDisparoBola[i].position, Quaternion.identity);
-    //    }
-    //}
-
-    //private IEnumerator Saltar()
-    //{
-    //    miRigidbody2D.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse); //Más adelante se pondrá aquí una función para que cree un área de daño al tocar el piso.
-    //    yield return null;
-    //}
-
-
 }

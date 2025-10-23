@@ -18,6 +18,7 @@ public class FuncionamientoInvocacion : MonoBehaviour
 
     void Start()
     {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Invocacion"), LayerMask.NameToLayer("Jugador"), true);
         animatorSoldado = GetComponent<Animator>();
         collider2 = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -28,7 +29,7 @@ public class FuncionamientoInvocacion : MonoBehaviour
     {
         MovimientoInvocacion();
         RaycastHit2D rayoSensorBorde = Physics2D.Raycast(posicionSensorSalto.position, Vector2.down, alcanceSensorSalto);
-        if (rayoSensorBorde.transform.CompareTag("EnemigoBasico") == true || rayoSensorBorde.transform.CompareTag("Aventurero") == true || rayoSensorBorde.transform.CompareTag("Jefe") == true)
+        if (rayoSensorBorde.transform.CompareTag("EnemigoBasico") == true || rayoSensorBorde.transform.CompareTag("Aventurero") == true || rayoSensorBorde.transform.CompareTag("Jefe") == true || rayoSensorBorde.transform.CompareTag("EnemigoMina") == true)
         {
             Debug.Log("saltando");
             SaltoInvocacion();

@@ -74,7 +74,12 @@ public class AnimarBrazo : MonoBehaviour
 
     public void Muerte()
     {
-        animatorBrazo.SetTrigger("BrazoMuerte");
+        animatorBrazo.SetBool("BrazoMuerte",true);
+    }
+
+    public void BrazoRevivir()
+    {
+        animatorBrazo.SetBool("BrazoMuerte", false);
     }
 
     public void BrazoInerte() {
@@ -84,5 +89,18 @@ public class AnimarBrazo : MonoBehaviour
     public void BrazoActivo()
     {
         animatorBrazo.SetBool("BrazoInerte", false);
+    }
+
+    private void FrenarParaCombateFinal()
+    {
+        if (dhaork.GetComponent<Movimiento>().enabled == false)
+        {
+            Quieto();
+        }
+    }
+
+    private void Update()
+    {
+        FrenarParaCombateFinal();
     }
 }

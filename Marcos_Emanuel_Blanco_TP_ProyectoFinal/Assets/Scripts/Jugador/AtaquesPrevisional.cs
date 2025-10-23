@@ -25,6 +25,7 @@ public class AtaquesPrevisional : MonoBehaviour
     [SerializeField] private float esperaSiguienteAtaqueW;
     [SerializeField] private float intervaloEntreGolpesW;
     [SerializeField] private PoolProyectilW poolBolasInfernales;
+    [SerializeField] private GameObject circuloW;
 
     [Header("E")]
 
@@ -33,6 +34,7 @@ public class AtaquesPrevisional : MonoBehaviour
     [SerializeField] private Transform[] puntoInvocacionE;
     [SerializeField] private float esperaSiguienteAtaqueE;
     [SerializeField] private float intervaloEntreGolpesE;
+    [SerializeField] private GameObject circuloE;
 
     [Header("R")]
 
@@ -41,7 +43,7 @@ public class AtaquesPrevisional : MonoBehaviour
     [SerializeField] private Transform explosionMuro;
     [SerializeField] private float esperaSiguienteAtaqueR;
     [SerializeField] private float intervaloEntreGolpesR;
-    [SerializeField] private float duracionMuroR;
+    [SerializeField] private GameObject circuloR;
 
     [Header("Aleatoria")]
 
@@ -245,6 +247,7 @@ public class AtaquesPrevisional : MonoBehaviour
         animatorCuerpo.SetTrigger("BolaDeFuego");
         animatorCuerpo.SetBool("HabilidadActiva", true);//animatorCuerpo.SetBool("BrazoInerte", true);
         brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
+        circuloW.GetComponent<AnimarCirculo>().AnimacionEnfriamiento();
         munWActual--;
         OnWAmmoChange.Invoke(munWActual.ToString());
         esperaSiguienteAtaqueW = intervaloEntreGolpesW;
@@ -271,6 +274,7 @@ public class AtaquesPrevisional : MonoBehaviour
     {
         animatorCuerpo.SetBool("HabilidadActiva", true);
         brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
+        circuloE.GetComponent<AnimarCirculo>().AnimacionEnfriamiento();
         munEActual--;
         OnEAmmoChange.Invoke(munEActual.ToString());
         esperaSiguienteAtaqueE = intervaloEntreGolpesE;
@@ -298,6 +302,7 @@ public class AtaquesPrevisional : MonoBehaviour
     {
         animatorCuerpo.SetBool("HabilidadActiva", true);
         brazoDerecho.GetComponent<AnimarBrazo>().BrazoHabilidadActiva();
+        circuloR.GetComponent<AnimarCirculo>().AnimacionEnfriamiento();
         munRActual--;
         OnRAmmoChange.Invoke(munRActual.ToString());
         esperaSiguienteAtaqueR = intervaloEntreGolpesR;

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class EstadoJugador : MonoBehaviour
 {
     [SerializeField] private float vidaJugador;
-    /*[SerializeField] */private float vidaActual;
+    private float vidaActual;
     private int almas;
     private int puntaje;
     [SerializeField] private UnityEvent<string> OnHealthChange;
@@ -63,7 +63,7 @@ public class EstadoJugador : MonoBehaviour
         if (vidaActual <= 0)
         {
             gameObject.GetComponent<Movimiento>().CambiarAturdido(true);
-            animatorCuerpo.SetTrigger("Muerte");
+            animatorCuerpo.SetBool("Muerte",true);
             brazo.GetComponent<AnimarBrazo>().Muerte();
             piernas.GetComponent<AnimarPiernas>().Quieto();
         }
@@ -97,6 +97,10 @@ public class EstadoJugador : MonoBehaviour
         OnHealthChange.Invoke(vidaActual.ToString());
         almas--;
         OnSoulsChange.Invoke(almas.ToString());
+        gameObject.GetComponent<AtaquesPrevisional>().enabled = false;
+        gameObject.GetComponent<Movimiento>().CambiarAturdido(false);
+        animatorCuerpo.SetBool("Muerte", false);
+        brazo.GetComponent<AnimarBrazo>().BrazoRevivir();
     }
 
     public void Destierro()

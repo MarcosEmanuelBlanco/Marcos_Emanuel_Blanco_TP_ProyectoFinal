@@ -29,9 +29,18 @@ public class AnimarPiernas : MonoBehaviour
         animatorPiernas.SetBool("PiernasCaminandoAdelante", false);
     }
 
+    private void FrenarParaCombateFinal()
+    {
+        GameObject dhaork = GameObject.FindGameObjectWithTag("Player");
+        if (dhaork.GetComponent<Movimiento>().enabled == false)
+        {
+            Quieto();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        FrenarParaCombateFinal();
     }
 }

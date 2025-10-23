@@ -15,7 +15,7 @@ public class Aventurero : MonoBehaviour
     [SerializeField] private float distanciaAlJugador;
     [SerializeField] private UnityEvent<string> OnHealthChange;
     [SerializeField] private TextMeshProUGUI textoVida;
-    //[SerializeField] private Transform jugador;
+    [SerializeField] private GameObject alma;
     [SerializeField] private bool moviendose;
     [SerializeField] private bool atacando;
     private bool aLaDerecha;
@@ -63,7 +63,7 @@ public class Aventurero : MonoBehaviour
         {
             vidaEnemigo += puntos;
             OnHealthChange.Invoke(vidaEnemigo.ToString());
-            Debug.Log("Enemigo herido");
+            barraVida.GetComponent<ActualizarTextoVidaEnemigo>().ActivarAnimaciones();
             Muerte();
         }
     }
@@ -81,8 +81,6 @@ public class Aventurero : MonoBehaviour
                     enemigos[i].GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
                 }
             }
-            GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
-            controlador.GetComponent<GameManager>().contarDerribados();
             collider2.enabled = false;
             rigidbody2.Sleep();
             if (GameObject.FindGameObjectWithTag("Player") != null)
@@ -97,7 +95,7 @@ public class Aventurero : MonoBehaviour
                 AtaquesPrevisional ataques = jugador.GetComponent<AtaquesPrevisional>();
                 ataques.CambiarHabilidadAleatoria(bonusHabilidad);
             }
-
+            alma.SetActive(true);
             animatorMov.SetBool("Muerto", true);
         }
     }
@@ -128,8 +126,6 @@ public class Aventurero : MonoBehaviour
             {
                 enemigos[i].GetComponent<MovimientoEnemigo>().CambiarAtqAventurero(false);
             }
-            GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
-            controlador.GetComponent<GameManager>().contarDerribados();
             collider2.enabled = false;
             rigidbody2.Sleep();
             animatorMov.SetBool("Muerto", true);

@@ -15,4 +15,15 @@ public class ControladorMenuPrincipal : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void Controles()
+    {
+        SceneManager.LoadScene(7);
+    }
+
+    public void Creditos()
+    {
+        SceneManager.LoadScene(8);
+    }
+
 }

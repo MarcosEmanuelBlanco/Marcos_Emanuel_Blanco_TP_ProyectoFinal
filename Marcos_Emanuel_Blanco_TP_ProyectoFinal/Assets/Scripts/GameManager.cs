@@ -8,53 +8,72 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private bool puedeVolver;
-    private bool juegoDetenido;
+    [SerializeField] private bool juegoDetenido;
     private bool gulgoVivo;
     [SerializeField] private GameObject dhaork;
     [SerializeField] private int enemigosDerribados;
     [SerializeField] private int totalEnemigos;
-    [SerializeField] private TextMeshProUGUI textoJuegoDetenido;
+    [SerializeField] private GameObject HUDPrincipal;
+    [SerializeField] private GameObject cartelDerrotaConAlmas;
+    [SerializeField] private GameObject cartelDerrotaSinAlmas;
+    [SerializeField] private GameObject cartelVictoria;
+    [SerializeField] private GameObject cartelPausa;
     [SerializeField] private UnityEvent<string> OnRemainingSoulsChange;
-    // Start is called before the first frame update
     void Start()
     {
         enemigosDerribados = 0;
         juegoDetenido = false;
         puedeVolver = true;
         gulgoVivo = true;
-        textoJuegoDetenido.gameObject.SetActive(false);
+        cartelPausa.SetActive(false);
     }
 
-    public void contarDerribados()
+    public void ContarDerribados()
     {
         enemigosDerribados++;
     }
+    
+    public void PararTiempo()
+    {
+        Time.timeScale = 0;
+    }
 
-    // Update is called once per frame
+    public void RestaurarTiempo()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void RevivirJugador()
+    {
+        dhaork.GetComponent<EstadoJugador>().Revivir();
+        dhaork.GetComponent<EstadoJugador>().MuertoFalse();
+        HUDPrincipal.SetActive(true);
+    }
     void Update()
     {
         Derribado();
         RevivirOReiniciar();
         AreaAsegurada();
         GrulgoshDerrotado();
-        if(Input.GetKeyDown(KeyCode.Space) && puedeVolver && juegoDetenido)
-        {
-            dhaork.GetComponent<EstadoJugador>().Revivir();
-        }
+        Pausa();
+    }
 
-        if(Input.GetKeyDown(KeyCode.Space) && !puedeVolver && juegoDetenido)
+    public void Pausa()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            ReiniciarEscena();
+            cartelPausa.SetActive(true);
+            juegoDetenido = true;
         }
+        //ContinuarJuego();
+    }
 
-        if(Input.GetKeyDown(KeyCode.Space) && !gulgoVivo && juegoDetenido)
+    public void ContinuarJuego()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && juegoDetenido)
         {
-            ReiniciarEscena();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape) && juegoDetenido)
-        {
-            VolverAlMenu();
+            cartelPausa.SetActive(false);
+            juegoDetenido = false;
         }
     }
 
@@ -62,15 +81,16 @@ public class GameManager : MonoBehaviour
     {
         if (dhaork.GetComponent<EstadoJugador>().GetFinalMuerte())
         {
-            textoJuegoDetenido.gameObject.SetActive(true);
+            HUDPrincipal.SetActive(false);
             Time.timeScale = 0;
             juegoDetenido = true;
         }
         else
         {
+            HUDPrincipal.SetActive(true);
             juegoDetenido = false;
             Time.timeScale = 1;
-            textoJuegoDetenido.gameObject.SetActive(false);
+
         }
     }
 
@@ -79,7 +99,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         juegoDetenido = false;
-        dhaork.GetComponent<EstadoJugador>().MuertoFalse();
+        
     }
 
     void VolverAlMenu()
@@ -91,25 +111,30 @@ public class GameManager : MonoBehaviour
 
     void RevivirOReiniciar()
     {
-        if (dhaork.GetComponent<EstadoJugador>().GetAlmas() > 0)
+        if (dhaork.GetComponent<EstadoJugador>().GetAlmas() > 0 && dhaork.GetComponent<EstadoJugador>().GetVidaActual() <= 0)
         {
-            OnRemainingSoulsChange.Invoke("Te derrotaron, pero no es el fin. Consume 1 alma con ESPACIO para continuar.");
+            cartelDerrotaConAlmas.SetActive(true);
+            dhaork.GetComponent<Movimiento>().CambiarAturdido(true);
+            dhaork.GetComponent<AtaquesPrevisional>().enabled = false;
             puedeVolver = true;
         }
-        else
+        else if(dhaork.GetComponent<EstadoJugador>().GetAlmas() <= 0 && dhaork.GetComponent<EstadoJugador>().GetVidaActual() <= 0)
         {
-            OnRemainingSoulsChange.Invoke("Te quedaste sin almas. Presiona ESPACIO para reiniciar.");
+            cartelDerrotaSinAlmas.SetActive(true);
+            dhaork.GetComponent<Movimiento>().CambiarAturdido(true);
+            dhaork.GetComponent<AtaquesPrevisional>().enabled = false;
             puedeVolver = false;
         }
     }
 
-    void AreaAsegurada()
+    private void AreaAsegurada()
     {
         if (enemigosDerribados == totalEnemigos && SceneManager.GetActiveScene().buildIndex != 5)
         {
-            OnRemainingSoulsChange.Invoke("ÁREA ASEGURADA. Presioná ESPACIO para reiniciar o ESCAPE para volver.");
-            textoJuegoDetenido.gameObject.SetActive(true);
-            Time.timeScale = 0;
+            cartelVictoria.SetActive(true);
+            dhaork.GetComponent<Movimiento>().enabled = false;
+            dhaork.GetComponent<AtaquesPrevisional>().enabled = false;
+            HUDPrincipal.SetActive(false);
             juegoDetenido = true;
         }
 
@@ -121,9 +146,10 @@ public class GameManager : MonoBehaviour
         if(gulgo != null && gulgo.GetComponent<MuerteGrulgosh>().GetGMuerto())
         {
             gulgoVivo = false;
-            OnRemainingSoulsChange.Invoke("ÁREA ASEGURADA. Presioná ESPACIO para reiniciar o ESCAPE para volver.");
-            textoJuegoDetenido.gameObject.SetActive(true);
-            Time.timeScale = 0;
+            cartelVictoria.SetActive(true);
+            dhaork.GetComponent<Movimiento>().enabled = false;
+            dhaork.GetComponent<AtaquesPrevisional>().enabled = false;
+            HUDPrincipal.SetActive(false);
             juegoDetenido = true;
         }
     }

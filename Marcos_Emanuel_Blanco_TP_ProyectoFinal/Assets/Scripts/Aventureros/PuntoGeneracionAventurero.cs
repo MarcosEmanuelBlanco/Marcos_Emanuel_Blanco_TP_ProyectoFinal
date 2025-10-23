@@ -9,6 +9,7 @@ public class PuntoGeneracionAventurero : MonoBehaviour
     [SerializeField] private Transform posicionSensor;
     [SerializeField] private Transform posicionSpawner;
     [SerializeField] private Vector2 alcanceSensor;
+    [SerializeField] private GameObject portal;
     private bool activo;
     // Start is called before the first frame update
     void Start()
@@ -34,13 +35,13 @@ public class PuntoGeneracionAventurero : MonoBehaviour
         {
             if (col.CompareTag("Player") && activo)
             {
-                Invoke(nameof(AparecerAventurero), 0);
+                portal.SetActive(true);
                 activo = false;
             }
         }
     }
 
-    private void AparecerAventurero()
+    public void AparecerAventurero()
     {
         rngAventurero = Random.Range(0, aventureros.Length);
         Instantiate(aventureros[rngAventurero], posicionSpawner.position, Quaternion.identity);

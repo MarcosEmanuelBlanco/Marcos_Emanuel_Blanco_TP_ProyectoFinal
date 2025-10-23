@@ -245,14 +245,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 2.0166667
-    functionName: TerminarHabilidad
+    functionName: ContinuarMovimiento
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.0333333
-    functionName: ContinuarMovimiento
+  - time: 2.0166667
+    functionName: TerminarHabilidad
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -22,4 +22,9 @@ public class ControladorSeleccion : MonoBehaviour
         int indiceEscenaActual = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(indiceEscenaActual + 3);
     }
+
+    public void VolverAlMenuPrincipal()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

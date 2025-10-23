@@ -65,8 +65,8 @@ public class ProyectilEnemigo : MonoBehaviour
 
     private void Destruir()
     {
-        gameObject.SetActive(false);
         rb.constraints = RigidbodyConstraints2D.None;
+        gameObject.SetActive(false);
     }
 
     public void ActivarRotacion()

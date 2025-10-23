@@ -9,7 +9,7 @@ public class AtaqueCACEnemigo : MonoBehaviour
     [SerializeField] private float radioGolpe;
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float frecuenciaAtaque;
-
+    [SerializeField] private GameObject efectoAtaque;
     private Animator animatorMov;
     // Start is called before the first frame update
     void Start()
@@ -49,6 +49,11 @@ public class AtaqueCACEnemigo : MonoBehaviour
     void Ataque()
     {
         InvokeRepeating(nameof(ActivarAnimacionAtaque), 0, frecuenciaAtaque);
+    }
+
+    private void ActivarEfecto()
+    {
+        efectoAtaque.SetActive(true);
     }
 
     void Golpear()
