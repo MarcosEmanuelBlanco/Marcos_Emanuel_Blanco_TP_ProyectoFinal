@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 0b3665252daac194592fcec1a25bf141, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -222,6 +222,14 @@ PrefabInstance:
       propertyPath: valorEnemigo
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: efectoMuerte1
+      value: 
+      objectReference: {fileID: 8300000, guid: c98d2feff58ad924bb869b0d93c67308, type: 3}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: efectoMuerte2
+      value: 
+      objectReference: {fileID: 8300000, guid: ffb23fecfe8a3cf4e86fff4a4bfaf63e, type: 3}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: alcanceVision.x
       value: 35
@@ -372,6 +380,8 @@ MonoBehaviour:
   fuerzaMazazo: {x: 0, y: 5}
   dagnoGolpe: 1000
   tiempoEntreGolpes: 2
+  cargaGolpe: {fileID: 8300000, guid: 81ff780142d2d8a4ebe313ba28eff109, type: 3}
+  golpeMazo: {fileID: 8300000, guid: 5c01b4de8789b514983f6febe30e3a58, type: 3}
 --- !u!95 &4830048153953313228
 Animator:
   serializedVersion: 5

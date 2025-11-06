@@ -7,10 +7,6 @@ using UnityEngine.SceneManagement;
 public class CuadroFinal : MonoBehaviour
 {
     [SerializeField] private GameObject manager;
-    private void OrdenPararTiempo()
-    {
-        manager.GetComponent<GameManager>().PararTiempo();
-    }
 
     public void BotonContinuar()
     {
@@ -20,16 +16,19 @@ public class CuadroFinal : MonoBehaviour
 
     public void BotonReiniciar()
     {
+        //manager.GetComponent<GameManager>().RestaurarTiempo();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void BotonVolver()
     {
-        SceneManager.LoadScene(2);
+        //manager.GetComponent<GameManager>().RestaurarTiempo();
+        SceneManager.LoadScene(0);
     }
 
     public void BotonSiguienteNivel()
     {
+        //manager.GetComponent<GameManager>().RestaurarTiempo();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

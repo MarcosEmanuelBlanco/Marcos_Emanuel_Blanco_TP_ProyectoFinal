@@ -83,14 +83,30 @@ public class ComportamientoGulgo : MonoBehaviour
     private const int EcharRaices = 3;
     private const int Golpiza = 4;
     private Animator animator;
+    private AudioSource sonidosG;
 
-    
+    [Header("Sonidos")]
+    [SerializeField] private AudioClip pisar;
+    [SerializeField] private AudioClip mordida;
+    [SerializeField] private AudioClip lanzarGolpe;
+    [SerializeField] private AudioClip aranazo;
+    [SerializeField] private AudioClip gargajear;
+    [SerializeField] private AudioClip escupir;
+    [SerializeField] private AudioClip echarRaicesSonido;
+    [SerializeField] private AudioClip gritoRaices;
+    [SerializeField] private AudioClip inicioEsporas;
+    [SerializeField] private AudioClip explosionEsporas;
+    [SerializeField] private AudioClip gritoMuerte;
+    [SerializeField] private AudioClip ruidoRunas;
+    [SerializeField] private AudioClip ruidoFuegoMuerte;
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        sonidosG = GetComponent<AudioSource>();
         velocidadCorreteoReal = distanciaCorreteo;
-        estadoActual = Morder;
+        estadoActual = Esporas;
         representacionAtaqueCuerpoACuerpo.gameObject.SetActive(false);
         representacionAtaqueMordisco.gameObject.SetActive(false);
         representacionAtaqueRaices.gameObject.SetActive(false);
@@ -105,8 +121,7 @@ public class ComportamientoGulgo : MonoBehaviour
 
     private void Update()
     {
-        //GolpeEsporas();
-        //miAnimator.SetBool("JefeEnAire", !JefeEnContactoConPlataforma());
+
     }
     private void OnDrawGizmos()
     {
@@ -156,6 +171,72 @@ public class ComportamientoGulgo : MonoBehaviour
     {
         estadoActual = Random.Range(0, 5);
     }
+
+    private void SonidoPisar()
+    {
+        //if(sonidosG.isPlaying) { return; }
+        sonidosG.PlayOneShot(pisar);
+    }
+
+    private void SonidoMordida()
+    {
+        sonidosG.PlayOneShot(mordida);
+    }
+
+    private void SonidoLanzarGolpe()
+    {
+        //if(sonidosG.isPlaying) { return; }
+        sonidosG.PlayOneShot(lanzarGolpe);
+    }
+
+    private void SonidoAranazo()
+    {
+        //if(sonidosG.isPlaying) { return; }
+        sonidosG.PlayOneShot(aranazo);
+    }
+
+    private void SonidoGargajear()
+    {
+        sonidosG.PlayOneShot(gargajear);
+    }
+    private void SonidoEscupir()
+    {
+        sonidosG.PlayOneShot(escupir);
+    }
+    private void SonidoRaices()
+    {
+        sonidosG.PlayOneShot(echarRaicesSonido);
+    }
+
+    private void SonidoGritoRaices()
+    {
+        sonidosG.PlayOneShot(gritoRaices);
+    }
+
+    private void SonidoInicioEsporas()
+    {
+        sonidosG.PlayOneShot(inicioEsporas);
+    }
+
+    private void SonidoExplosionEsporas()
+    {
+        sonidosG.PlayOneShot(explosionEsporas);
+    }
+
+    private void SonidoGritoMuerte()
+    {
+        sonidosG.PlayOneShot(gritoMuerte);
+    }
+
+    private void SonidoRunas()
+    {
+        sonidosG.PlayOneShot(ruidoRunas);
+    }
+
+    private void SonidoFuegoMuerte()
+    {
+        sonidosG.PlayOneShot(ruidoFuegoMuerte);
+    }
     private void Mordisco()
     {
         tiempo = Time.time;
@@ -182,7 +263,7 @@ public class ComportamientoGulgo : MonoBehaviour
         //{
         //    posicionObjetivo = new(transform.position.x - jugador.transform.position.x, transform.position.y);
         //}
-        while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
+        while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo && gameObject.GetComponent<EnemigoPrevisional>().GetVidaActual() > 0)
         {
             transform.position = Vector2.Lerp(posI, posOb, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
             yield return null;
@@ -198,7 +279,7 @@ public class ComportamientoGulgo : MonoBehaviour
             {
                 RepresentarMordisco();
                 col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoMordisco);
-                gameObject.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(dagnoMordisco * 0.5f);
+                gameObject.GetComponent<EnemigoPrevisional>().CurarVidaEnemigo(dagnoMordisco * 0.5f);
                 tiempo = Time.time;
                 StartCoroutine(nameof(ActivacionVeneno));
             }
@@ -210,9 +291,12 @@ public class ComportamientoGulgo : MonoBehaviour
     }
     private IEnumerator ActivacionVeneno()
     {
+        GameObject dhaork = GameObject.FindGameObjectWithTag("Player");
+        dhaork.GetComponent<EstadoJugador>().ActivarParticulasVeneno();
         InvokeRepeating(nameof(DagnarConVeneno), 0, lapsoTicksVeneno);
         yield return new WaitForSeconds(duracionVeneno);
         CancelInvoke(nameof(DagnarConVeneno));
+        dhaork.GetComponent<EstadoJugador>().DesactivarParticulasVeneno();
     }
     private void DagnarConVeneno()
     {
@@ -236,7 +320,7 @@ public class ComportamientoGulgo : MonoBehaviour
         Vector2 posOb = posicionObjetivo; //Debería ser la del jugador.
         GameObject j = jugador;
         GameObject m = muro;
-        while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo)
+        while (Time.time < tiempo + duracionDeCorreteo / divisorDuracionDeCorreteo && gameObject.GetComponent<EnemigoPrevisional>().GetVidaActual() > 0)
         {
             transform.position = Vector2.Lerp(posI, posOb, (Time.time - tiempo) / (duracionDeCorreteo / divisorDuracionDeCorreteo));
 
@@ -256,7 +340,6 @@ public class ComportamientoGulgo : MonoBehaviour
     {
         animator.SetBool("SueltaRaices", true);
     }
-
     private void FinalRaices()
     {
         animator.SetBool("SueltaRaices", false);
@@ -274,13 +357,13 @@ public class ComportamientoGulgo : MonoBehaviour
             {
                 
                 col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoRaices);
-                gameObject.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(dagnoRaices * 0.5f);
+                gameObject.GetComponent<EnemigoPrevisional>().CurarVidaEnemigo(dagnoRaices * 0.5f);
             }
 
             if (col.CompareTag("Invocacion"))
             {
                 col.transform.GetComponent<Invocacion>().ModificarVidaInvocacion(-dagnoRaices);
-                gameObject.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(dagnoRaices * 0.5f);
+                gameObject.GetComponent<EnemigoPrevisional>().CurarVidaEnemigo(dagnoRaices * 0.5f);
                 Debug.Log("Enemigo Herido");
             }
         }
@@ -333,11 +416,13 @@ public class ComportamientoGulgo : MonoBehaviour
             if (col.CompareTag("Player"))
             {
                 RepresentarGolpiza();
+                SonidoAranazo();
                  col.transform.GetComponent<EstadoJugador>().ModificarVidaJugador(-dagnoCuerpoACuerpo);
             }
             if (col.CompareTag("Pegote"))
             {
                 RepresentarGolpiza();
+                SonidoAranazo();
                 col.transform.GetComponent<FuncionamientoPegote>().ModificarVidaPegote(-dagnoCuerpoACuerpo);
             }
         }

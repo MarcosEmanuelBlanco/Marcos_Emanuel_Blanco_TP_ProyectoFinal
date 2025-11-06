@@ -5,6 +5,9 @@ using UnityEngine;
 public class FuncionamientoMuro : MonoBehaviour
 {
     private Animator animatorMuro;
+    private AudioSource sonidosMuro;
+    [SerializeField] private AudioClip efectoMuroPasivo;
+    [SerializeField] private AudioClip efectoMuroGolpe;
     [SerializeField] private float vidaMuro;
     [SerializeField] private float dagnoExplosionR;
     [SerializeField] private float dagnoBaseExplosionR;
@@ -14,7 +17,24 @@ public class FuncionamientoMuro : MonoBehaviour
     void Start()
     {
         animatorMuro = GetComponent<Animator>();
+        sonidosMuro = GetComponent<AudioSource>();
     }
+
+    private void SonidoMuroPasivo()
+    {
+        sonidosMuro.PlayOneShot(efectoMuroPasivo);
+    }
+
+    private void SonidoMuroImpacto()
+    {
+        sonidosMuro.PlayOneShot(efectoMuroGolpe);
+    }
+
+    private void SonidoMuroExplosion()
+    {
+        sonidosMuro.Pause();
+    }
+
     public void DagnarMuro(float dagnoEnemigo)
     {
         vidaMuro += dagnoEnemigo;

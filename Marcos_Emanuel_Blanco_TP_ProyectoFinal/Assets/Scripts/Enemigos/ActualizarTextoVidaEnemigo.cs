@@ -17,4 +17,9 @@ public class ActualizarTextoVidaEnemigo : MonoBehaviour
         barra.GetComponent<Animator>().SetTrigger("Golpe");
         textoVidaEnemigo.GetComponent<Animator>().SetTrigger("Golpe");
     }
+
+    public void ActivarAnimacionesCuracion()
+    {
+        textoVidaEnemigo.GetComponent<Animator>().SetTrigger("Curacion");
+    }
 }

@@ -5,10 +5,18 @@ using UnityEngine;
 public class AnimarPiernas : MonoBehaviour
 {
     private Animator animatorPiernas;
+    private AudioSource sonidosPiernas;
+    [SerializeField] private AudioClip efectoCaminar;
     // Start is called before the first frame update
     void Start()
     {
         animatorPiernas = GetComponent<Animator>();
+        sonidosPiernas = GetComponent<AudioSource>();
+    }
+
+    private void SonidoCaminar()
+    {
+        sonidosPiernas.PlayOneShot(efectoCaminar);
     }
 
     public void CaminarAdelante()

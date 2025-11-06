@@ -528,6 +528,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 370340630117862229, guid: 283432f06aafadf43babf3eb7daf8bed, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ca23d32408eaca346af493f01954d61d, type: 3}
     - target: {fileID: 997340249450147824, guid: 283432f06aafadf43babf3eb7daf8bed, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -612,6 +616,14 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 158879055}
+    - target: {fileID: 4082954265699853145, guid: 283432f06aafadf43babf3eb7daf8bed, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9077a59b3be34e543bb944a408cbe134, type: 3}
+    - target: {fileID: 5116666062547930365, guid: 283432f06aafadf43babf3eb7daf8bed, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ca23d32408eaca346af493f01954d61d, type: 3}
     - target: {fileID: 6084799681463904711, guid: 283432f06aafadf43babf3eb7daf8bed, type: 3}
       propertyPath: manager
       value: 
@@ -3146,7 +3158,7 @@ PrefabInstance:
       propertyPath: m_text
       value: "Las fuerzas de Grulgosh han llegado sorprendentemente lejos, y qui\xE9n
         sabe cu\xE1n lejos habr\xE1n llegado los otros. No quisiera insinuar que
-        ha perdido su poder, se\xF1or, pero luego de tantos a\xF1os en el exilio
+        ha perdido su poder, se\xF1or, pero luego de tantos a\xF1os en el exilio,
         ser\xEDa l\xF3gico que necesite algo de pr\xE1ctica para el combate."
       objectReference: {fileID: 0}
     - target: {fileID: 3692110672836657979, guid: 8241215039a09d74aa3902ad35efbc20, type: 3}
@@ -3290,7 +3302,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.35333335, y: 0.35333335, z: 0}
   m_MaxChunkCount: 16
@@ -7661,7 +7673,7 @@ CompositeCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.3}
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
@@ -7678,10 +7690,10 @@ CompositeCollider2D:
         Y: -53533336
   m_CompositePaths:
     m_Paths:
-    - - {x: 204.3533, y: -5.3533335}
-      - {x: 204.3533, y: -2.6466665}
-      - {x: -9.353333, y: -2.646696}
-      - {x: -9.353304, y: -5.3533335}
+    - - {x: 204.3533, y: -5.6533337}
+      - {x: 204.3533, y: -2.9466665}
+      - {x: -9.353333, y: -2.946696}
+      - {x: -9.353304, y: -5.6533337}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -7783,7 +7795,7 @@ Transform:
   m_GameObject: {fileID: 1507168623}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 80, y: -1.2, z: 10}
+  m_LocalPosition: {x: 86, y: -1.2, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8101,7 +8113,7 @@ Transform:
   m_GameObject: {fileID: 1798890980}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 85, y: -1.2, z: 10}
+  m_LocalPosition: {x: 88, y: -1.2, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8798,23 +8810,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 460772052953168077, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2057208844201642879, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2384559517393022206, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2578187866584098505, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2618427031983021016, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3334461974479955641, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_Name
@@ -8822,66 +8834,70 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3551658130508617207, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3923808563804400269, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4347006797337575317, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4824043603483786077, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5312731164250556303, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6125252597849633612, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6130466656978725699, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6432385806733783791, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6696380679281283327, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7011276175219007428, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7022487748252965607, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7209582853061275739, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7564876544723909997, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7795098041717092466, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8308243842649681321, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 430544810495138163, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
+    - {fileID: 6999919811649789950, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
+    - {fileID: 7299601284269877548, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
+    - {fileID: 3437216296261214803, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 61122194679307402, guid: 5a559f7d294c550418249adf12ee83dc, type: 3}
       insertIndex: -1

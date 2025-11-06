@@ -40,6 +40,8 @@ AnimationClip:
       value: {fileID: 21300000, guid: d17ad9d163116b7478fdbc29f9ef58e0, type: 3}
     - time: 0.15
       value: {fileID: 21300000, guid: b37e5897b8ad8574c9f6f27ee3477e4e, type: 3}
+    - time: 0.16666667
+      value: {fileID: 0}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -72,12 +74,13 @@ AnimationClip:
     - {fileID: 21300000, guid: 5fa2771d89c875a48b3c35886ea2e515, type: 3}
     - {fileID: 21300000, guid: d17ad9d163116b7478fdbc29f9ef58e0, type: 3}
     - {fileID: 21300000, guid: b37e5897b8ad8574c9f6f27ee3477e4e, type: 3}
+    - {fileID: 0}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.16666667
+    m_StopTime: 0.18333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -98,13 +101,20 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
+    functionName: SonidoMuroExplosion
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
     functionName: GolpeR
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.16666667
+  - time: 0.18333334
     functionName: Desactivar
     data: 
     objectReferenceParameter: {fileID: 0}

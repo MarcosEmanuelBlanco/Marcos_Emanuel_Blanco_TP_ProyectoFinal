@@ -11,6 +11,8 @@ public class FuncionamientoProyectil : MonoBehaviour
     //[SerializeField] private float bonusDagnoMultitud;
     private Rigidbody2D rb;
     private Animator miAnimator;
+    private AudioSource sonidosBDF;
+    [SerializeField] private AudioClip efectoImpacto;
     [SerializeField] private Vector2 fuerzaLanzamiento;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +21,13 @@ public class FuncionamientoProyectil : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.SetRotation(-90.0f);
         miAnimator = GetComponent<Animator>();
+        sonidosBDF = GetComponent<AudioSource>();
         FuerzaFuego();
+    }
+
+    private void SonidoImpactoBDF()
+    {
+        sonidosBDF.PlayOneShot(efectoImpacto);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

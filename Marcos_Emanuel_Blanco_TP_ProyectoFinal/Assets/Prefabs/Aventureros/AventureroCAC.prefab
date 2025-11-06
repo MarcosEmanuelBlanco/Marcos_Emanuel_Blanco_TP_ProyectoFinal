@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 93d403c236e04524ea894f23238fa2ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -223,6 +223,10 @@ PrefabInstance:
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: efectoMuerte1
+      value: 
+      objectReference: {fileID: 8300000, guid: 03f79baf356db5648a525d0211d5ccc9, type: 3}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: alcanceVision.x
       value: 35
       objectReference: {fileID: 0}
@@ -356,6 +360,7 @@ MonoBehaviour:
   radioGolpe: 1
   dagnoGolpe: 200
   tiempoEntreGolpes: 1
+  efectoGolpe: {fileID: 8300000, guid: 41b30fbdfcc93ec43adaaa486084239f, type: 3}
 --- !u!95 &8740095868741925486
 Animator:
   serializedVersion: 5

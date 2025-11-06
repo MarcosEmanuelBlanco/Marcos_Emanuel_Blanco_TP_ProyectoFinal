@@ -9,16 +9,23 @@ public class ProyectilEnemigo : MonoBehaviour
     [SerializeField] private float dagnoExplosion;
     private Rigidbody2D rb;
     [SerializeField] private Vector2 fuerzaLanzamiento;
+    [SerializeField] private AudioClip efectoImpactoCat;
     private Animator animator;
+    private AudioSource sonidosProyectilCat;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        sonidosProyectilCat = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         rb.rotation = 0f;
         FuerzaCanonazo();
     }
 
+    private void SonidoImpactoCat()
+    {
+        sonidosProyectilCat.PlayOneShot(efectoImpactoCat);
+    }
 
     public void FuerzaCanonazo()
     {

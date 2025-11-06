@@ -135,6 +135,10 @@ PrefabInstance:
       value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: efectoMuerte1
+      value: 
+      objectReference: {fileID: 8300000, guid: 636afd09cb59e914bac9421260f5c763, type: 3}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: alcanceVision.x
       value: 35
       objectReference: {fileID: 0}
@@ -273,6 +277,7 @@ MonoBehaviour:
   tiempoEntreDisparos: 0.5
   posicionAtaque: {fileID: 8571047088054817351}
   areaAtaque: {x: 13, y: 1}
+  efectoDisparo: {fileID: 8300000, guid: b36b6ee9eca77ce45907e59e892c9612, type: 3}
 --- !u!95 &7388554850798359947
 Animator:
   serializedVersion: 5

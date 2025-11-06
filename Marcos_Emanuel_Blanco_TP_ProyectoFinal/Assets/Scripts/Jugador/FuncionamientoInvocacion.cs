@@ -7,6 +7,9 @@ using UnityEngine.Events;
 public class FuncionamientoInvocacion : MonoBehaviour
 {
     private Animator animatorSoldado;
+    private AudioSource sonidosSoldado;
+    [SerializeField] private AudioClip efectoSalto;
+    [SerializeField] private AudioClip efectoAtaque;
     [SerializeField] private float velocidadInvocacion;
     [SerializeField] private Transform posicionSensorSalto;
     [SerializeField] private float alcanceSensorSalto;
@@ -24,6 +27,15 @@ public class FuncionamientoInvocacion : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void SonidoSalto()
+    {
+        sonidosSoldado.PlayOneShot(efectoSalto);
+    }
+
+    private void SonidoAtaque()
+    {
+        sonidosSoldado.PlayOneShot(efectoAtaque);
+    }
 
     void FixedUpdate()
     {

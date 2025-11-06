@@ -23,6 +23,10 @@ public class Aventurero : MonoBehaviour
     private Rigidbody2D rigidbody2;
     private Collider2D collider2;
     private Animator animatorMov;
+    private AudioSource sonidosMuerte;
+    [SerializeField] private AudioClip efectoMuerte1;
+    [SerializeField] private AudioClip efectoMuerte2;
+    [SerializeField] private AudioClip efectoMuerte3;
     [SerializeField] private bool invulnerable;
     [SerializeField] private float duracionInvulnerabilidad;
     private void Start()
@@ -37,13 +41,24 @@ public class Aventurero : MonoBehaviour
         rigidbody2 = GetComponent<Rigidbody2D>();
         collider2 = GetComponent<Collider2D>();
         animatorMov = GetComponent<Animator>();
+        sonidosMuerte = GetComponent<AudioSource>();
         animatorMov.SetBool("Invulnerable", true);
     }
 
-    //public void ActivarAnimacionMovimiento()
-    //{
-    //    animatorMov.SetBool("Persiguiendo", true);
-    //}
+    private void SonidoMuerte1()
+    {
+        sonidosMuerte.PlayOneShot(efectoMuerte1);
+    }
+
+    private void SonidoMuerte2()
+    {
+        sonidosMuerte.PlayOneShot(efectoMuerte2);
+    }
+
+    private void SonidoMuerte3()
+    {
+        sonidosMuerte.PlayOneShot(efectoMuerte3);
+    }
 
     private IEnumerator InvulnerabilidadInicial()
     {
@@ -111,7 +126,7 @@ public class Aventurero : MonoBehaviour
         {
             vidaEnemigo += puntos;
             OnHealthChange.Invoke(vidaEnemigo.ToString());
-            Debug.Log("Enemigo herido");
+            barraVida.GetComponent<ActualizarTextoVidaEnemigo>().ActivarAnimaciones();
             MuerteNoJugador();
         }
     }
@@ -130,6 +145,11 @@ public class Aventurero : MonoBehaviour
             rigidbody2.Sleep();
             animatorMov.SetBool("Muerto", true);
         }
+    }
+
+    public float GetVidaAv()
+    {
+        return vidaEnemigo;
     }
 
     public bool GetMoviendose()

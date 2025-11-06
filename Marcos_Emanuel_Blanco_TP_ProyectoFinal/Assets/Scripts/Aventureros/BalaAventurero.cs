@@ -9,6 +9,8 @@ public class BalaAventurero : MonoBehaviour
     [SerializeField] private float dagnoBala;
     private Rigidbody2D rb;
     private Animator animatorBala;
+    private AudioSource sonidosBala;
+    [SerializeField] private AudioClip efectoBala;
     [SerializeField] private Vector2 fuerzaLanzamiento;
     // Start is called before the first frame update
     void Start()
@@ -16,6 +18,7 @@ public class BalaAventurero : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         CambiarDireccionBala();
         animatorBala = GetComponent<Animator>();
+        sonidosBala = GetComponent<AudioSource>();
         FuerzaDisparo();
     }
 
@@ -23,7 +26,9 @@ public class BalaAventurero : MonoBehaviour
     {
         if (collision.CompareTag("EnemigoBasico") || collision.CompareTag("Player") || collision.CompareTag("Invocacion"))
         {
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
             GolpeProyectil();
+            sonidosBala.PlayOneShot(efectoBala);
             //Explotar();
         }
     }

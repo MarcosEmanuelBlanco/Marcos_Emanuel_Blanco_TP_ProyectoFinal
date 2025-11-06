@@ -11,11 +11,19 @@ public class AtaqueAventureroTirador : MonoBehaviour
     [SerializeField] private Transform posicionAtaque;
     [SerializeField] private Vector2 areaAtaque;
     private Animator animatorMov;
+    private AudioSource sonidoDisparoBB;
+    [SerializeField] private AudioClip efectoDisparo;
     private PoolBalas poolBalas;
     void Start()
     {
         animatorMov = GetComponent<Animator>();
+        sonidoDisparoBB = GetComponent<AudioSource>();
         poolBalas = GetComponent<PoolBalas>();
+    }
+
+    private void SonidoDisparo()
+    {
+        sonidoDisparoBB.PlayOneShot(efectoDisparo);
     }
 
     public void ActivarAnimacionAtaque()

@@ -8,6 +8,8 @@ public class Invocacion : MonoBehaviour
 {
     [SerializeField] private float vidaInvocacion;
     private Animator animatorSoldado;
+    private AudioSource sonidosInvocacion;
+    [SerializeField] private AudioClip efectoMuerte;
     [SerializeField] private Canvas barraVida;
     [SerializeField] private UnityEvent<string> OnHealthChange;
     [SerializeField] private TextMeshProUGUI textoVida;
@@ -17,9 +19,15 @@ public class Invocacion : MonoBehaviour
     void Start()
     {
         animatorSoldado = GetComponent<Animator>();
+        sonidosInvocacion = GetComponent<AudioSource>();
         collider2 = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         OnHealthChange.Invoke(vidaInvocacion.ToString());
+    }
+
+    private void SonidoMuerte()
+    {
+        sonidosInvocacion.PlayOneShot(efectoMuerte);
     }
 
     public void ModificarVidaInvocacion(float puntos)

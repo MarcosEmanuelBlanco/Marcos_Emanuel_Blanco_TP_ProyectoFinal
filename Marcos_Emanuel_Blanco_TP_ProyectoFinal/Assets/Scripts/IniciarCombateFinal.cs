@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class IniciarCombateFinal : MonoBehaviour
 {
+    [SerializeField] private GameObject manager;
     private void InicioCombate()
     {
         GameObject dhaork = GameObject.FindGameObjectWithTag("Player");
@@ -11,5 +12,6 @@ public class IniciarCombateFinal : MonoBehaviour
         dhaork.GetComponent<Movimiento>().enabled = true;
         dhaork.GetComponent<AtaquesPrevisional>().enabled = true;
         grulgosh.GetComponent<ComportamientoGulgo>().Espera();
+        manager.GetComponent<GameManager>().ReproducirTemaJefe();
     }
 }

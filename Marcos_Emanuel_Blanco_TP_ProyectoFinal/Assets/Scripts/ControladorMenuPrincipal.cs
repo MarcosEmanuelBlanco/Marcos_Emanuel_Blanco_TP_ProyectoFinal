@@ -5,10 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class ControladorMenuPrincipal : MonoBehaviour
 {
+    [SerializeField] private GameObject pantallaNiveles;
+    [SerializeField] private GameObject pantallaControles;
+    [SerializeField] private GameObject pantallaCreditos;
+    [SerializeField] private GameObject pantallaMenu;
     public void CargarSiguienteEscena()
     {
-        int indiceEscenaActual = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(indiceEscenaActual + 1);
+        //int indiceEscenaActual = SceneManager.GetActiveScene().buildIndex;
+        //SceneManager.LoadScene(indiceEscenaActual + 1);
+        pantallaMenu.SetActive(false);
+        pantallaNiveles.SetActive(true);
     }
 
     public void CerrarJuego()
@@ -18,12 +24,16 @@ public class ControladorMenuPrincipal : MonoBehaviour
 
     public void Controles()
     {
-        SceneManager.LoadScene(7);
+        pantallaMenu.SetActive(false);
+        pantallaControles.SetActive(true);
+        //SceneManager.LoadScene(7);
     }
 
     public void Creditos()
     {
-        SceneManager.LoadScene(8);
+        pantallaMenu.SetActive(false);
+        pantallaCreditos.SetActive(true);
+        //SceneManager.LoadScene(8);
     }
 
 }

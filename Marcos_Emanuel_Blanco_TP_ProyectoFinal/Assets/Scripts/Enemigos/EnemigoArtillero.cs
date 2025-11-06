@@ -8,13 +8,16 @@ public class EnemigoArtillero : MonoBehaviour
     [SerializeField] private Transform puntoDisparo;
     [SerializeField] private float frecuenciaDisparo;
     [SerializeField] private GameObject setParticulas;
+    [SerializeField] private AudioClip disparoCat;
     private Animator animatorMov;
+    private AudioSource sonidosCatapultronco;
     private PoolProyectilArtilleria poolBombas;
     private bool activarParticulas;
     void Start()
     {
         activarParticulas = true;
         animatorMov = GetComponent<Animator>();
+        sonidosCatapultronco = GetComponent<AudioSource>();
         poolBombas = GetComponent<PoolProyectilArtilleria>();
     }
 
@@ -22,6 +25,11 @@ public class EnemigoArtillero : MonoBehaviour
     {
         animatorMov.SetTrigger("Atacando");
         //animatorMov.SetBool("Persiguiendo", false);
+    }
+
+    private void SonidoDisparoCat()
+    {
+        sonidosCatapultronco.PlayOneShot(disparoCat);
     }
 
     private void OnBecameVisible()

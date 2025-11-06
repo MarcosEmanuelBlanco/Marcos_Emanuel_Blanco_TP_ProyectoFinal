@@ -6,12 +6,40 @@ public class AnimarBrazo : MonoBehaviour
 {
     private Animator animatorBrazo;
     [SerializeField] private GameObject dhaork;
-
+    private AudioSource sonidosBrazo;
+    [SerializeField] private AudioClip efectoAtaqueBasico;
+    [SerializeField] private AudioClip efectoGolpeAtaqueBasico;
+    [SerializeField] private AudioClip efectoCargaCA;
+    [SerializeField] private AudioClip efectoGolpeCA;
+    [SerializeField] private AudioClip efectoMuerteEspada;
     private void Start()
     {
         animatorBrazo = GetComponent<Animator>();
+        sonidosBrazo = GetComponent<AudioSource>();
+    }
+    private void SonidoAtaqueBasico()
+    {
+        sonidosBrazo.PlayOneShot(efectoAtaqueBasico);
+    }
+    private void SonidoGolpeAtaqueBasico()
+    {
+        sonidosBrazo.PlayOneShot(efectoGolpeAtaqueBasico);
     }
 
+    private void SonidoCargaCA()
+    {
+        sonidosBrazo.PlayOneShot(efectoCargaCA);
+    }
+
+    private void SonidoGolpeCA()
+    {
+        sonidosBrazo.PlayOneShot(efectoGolpeCA);
+    }
+
+    private void SonidoEspadaMuerte()
+    {
+        sonidosBrazo.PlayOneShot(efectoMuerteEspada);
+    }
     public void BrazoHabilidadActiva()
     {
         animatorBrazo.SetBool("BrazoHabilidadActiva", true);

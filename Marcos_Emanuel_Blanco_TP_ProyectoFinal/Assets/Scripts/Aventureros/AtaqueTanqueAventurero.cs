@@ -11,11 +11,30 @@ public class AtaqueTanqueAventurero : MonoBehaviour
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float tiempoEntreGolpes;
     private Animator animatorMov;
+    private AudioSource sonidosImpactoTanq;
+    [SerializeField] private AudioClip cargaGolpe;
+    [SerializeField] private AudioClip golpeMazo;
     // Start is called before the first frame update
     void Start()
     {
         representacionAtaque.gameObject.SetActive(false);
         animatorMov = GetComponent<Animator>();
+        sonidosImpactoTanq = GetComponent<AudioSource>();
+    }
+
+    private void SonidoCarga()
+    {
+        sonidosImpactoTanq.PlayOneShot(cargaGolpe);
+    }
+
+    private void DetenerSonido()
+    {
+        sonidosImpactoTanq.Pause();
+    }
+
+    private void SonidoGolpe()
+    {
+        sonidosImpactoTanq.PlayOneShot(golpeMazo);
     }
     public void ActivarAnimacionAtaque()
     {

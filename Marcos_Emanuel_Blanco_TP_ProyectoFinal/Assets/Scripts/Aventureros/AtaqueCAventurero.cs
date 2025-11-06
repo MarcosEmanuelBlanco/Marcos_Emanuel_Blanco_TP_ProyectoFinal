@@ -10,11 +10,19 @@ public class AtaqueCAventurero : MonoBehaviour
     [SerializeField] private float radioGolpe;
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float tiempoEntreGolpes;
+    [SerializeField] private AudioClip efectoGolpe;
     private Animator animatorMov;
+    private AudioSource sonidosImpactoPMG;
     void Start()
     {
         representacionAtaque.gameObject.SetActive(false);
         animatorMov = GetComponent<Animator>();
+        sonidosImpactoPMG = GetComponent<AudioSource>();
+    }
+
+    private void SonidoGolpePMG()
+    {
+        sonidosImpactoPMG.PlayOneShot(efectoGolpe);
     }
 
     public void ActivarAnimacionAtaque()

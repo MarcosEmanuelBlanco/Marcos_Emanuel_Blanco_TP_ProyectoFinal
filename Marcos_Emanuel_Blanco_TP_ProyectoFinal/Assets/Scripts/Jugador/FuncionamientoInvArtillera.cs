@@ -5,6 +5,8 @@ using UnityEngine;
 public class FuncionamientoInvArtillera : MonoBehaviour
 {
     private Animator animatorArtillero;
+    private AudioSource sonidosArtillero;
+    [SerializeField] private AudioClip efectoDisparo;
     [SerializeField] private GameObject proyectil;
     [SerializeField] private Transform puntoDisparo;
     [SerializeField] private float frecuenciaDisparo;
@@ -14,7 +16,13 @@ public class FuncionamientoInvArtillera : MonoBehaviour
     void Start()
     {
         animatorArtillero = GetComponent<Animator>();
+        sonidosArtillero = GetComponent<AudioSource>();
         poolBolasFuego = GetComponent<PoolProyectilInvocacion>();
+    }
+
+    private void SonidoDisparoArtillero()
+    {
+        sonidosArtillero.PlayOneShot(efectoDisparo);
     }
 
     void OnBecameVisible()

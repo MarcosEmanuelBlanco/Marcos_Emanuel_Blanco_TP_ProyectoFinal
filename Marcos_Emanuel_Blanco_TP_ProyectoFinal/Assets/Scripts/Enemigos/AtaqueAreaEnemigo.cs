@@ -9,18 +9,32 @@ public class AtaqueAreaEnemigo : MonoBehaviour
     [SerializeField] private Vector2 rectGolpe;
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float frecuenciaAtaque;
+    [SerializeField] private AudioClip preparacionRBAtaque;
+    [SerializeField] private AudioClip efectoRBAtaque;
     private Animator animatorMov;
+    private AudioSource sonidoRocoBloco;
     // Start is called before the first frame update
     void Start()
     {
         representacionAtaque.gameObject.SetActive(false);
         animatorMov = GetComponent<Animator>();
+        sonidoRocoBloco = GetComponent<AudioSource>();
     }
 
     public void ActivarAnimacionAtaque()
     {
         animatorMov.SetTrigger("Atacando");
         //animatorMov.SetBool("Persiguiendo", false);
+    }
+
+    private void SonidoRBPreparacion()
+    {
+        sonidoRocoBloco.PlayOneShot(preparacionRBAtaque);
+    }
+
+    private void SonidoRBAtaque()
+    {
+        sonidoRocoBloco.PlayOneShot(efectoRBAtaque);
     }
 
     private void OnBecameVisible()

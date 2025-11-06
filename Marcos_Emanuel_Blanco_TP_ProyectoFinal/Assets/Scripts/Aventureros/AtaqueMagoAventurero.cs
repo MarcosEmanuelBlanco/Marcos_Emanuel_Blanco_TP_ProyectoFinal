@@ -10,10 +10,18 @@ public class AtaqueMagoAventurero : MonoBehaviour
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float tiempoEntreGolpes;
     private Animator animatorMov;
+    private AudioSource sonidosImpactoISH;
+    [SerializeField] private AudioClip golpeRayoISH;
     void Start()
     {
         representacionAtaque.gameObject.SetActive(false);
         animatorMov = GetComponent<Animator>();
+        sonidosImpactoISH = GetComponent<AudioSource>();
+    }
+
+    private void SonidoRayo()
+    {
+        sonidosImpactoISH.PlayOneShot(golpeRayoISH);
     }
 
     public void ActivarAnimacionAtaque()

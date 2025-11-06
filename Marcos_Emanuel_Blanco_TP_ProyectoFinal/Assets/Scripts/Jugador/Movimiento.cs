@@ -69,6 +69,10 @@ public class Movimiento : MonoBehaviour
         {
             animatorCuerpo.SetBool("CaminandoAdelante", false);
             animatorCuerpo.SetBool("CaminandoAtras", false);
+            brazo.GetComponent<AnimarBrazo>().Quieto();
+            piernas.GetComponent<AnimarPiernas>().Quieto();
+            moverHorizontal = 0;
+            direccion = moverHorizontal;
         }
     }
 

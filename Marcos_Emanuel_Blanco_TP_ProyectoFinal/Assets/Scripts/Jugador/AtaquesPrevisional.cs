@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class AtaquesPrevisional : MonoBehaviour
 {
     private Animator animatorCuerpo;
+    private AudioSource sonidosDhaork;
     [SerializeField] private bool habilidadActiva;
 
     [Header("Q")]
@@ -85,9 +86,17 @@ public class AtaquesPrevisional : MonoBehaviour
     private int munRActual;
     [SerializeField] private UnityEvent<string> OnRandomSkillChange;
 
+    [Header("Sonidos")]
+    [SerializeField] private AudioClip lanzamientoBDF;
+    [SerializeField] private AudioClip cargaRelampago;
+    [SerializeField] private AudioClip efectoRecarga;
+    [SerializeField] private AudioClip detonacionMuro;
+    [SerializeField] private AudioClip chasquidoPortal;
+
     void Start()
     {
         animatorCuerpo = GetComponent<Animator>();
+        sonidosDhaork = GetComponent<AudioSource>();
         habilidadActiva = false;
         //aleatoriaDisponible = false;
         explosionMuro.gameObject.SetActive(false);
@@ -109,6 +118,31 @@ public class AtaquesPrevisional : MonoBehaviour
         OnRAmmoChange.Invoke(munRActual.ToString());
         OnRandomSkillChange.Invoke(" ");
         poolBolasInfernales = GetComponent<PoolProyectilW>();
+    }
+
+    private void SonidoBDF()
+    {
+        sonidosDhaork.PlayOneShot(lanzamientoBDF);
+    }
+
+    private void SonidoRE()
+    {
+        sonidosDhaork.PlayOneShot(cargaRelampago);
+    }
+
+    private void SonidoRecarga()
+    {
+        sonidosDhaork.PlayOneShot(efectoRecarga);
+    }
+
+    private void SonidoMuro()
+    {
+        sonidosDhaork.PlayOneShot(detonacionMuro);
+    }
+
+    private void SonidoChasquido()
+    {
+        sonidosDhaork.PlayOneShot(chasquidoPortal);
     }
 
     private void Update()

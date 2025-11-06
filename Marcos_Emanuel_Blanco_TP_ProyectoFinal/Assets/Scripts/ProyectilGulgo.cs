@@ -12,13 +12,21 @@ public class ProyectilGulgo : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private Vector2 fuerzaLanzamiento;
     private Animator animator;
+    private AudioSource sonidosProyectilPegote;
+    [SerializeField] private AudioClip impactoPegote;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        sonidosProyectilPegote = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         rb.rotation = 90f;
         FuerzaEscupitajo();
+    }
+
+    private void SonidoPegote()
+    {
+        sonidosProyectilPegote.PlayOneShot(impactoPegote);
     }
 
     public void FuerzaEscupitajo()
@@ -31,11 +39,13 @@ public class ProyectilGulgo : MonoBehaviour
         if (collision.CompareTag("Suelo"))
         {
             AnimarYParalizar();
+            SonidoPegote();
         }
 
         if (collision.CompareTag("Invocacion"))
         {
             AnimarYParalizar();
+            SonidoPegote();
             collision.transform.GetComponent<Invocacion>().ModificarVidaInvocacion(-dagnoExplosion);
         }
 
@@ -52,6 +62,7 @@ public class ProyectilGulgo : MonoBehaviour
         if (collision.CompareTag("Muro"))
         {
             AnimarYParalizar();
+            SonidoPegote();
             collision.transform.GetComponent<FuncionamientoMuro>().DagnarMuro(-dagnoExplosion);
         }
     }

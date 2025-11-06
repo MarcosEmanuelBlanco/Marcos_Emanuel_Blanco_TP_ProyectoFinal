@@ -10,12 +10,15 @@ public class AtaqueCACEnemigo : MonoBehaviour
     [SerializeField] private float dagnoGolpe;
     [SerializeField] private float frecuenciaAtaque;
     [SerializeField] private GameObject efectoAtaque;
+    [SerializeField] private AudioClip efectoMusgSonido;
     private Animator animatorMov;
+    private AudioSource sonidoMusgardo;
     // Start is called before the first frame update
     void Start()
     {
         //representacionAtaque.gameObject.SetActive(false);
         animatorMov = GetComponent<Animator>();
+        sonidoMusgardo = GetComponent<AudioSource>();
     }
     private void OnBecameVisible()
     {
@@ -26,6 +29,11 @@ public class AtaqueCACEnemigo : MonoBehaviour
     {
         //animatorMov.SetBool("Persiguiendo", false);
         animatorMov.SetTrigger("Atacando");
+    }
+
+    private void SonidoMusgAtaque()
+    {
+        sonidoMusgardo.PlayOneShot(efectoMusgSonido);
     }
 
     private bool DetectarAtacando()

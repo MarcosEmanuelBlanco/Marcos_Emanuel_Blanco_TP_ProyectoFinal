@@ -16,6 +16,8 @@ TagManager:
   - Jefe
   - Invocacion
   - Cuadro
+  - Cartel1
+  - Cartel2
   layers:
   - Default
   - TransparentFX

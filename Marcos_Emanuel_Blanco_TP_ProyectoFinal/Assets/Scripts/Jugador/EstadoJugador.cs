@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class EstadoJugador : MonoBehaviour
 {
     [SerializeField] private float vidaJugador;
+    [SerializeField] private GameObject particulasVeneno;
     private float vidaActual;
     private int almas;
     private int puntaje;
@@ -13,6 +14,8 @@ public class EstadoJugador : MonoBehaviour
     [SerializeField] private UnityEvent<string> OnSoulsChange;
     [SerializeField] private UnityEvent<string> OnScoreChange;
     private Animator animatorCuerpo;
+    private AudioSource sonidosCuerpoMuerte;
+    [SerializeField] private AudioClip efectoAlmas;
     [SerializeField] private GameObject brazo;
     [SerializeField] private GameObject piernas;
     [SerializeField] private bool finalMuerte;
@@ -20,12 +23,18 @@ public class EstadoJugador : MonoBehaviour
     {
         finalMuerte = false;
         animatorCuerpo = GetComponent<Animator>();
+        sonidosCuerpoMuerte = GetComponent<AudioSource>();
         vidaActual = vidaJugador;
         puntaje = 0;
         almas = 3;
         OnHealthChange.Invoke(vidaActual.ToString());
         OnSoulsChange.Invoke(almas.ToString());
         OnScoreChange.Invoke(puntaje.ToString());
+    }
+
+    private void SonidoMuerte()
+    {
+        sonidosCuerpoMuerte.PlayOneShot(efectoAlmas);
     }
 
     public void SetFinalMuerte(bool muerto)
@@ -67,6 +76,16 @@ public class EstadoJugador : MonoBehaviour
             brazo.GetComponent<AnimarBrazo>().Muerte();
             piernas.GetComponent<AnimarPiernas>().Quieto();
         }
+    }
+
+    public void ActivarParticulasVeneno()
+    {
+        particulasVeneno.SetActive(true);
+    }
+
+    public void DesactivarParticulasVeneno()
+    {
+        particulasVeneno.SetActive(false);
     }
 
     public float GetVidaActual()

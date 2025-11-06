@@ -8,7 +8,7 @@ public class DetenerJuegoPausa : MonoBehaviour
 {
     private void DetenerTiempoPausa()
     {
-        Time.timeScale = 0;
+        Debug.Log("Pausa");
     }
 
     private void Update()
@@ -16,6 +16,7 @@ public class DetenerJuegoPausa : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Time.timeScale = 1;
+            gameObject.SetActive(false);
         }
     }
 }

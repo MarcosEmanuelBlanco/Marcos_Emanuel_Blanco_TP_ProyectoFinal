@@ -8,12 +8,13 @@ public class AtaqueMina : MonoBehaviour
     [SerializeField] private Transform posicionAtaque;
     [SerializeField] private Vector2 rectGolpe;
     [SerializeField] private float dagnoGolpe;
-
+    [SerializeField] private AudioClip efectoExplosionT;
+    private AudioSource sonidosTrampinion;
     private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-
+        sonidosTrampinion = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
     }
     // Update is called once per frame
@@ -26,6 +27,11 @@ public class AtaqueMina : MonoBehaviour
         vidaMina += puntos;
         Debug.Log("Enemigo herido");
         Muerte();
+    }
+
+    private void SonidoExplosionT()
+    {
+        sonidosTrampinion.PlayOneShot(efectoExplosionT);
     }
 
     private void Muerte()

@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 781090f1704bc40488a0d284aa838385, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -223,6 +223,10 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: efectoMuerte1
+      value: 
+      objectReference: {fileID: 8300000, guid: fffdd7ae9dd07cb4d87b3b085287d2a4, type: 3}
+    - target: {fileID: 6681549750798760056, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: alcanceVision.x
       value: 35
       objectReference: {fileID: 0}
@@ -358,6 +362,7 @@ MonoBehaviour:
   areaAtaque: {x: 7, y: 4}
   dagnoGolpe: 350
   tiempoEntreGolpes: 3
+  golpeRayoISH: {fileID: 8300000, guid: 9b575a36afcfc244e970cb783665cda0, type: 3}
 --- !u!95 &6471221073500207151
 Animator:
   serializedVersion: 5

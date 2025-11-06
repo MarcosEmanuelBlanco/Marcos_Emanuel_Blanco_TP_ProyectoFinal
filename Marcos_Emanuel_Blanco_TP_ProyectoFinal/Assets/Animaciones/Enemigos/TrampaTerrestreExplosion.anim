@@ -54,6 +54,8 @@ AnimationClip:
       value: {fileID: 21300000, guid: 68f87d4e0944af5459d93625d8d72eb7, type: 3}
     - time: 0.26666668
       value: {fileID: 21300000, guid: 28ba81043b50757438ae5c9a583856c6, type: 3}
+    - time: 0.28333336
+      value: {fileID: 0}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -93,12 +95,13 @@ AnimationClip:
     - {fileID: 21300000, guid: 8d1ca1aa026328548903db7e64d2be3c, type: 3}
     - {fileID: 21300000, guid: 68f87d4e0944af5459d93625d8d72eb7, type: 3}
     - {fileID: 21300000, guid: 28ba81043b50757438ae5c9a583856c6, type: 3}
+    - {fileID: 0}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.28333336
+    m_StopTime: 0.41666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -125,7 +128,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.28333336
+  - time: 0.06666667
+    functionName: SonidoExplosionT
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.41666666
     functionName: Destruir
     data: 
     objectReferenceParameter: {fileID: 0}

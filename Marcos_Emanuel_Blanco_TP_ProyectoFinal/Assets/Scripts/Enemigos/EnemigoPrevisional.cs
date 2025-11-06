@@ -12,7 +12,9 @@ public class EnemigoPrevisional : MonoBehaviour
     [SerializeField] private UnityEvent<string> OnHealthChange;
     [SerializeField] private TextMeshProUGUI textoVida;
     [SerializeField] private float vidaActual;
+    [SerializeField] private AudioClip efectoMuerte;
     private Animator animatorMov;
+    private AudioSource sonido;
     private Rigidbody2D rigidbody2;
     private Collider2D collider2;
     private bool muerto;
@@ -23,6 +25,7 @@ public class EnemigoPrevisional : MonoBehaviour
         OnHealthChange.Invoke(vidaActual.ToString());
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemigo"), LayerMask.NameToLayer("Enemigo"), true);
         animatorMov = GetComponent<Animator>();
+        sonido = GetComponent<AudioSource>();
         rigidbody2 = GetComponent<Rigidbody2D>();
         collider2 = GetComponent<Collider2D>();
         muerto = false;
@@ -34,6 +37,13 @@ public class EnemigoPrevisional : MonoBehaviour
         OnHealthChange.Invoke(vidaActual.ToString());
         barraVida.GetComponent<ActualizarTextoVidaEnemigo>().ActivarAnimaciones();
         Muerte();
+    }
+
+    public void CurarVidaEnemigo(float puntos)
+    {
+        vidaActual += puntos;
+        OnHealthChange.Invoke(vidaActual.ToString());
+        barraVida.GetComponent<ActualizarTextoVidaEnemigo>().ActivarAnimacionesCuracion();
     }
 
     public bool GetMuerto()
@@ -67,7 +77,7 @@ public class EnemigoPrevisional : MonoBehaviour
     {
         vidaActual += puntos;
         OnHealthChange.Invoke(vidaActual.ToString());
-        Debug.Log("Enemigo herido");
+        barraVida.GetComponent<ActualizarTextoVidaEnemigo>().ActivarAnimaciones();
         MuerteNoJugador();
     }
 
@@ -87,6 +97,11 @@ public class EnemigoPrevisional : MonoBehaviour
         GameObject controlador = GameObject.FindGameObjectWithTag("GameController");
         controlador.GetComponent<GameManager>().ContarDerribados();
         Destroy(gameObject);
+    }
+
+    private void SonidoMuerte()
+    {
+        sonido.PlayOneShot(efectoMuerte);
     }
 
     public float GetVidaActual()

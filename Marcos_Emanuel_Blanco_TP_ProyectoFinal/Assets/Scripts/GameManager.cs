@@ -7,9 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private bool puedeVolver;
     [SerializeField] private bool juegoDetenido;
-    private bool gulgoVivo;
     [SerializeField] private GameObject dhaork;
     [SerializeField] private int enemigosDerribados;
     [SerializeField] private int totalEnemigos;
@@ -19,13 +17,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject cartelVictoria;
     [SerializeField] private GameObject cartelPausa;
     [SerializeField] private UnityEvent<string> OnRemainingSoulsChange;
+    private AudioSource sonidosJuego;
+    [SerializeField] private AudioClip temaJefe;
     void Start()
     {
+        sonidosJuego = GetComponent<AudioSource>();
         enemigosDerribados = 0;
         juegoDetenido = false;
-        puedeVolver = true;
-        gulgoVivo = true;
         cartelPausa.SetActive(false);
+    }
+
+    public void ReproducirTemaJefe()
+    {
+        sonidosJuego.clip = temaJefe;
     }
 
     public void ContarDerribados()
@@ -45,9 +49,11 @@ public class GameManager : MonoBehaviour
 
     public void RevivirJugador()
     {
+        sonidosJuego.Play();
         dhaork.GetComponent<EstadoJugador>().Revivir();
         dhaork.GetComponent<EstadoJugador>().MuertoFalse();
         HUDPrincipal.SetActive(true);
+        //RestaurarTiempo();
     }
     void Update()
     {
@@ -62,19 +68,24 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            cartelPausa.SetActive(true);
-            juegoDetenido = true;
+            if (juegoDetenido)
+            {
+                ContinuarJuego();
+            }
+            else
+            {
+                cartelPausa.SetActive(true);
+                juegoDetenido = true;
+                PararTiempo();
+            }
         }
-        //ContinuarJuego();
     }
 
     public void ContinuarJuego()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && juegoDetenido)
-        {
-            cartelPausa.SetActive(false);
-            juegoDetenido = false;
-        }
+        cartelPausa.SetActive(false);
+        juegoDetenido = false;
+        RestaurarTiempo();
     }
 
     void Derribado()
@@ -82,48 +93,59 @@ public class GameManager : MonoBehaviour
         if (dhaork.GetComponent<EstadoJugador>().GetFinalMuerte())
         {
             HUDPrincipal.SetActive(false);
-            Time.timeScale = 0;
             juegoDetenido = true;
         }
         else
         {
             HUDPrincipal.SetActive(true);
             juegoDetenido = false;
-            Time.timeScale = 1;
-
         }
     }
 
-    void ReiniciarEscena()
+    void PararPorEvento()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        juegoDetenido = false;
-        
+        if (!juegoDetenido)
+        {
+            RestaurarTiempo();
+        }
+        else
+        {
+            PararTiempo();
+        }
     }
 
-    void VolverAlMenu()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(2);
-        juegoDetenido = false;
-    }
+    //void ReiniciarEscena()
+    //{
+    //    Time.timeScale = 1;
+    //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    //    juegoDetenido = false;
+        
+    //}
+
+    //void VolverAlMenu()
+    //{
+    //    Time.timeScale = 1;
+    //    SceneManager.LoadScene(2);
+    //    juegoDetenido = false;
+    //}
 
     void RevivirOReiniciar()
     {
         if (dhaork.GetComponent<EstadoJugador>().GetAlmas() > 0 && dhaork.GetComponent<EstadoJugador>().GetVidaActual() <= 0)
         {
+            sonidosJuego.Pause();
             cartelDerrotaConAlmas.SetActive(true);
+            //PararTiempo();
             dhaork.GetComponent<Movimiento>().CambiarAturdido(true);
             dhaork.GetComponent<AtaquesPrevisional>().enabled = false;
-            puedeVolver = true;
         }
         else if(dhaork.GetComponent<EstadoJugador>().GetAlmas() <= 0 && dhaork.GetComponent<EstadoJugador>().GetVidaActual() <= 0)
         {
+            sonidosJuego.Pause();
             cartelDerrotaSinAlmas.SetActive(true);
+            //PararTiempo();
             dhaork.GetComponent<Movimiento>().CambiarAturdido(true);
             dhaork.GetComponent<AtaquesPrevisional>().enabled = false;
-            puedeVolver = false;
         }
     }
 
@@ -131,11 +153,12 @@ public class GameManager : MonoBehaviour
     {
         if (enemigosDerribados == totalEnemigos && SceneManager.GetActiveScene().buildIndex != 5)
         {
+            sonidosJuego.Pause();
             cartelVictoria.SetActive(true);
             dhaork.GetComponent<Movimiento>().enabled = false;
             dhaork.GetComponent<AtaquesPrevisional>().enabled = false;
             HUDPrincipal.SetActive(false);
-            juegoDetenido = true;
+            //PararTiempo();
         }
 
     }
@@ -145,12 +168,12 @@ public class GameManager : MonoBehaviour
         GameObject gulgo = GameObject.FindGameObjectWithTag("Jefe");
         if(gulgo != null && gulgo.GetComponent<MuerteGrulgosh>().GetGMuerto())
         {
-            gulgoVivo = false;
+            sonidosJuego.Pause();
             cartelVictoria.SetActive(true);
             dhaork.GetComponent<Movimiento>().enabled = false;
             dhaork.GetComponent<AtaquesPrevisional>().enabled = false;
             HUDPrincipal.SetActive(false);
-            juegoDetenido = true;
+            //PararTiempo();
         }
     }
 }
