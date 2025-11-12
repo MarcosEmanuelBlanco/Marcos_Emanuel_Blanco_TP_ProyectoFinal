@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
         AreaAsegurada();
         GrulgoshDerrotado();
         Pausa();
+        VolverAlMainPausa();
     }
 
     public void Pausa()
@@ -77,6 +78,18 @@ public class GameManager : MonoBehaviour
                 cartelPausa.SetActive(true);
                 juegoDetenido = true;
                 PararTiempo();
+            }
+        }
+    }
+
+    private void VolverAlMainPausa()
+    {
+        if (juegoDetenido)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                juegoDetenido = false;
+                SceneManager.LoadScene(0);
             }
         }
     }

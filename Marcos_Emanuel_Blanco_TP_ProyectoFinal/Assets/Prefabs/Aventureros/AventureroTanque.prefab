@@ -166,6 +166,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AventureroTanque
       objectReference: {fileID: 0}
+    - target: {fileID: 3650823115846941359, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
+      propertyPath: m_Pitch
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3800048093699803952, guid: 3ea2104d232a2c0418bdf54c4777e5c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

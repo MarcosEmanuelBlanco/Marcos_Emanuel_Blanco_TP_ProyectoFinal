@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Juego detenido\nPuls\xE1 Espacio para continuar"
+  m_text: "Juego detenido\nPuls\xE1 Espacio para continuar o ESC para volver al men\xFA"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aa846795e2c43b24bb038125a3aa6680, type: 2}
   m_sharedMaterial: {fileID: 2773407185774687926, guid: aa846795e2c43b24bb038125a3aa6680, type: 2}
