@@ -14,10 +14,35 @@ public class Movimiento : MonoBehaviour
     [SerializeField] private GameObject brazo;
     private Animator animatorCuerpo;
     private bool paralizado;
+    [SerializeField] private float fuerzaPatada;
+    [SerializeField] private float danioPatada;
+    [SerializeField] private GameObject efectoVisualPatada;
+    [SerializeField] private AudioClip sonidoPatada;
+    private AudioSource efectoPatada;
     void Start()
     {
         paralizado = false;
         animatorCuerpo = GetComponent<Animator>();
+        efectoPatada = GetComponent<AudioSource>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemigoBasico"))
+        {
+            collision.gameObject.GetComponent<EnemigoPrevisional>().Pateado(fuerzaPatada);
+            collision.gameObject.GetComponent<EnemigoPrevisional>().ModificarVidaEnemigo(-danioPatada);
+            efectoVisualPatada.SetActive(true);
+            efectoPatada.PlayOneShot(sonidoPatada);
+        }
+
+        if (collision.gameObject.CompareTag("Aventurero"))
+        {
+            collision.gameObject.GetComponent<Aventurero>().Pateado(fuerzaPatada);
+            collision.gameObject.GetComponent<Aventurero>().ModificarVidaEnemigo(-danioPatada);
+            efectoVisualPatada.SetActive(true);
+            efectoPatada.PlayOneShot(sonidoPatada);
+        }
     }
 
     public void CambiarAturdido(bool atu)

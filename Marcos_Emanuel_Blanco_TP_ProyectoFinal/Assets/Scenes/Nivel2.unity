@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2994676879331515623, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: vidaJugador
-      value: 22500
+      value: 16500
       objectReference: {fileID: 0}
     - target: {fileID: -2994676879331515623, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: OnScoreChange.m_PersistentCalls.m_Calls.Array.size
@@ -330,6 +330,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 951573809850808836, guid: 283432f06aafadf43babf3eb7daf8bed, type: 3}
   m_PrefabInstance: {fileID: 647238126}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &211029163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211029164}
+  m_Layer: 0
+  m_Name: PUNTO3 (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &211029164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211029163}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 83, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &303722414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5585,11 +5616,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1006920721869826104, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
       propertyPath: puntosAparicion.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1006920721869826104, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
       propertyPath: enemigosAGenerar.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1006920721869826104, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
       propertyPath: puntosAparicion.Array.data[0]
@@ -5604,6 +5635,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1897161154}
     - target: {fileID: 1006920721869826104, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
+      propertyPath: puntosAparicion.Array.data[3]
+      value: 
+      objectReference: {fileID: 2147208597}
+    - target: {fileID: 1006920721869826104, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
+      propertyPath: puntosAparicion.Array.data[4]
+      value: 
+      objectReference: {fileID: 211029164}
+    - target: {fileID: 1006920721869826104, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
       propertyPath: enemigosAGenerar.Array.data[0]
       value: 
       objectReference: {fileID: 8720418070332993492, guid: a4aff795e9ce87f459a783a23ec1aa8f, type: 3}
@@ -5613,6 +5652,14 @@ PrefabInstance:
       objectReference: {fileID: 8720418070332993492, guid: a4aff795e9ce87f459a783a23ec1aa8f, type: 3}
     - target: {fileID: 1006920721869826104, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
       propertyPath: enemigosAGenerar.Array.data[2]
+      value: 
+      objectReference: {fileID: 8720418070332993492, guid: a4aff795e9ce87f459a783a23ec1aa8f, type: 3}
+    - target: {fileID: 1006920721869826104, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
+      propertyPath: enemigosAGenerar.Array.data[3]
+      value: 
+      objectReference: {fileID: 8720418070332993492, guid: a4aff795e9ce87f459a783a23ec1aa8f, type: 3}
+    - target: {fileID: 1006920721869826104, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
+      propertyPath: enemigosAGenerar.Array.data[4]
       value: 
       objectReference: {fileID: 8720418070332993492, guid: a4aff795e9ce87f459a783a23ec1aa8f, type: 3}
     - target: {fileID: 1814277469580412970, guid: 04c4cd09e42e4cb44b4c2707e87b94d0, type: 3}
@@ -6209,6 +6256,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 913ac276757c701428dd0f571b15fa54, type: 3}
+--- !u!1 &2147208596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2147208597}
+  m_Layer: 0
+  m_Name: PUNTO3 (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2147208597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147208596}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 81, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -6236,4 +6314,6 @@ SceneRoots:
   - {fileID: 1331150892}
   - {fileID: 1950537249}
   - {fileID: 1897161154}
+  - {fileID: 2147208597}
+  - {fileID: 211029164}
   - {fileID: 531945775}

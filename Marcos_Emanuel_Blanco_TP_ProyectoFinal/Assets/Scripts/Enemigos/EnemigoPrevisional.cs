@@ -31,6 +31,13 @@ public class EnemigoPrevisional : MonoBehaviour
         muerto = false;
         
     }
+
+    public void Pateado(float fuerza)
+    {
+        Vector2 fuerzaTotal = new(fuerza / vidaMaxima, 1.0f);
+        rigidbody2.AddForce(fuerzaTotal, ForceMode2D.Impulse);
+    }
+
     public void ModificarVidaEnemigo(float puntos)
     {
         vidaActual += puntos;

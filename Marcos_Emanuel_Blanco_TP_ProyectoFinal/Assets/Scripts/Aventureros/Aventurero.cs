@@ -45,6 +45,13 @@ public class Aventurero : MonoBehaviour
         animatorMov.SetBool("Invulnerable", true);
     }
 
+
+    public void Pateado(float fuerza)
+    {
+        Vector2 fuerzaTotal = new(fuerza / vidaEnemigo, 1.0f);
+        rigidbody2.AddForce(fuerzaTotal, ForceMode2D.Impulse);
+    }
+
     private void SonidoMuerte1()
     {
         sonidosMuerte.PlayOneShot(efectoMuerte1);
