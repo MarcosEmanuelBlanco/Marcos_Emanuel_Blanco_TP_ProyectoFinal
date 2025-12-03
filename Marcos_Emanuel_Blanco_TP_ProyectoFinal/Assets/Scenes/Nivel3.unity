@@ -18303,7 +18303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2994676879331515623, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: vidaJugador
-      value: 180000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: -2994676879331515623, guid: ded59128ee0220a41bf7fc7868a7cd77, type: 3}
       propertyPath: OnScoreChange.m_PersistentCalls.m_Calls.Array.size
